@@ -2,8 +2,8 @@
   "format": "battleship-manuscript-dashboard-capture",
   "version": 1,
   "captureScriptSha256": "f34c5570fd6bc64567315b93dd8b384cca01be230be3047c50bb439310bf5e3f",
-  "url": "http://127.0.0.1:5186",
-  "capturedAt": "2026-10-24T21:11:14.160Z",
+  "url": "http://127.0.0.1:5192",
+  "capturedAt": "2026-10-26T21:06:32.512Z",
   "browser": "156.0.8078.48",
   "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
   "viewport": {
@@ -48,18 +48,13 @@
     "habitStrength": 0
   },
   "servedAssets": {
-    "index.html": "690e6806b9e1073418f554c7b74b67c536b96204361d7b2c2fbdb2ffe96870d6",
+    "index.html": "6b1083421e754ef65db7569e96470ce6303d25434f26647a8de79c077f77a5ed",
     "robots.txt": "16ceb5ee3e0dc13aa9adf31a3ebbe45a1d965b8c2b9f72eaf84e5911e140ed95",
-    "assets/index-mFztVPFl.css": "627ee1321a213a5c590b90b71704767ae99e4fd41494f9ef08115c55d6d9ad14",
-    "assets/index-DDYKU823.js.map": "f3f0e7b6eaa7be83a7b7f767eb9cc6526d0612cefa8265d818b10432d51b4076",
-    "assets/index-D_sACO1q.js.map": "3d05726eefcc3b059b4b68dcc77217ab08f13cb06cccef6b0bf7882208670ada",
-    "assets/index-DDYKU823.js": "0ee04117d74120f70155a53de2f67e5d6fcdfdd2fa92338b5dc1105c0439c6e4",
-    "assets/session.worker-SxKNVsLg.js": "c81f0a6669c72abbd504be452800ca99b4f80f7fae93b2ddf24088697f04a0c7",
+    "assets/index-CdfZBM15.js": "06c5000ccc5747764fd1cf73b1009cf65a68b229670c693b3d5f2e2a622d2287",
+    "assets/index-BACMt9sm.css": "a7e7c59cb246706b8931aa3e9a82d6ccddc561f59aace6376ffe9b60e7af9424",
     "assets/session.worker-DwBOGEP-.js.map": "81843bceadcfb1ae2e93cf2c234b2325e9a180272352b6636db06035ce2a2cc3",
-    "assets/index-B_DmTTV3.css": "6487dfff52d2f5d24f6e29acc493595588d6c5c6ec69247deb29c2bd1652d250",
-    "assets/session.worker-DwBOGEP-.js": "a8eed960c8f06935ee1864efb31f36e489e781fdcc3786f4595f8475ad869c1c",
-    "assets/index-D_sACO1q.js": "da3cdbc70c3638ca3aca9f21c43e0ecea8ea9ffa1a02a468e0c9fcc50288d844",
-    "assets/session.worker-SxKNVsLg.js.map": "52eec4de2faa9d16dea07e18207c26768d63aba387d2263576fa1dfcaab0c5bb"
+    "assets/index-CdfZBM15.js.map": "b0cfa756dcf26809b2383a3d939e1a5e8200d1d4513fb976af9e0f9782dabbdb",
+    "assets/session.worker-DwBOGEP-.js": "a8eed960c8f06935ee1864efb31f36e489e781fdcc3786f4595f8475ad869c1c"
   },
   "captures": [
     {
@@ -106,14 +101,14 @@
     },
     {
       "path": "manuscript/figures/dashboard/action-tradeoff.png",
-      "sha256": "ccaa33427f79b978f2547cafd5c29e965c4c736080ac79ad548da08c9bfea935",
+      "sha256": "a2c454be17e224dbae32408cd8d15aee3f4eee237604ec919abff3ee45f9c87b",
       "region": "panel action-tradeoff",
       "width": 1019.625,
-      "height": 670
+      "height": 770
     },
     {
       "path": "manuscript/figures/dashboard/action-tradeoff-plot.png",
-      "sha256": "31e2f452e9f0ff41148a53f25cc8d2f6709a755d8a008622a797999b11835706",
+      "sha256": "c1d39f87f9098908bc20a8f271ee5a5f1b4cd1858744c2c5c4e910c0011c4eca",
       "region": "action-tradeoff-plot",
       "width": 969.625,
       "height": 364

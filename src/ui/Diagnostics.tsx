@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { coordinate } from "../core/fleet";
 import type { Shot } from "../core/game";
 import type { ActionScore, Belief } from "../core/inference";
@@ -60,10 +61,23 @@ export function ActionTable({
   readonly size: number;
   readonly onSelect: ((cell: number) => void) | null;
 }) {
+  const [expanded, setExpanded] = useState(false);
   return (
     <section className="table-scroll" aria-label="Action candidate table">
       <table>
-        <caption className="sr-only">Top action candidates at current settings</caption>
+        <caption className="action-table-caption">
+          {expanded ? "All legal actions" : "Leading action candidates"} at current settings
+          {actions.length > 8 && (
+            <button
+              className="text-button"
+              type="button"
+              aria-expanded={expanded}
+              onClick={() => setExpanded((value) => !value)}
+            >
+              {expanded ? "Show leading eight" : `Show all ${actions.length} actions`}
+            </button>
+          )}
+        </caption>
         <thead>
           <tr>
             <th>Cell</th>
@@ -75,7 +89,7 @@ export function ActionTable({
           </tr>
         </thead>
         <tbody>
-          {actions.slice(0, 8).map((a) => (
+          {(expanded ? actions : actions.slice(0, 8)).map((a) => (
             <tr key={a.cell}>
               <td data-label="Cell">
                 {onSelect ? (

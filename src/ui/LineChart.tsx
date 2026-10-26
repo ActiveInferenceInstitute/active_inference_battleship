@@ -39,6 +39,12 @@ export function LineChart({
         <strong>{title}</strong>
         <span className="mono muted">{unit}</span>
       </figcaption>
+      {values.length > 0 && (
+        <p className="chart-latest small">
+          Latest <strong className="mono">{display(values.at(-1) ?? 0)}</strong> {unit}
+          <span className="muted"> · {values.length} observations</span>
+        </p>
+      )}
       {values.length === 0 ? (
         <div className="chart-empty">History appears after the first shot.</div>
       ) : (
@@ -60,13 +66,23 @@ export function LineChart({
                 <line className="chart-rule" key={y} x1="0" x2="360" y1={y} y2={y} />
               ))}
               <polyline
+                className="chart-trace"
+                pathLength="1"
                 fill="none"
                 stroke={color}
                 strokeWidth="2"
                 points={points.map((point) => `${point.x},${point.y}`).join(" ")}
               />
-              {points.map((point) => (
-                <circle key={point.label} cx={point.x} cy={point.y} r="3" fill={color} />
+              {points.map((point, index) => (
+                <circle
+                  key={point.label}
+                  cx={point.x}
+                  cy={point.y}
+                  r={index === points.length - 1 ? "4" : "2.5"}
+                  fill={color}
+                  stroke={index === points.length - 1 ? "var(--text)" : "none"}
+                  strokeWidth="1"
+                />
               ))}
             </svg>
             <div className="chart-x-labels" aria-hidden="true">

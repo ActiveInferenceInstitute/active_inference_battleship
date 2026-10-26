@@ -1,6 +1,6 @@
 {
   "name": "active-inference-battleship",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
   "description": "A GNN-specified Battleship game and inspectable active inference dashboard from the Active Inference Institute",
@@ -86,10 +86,10 @@
     "bun": ">=1.4.4"
   },
   "license": "MIT",
-  "homepage": "https://github.com/ActInfInstitute/active_inference_battleship",
+  "homepage": "https://github.com/ActiveInferenceInstitute/active_inference_battleship",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ActInfInstitute/active_inference_battleship.git"
+    "url": "https://github.com/ActiveInferenceInstitute/active_inference_battleship.git"
   },
   "author": {
     "name": "Daniel Ari Friedman",

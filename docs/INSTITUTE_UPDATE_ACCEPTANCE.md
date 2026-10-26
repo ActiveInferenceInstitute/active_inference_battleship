@@ -1,3 +1,5 @@
+> Historical record: statements below describe the dated pre-release candidate. Current organization ownership, releases, and DOI are documented in [publication details](PUBLICATION.md).
+
 # Institute update: local verification record
 
 This post-review record accompanies an **unreleased draft**. It is separate from the frozen product manifests. It does not publish source, create a tag or release, reserve a DOI, upload a deposit, or grant scientific or publication approval.

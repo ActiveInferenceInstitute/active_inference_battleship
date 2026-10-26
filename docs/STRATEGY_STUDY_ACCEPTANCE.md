@@ -1,3 +1,5 @@
+> Historical record: statements below describe the dated pre-release candidate. Current organization ownership, releases, and DOI are documented in [publication details](PUBLICATION.md).
+
 # Strategy study and manuscript: local review-ready handoff
 
 The manuscript, research outputs and reader improvements are ready for local review in the private working copy. This record documents completed independent R4 rendered reviews and the subsequent R5 documentary correction. It does **not** change the original reviewers' `REVISE` verdicts into independent `PASS` verdicts, authorize publication, assign a DOI, or certify scientific efficacy.

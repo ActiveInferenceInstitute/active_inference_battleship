@@ -1,3 +1,5 @@
+> Historical record: statements below describe the dated pre-release candidate. Current organization ownership, releases, and DOI are documented in [publication details](PUBLICATION.md).
+
 # Graphical opening and Battleship scholarship update
 
 This records the local manuscript update requested on October 25, 2026. It is a builder verification and integration record, not a public-release or scientific efficacy approval.

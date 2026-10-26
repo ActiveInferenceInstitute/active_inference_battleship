@@ -31,7 +31,7 @@ def require_revision(text: str, revision: str, edition: str) -> None:
 
 def require_release_statement(text: str, links: set[str], repository: str, edition: str, doi: str | None = None) -> None:
     visible = re.sub(r"\s+", " ", text).casefold()
-    required = ("active inference institute", "version 0.4.0", "zenodo", "doi")
+    required = ("active inference institute", "version 0.5.0", "zenodo", "doi")
     if any(phrase not in visible for phrase in required) or repository not in links:
         raise ValueError(f"Missing visible published-release statement or repository link: {edition}")
     if doi is not None and (doi not in re.sub(r"\s+", "", text) or "https://doi.org/" + doi not in links):

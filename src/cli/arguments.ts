@@ -110,7 +110,7 @@ export function parseCell(text: string, size: number): number {
   return r * size + c;
 }
 
-export const usage = `Active Inference Institute — Battleship v0.4.0
+export const usage = `Active Inference Institute — Battleship v0.5.0
 
 Usage:
   battleship analyze REPLAY [--actor player|opponent] [--cell A1|INDEX]

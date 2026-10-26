@@ -2,18 +2,20 @@
 
 A playable browser Battleship game and an inspectable active inference dashboard from the **Active Inference Institute**, specified in **Generalized Notation Notation (GNN)**. GNN is a generative-model notation, not a graph neural network. The build **imports the actual local GNN Python parser**, checks a deliberately bounded model contract, and compiles its declarations and provenance into the browser application. Tested TypeScript code implements the supported mathematics. [Follow the specification-to-runtime path](docs/GNN_SPECIFICATION.md).
 
-**Public release v0.4.0.** [Source and release downloads](https://github.com/ActInfInstitute/active_inference_battleship/releases/tag/v0.4.0) · [Manuscript DOI: 10.5281/zenodo.23670188](https://doi.org/10.5281/zenodo.23670188). The Zenodo record archives the manuscript and reproducibility companions. Software is MIT licensed; the manuscript and original figures are CC BY 4.0. No npm registry publication or separate software DOI is claimed. [Release and citation details](docs/RELEASE_PLAN.md).
+**Public release v0.5.0.** [Source and release downloads](https://github.com/ActiveInferenceInstitute/active_inference_battleship/releases/tag/v0.5.0) · [Manuscript DOI: 10.5281/zenodo.23676081](https://doi.org/10.5281/zenodo.23676081). The Zenodo record archives the manuscript and reproducibility companions. Software is MIT licensed; the manuscript and original figures are CC BY 4.0. No npm registry publication or separate software DOI is claimed. [Release and citation details](docs/RELEASE_PLAN.md).
 
 ## Start with the public release
 
-[Play the live dashboard](https://actinfinstitute.github.io/active_inference_battleship/) · [Read the online manuscript](https://actinfinstitute.github.io/active_inference_battleship/paper/) · [Download the DOI-bearing PDF](https://github.com/ActInfInstitute/active_inference_battleship/releases/download/v0.4.0/active_inference_battleship_combined.pdf).
+[Watch the narrated 20-minute video](https://github.com/ActiveInferenceInstitute/active_inference_battleship/releases/download/v0.5.0/Active_Inference_Battleship_20min.mp4) · [Lecture slides](https://github.com/ActiveInferenceInstitute/active_inference_battleship/releases/download/v0.5.0/Active_Inference_Battleship_slides.pdf) · [Changes in version 0.5.0](CHANGELOG.md).
 
-Download `active-inference-battleship-dashboard-v0.4.0.zip` from the release, extract it, and serve its folder with any static HTTP server. Download the reader ZIP for the complete paper and its linked research companions. Neither built interface requires Python or a GNN checkout at runtime; the paper reader uses an external MathJax resource for notation and includes PDF/Word alternatives.
+[Play the live dashboard](https://activeinferenceinstitute.github.io/active_inference_battleship/) · [Read the online manuscript](https://activeinferenceinstitute.github.io/active_inference_battleship/paper/) · [Download the DOI-bearing PDF](https://github.com/ActiveInferenceInstitute/active_inference_battleship/releases/download/v0.5.0/active_inference_battleship_combined.pdf).
+
+Download `active-inference-battleship-dashboard-v0.5.0.zip` from the release, extract it, and serve its folder with any static HTTP server. Download the reader ZIP for the complete paper and its linked research companions. Neither built interface requires Python or a GNN checkout at runtime; the paper reader uses an external MathJax resource for notation and includes PDF/Word alternatives.
 
 For a source clone:
 
 ```sh
-git clone https://github.com/ActInfInstitute/active_inference_battleship.git
+git clone https://github.com/ActiveInferenceInstitute/active_inference_battleship.git
 cd active_inference_battleship
 bun install --frozen-lockfile
 bun run demo

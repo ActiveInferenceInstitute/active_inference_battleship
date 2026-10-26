@@ -33,6 +33,8 @@ const stages = [
 
 export function GnnPipeline({ model }: { readonly model: CompiledModel }) {
   const [notice, setNotice] = useState("");
+  const [selectedStage, setSelectedStage] = useState(0);
+  const current = stages[selectedStage] ?? stages[0];
   const download = (kind: "source" | "model") => {
     const source = kind === "source";
     const filename = source ? "battleship.gnn.md" : "battleship-model.json";
@@ -62,7 +64,7 @@ export function GnnPipeline({ model }: { readonly model: CompiledModel }) {
       </p>
       <ol className="gnn-stages">
         {stages.map(([verb, title, detail], index) => (
-          <li key={verb}>
+          <li key={verb} className={selectedStage === index ? "gnn-stage-selected" : ""}>
             <span className="gnn-stage-number" aria-hidden="true">
               {index + 1}
             </span>
@@ -71,9 +73,55 @@ export function GnnPipeline({ model }: { readonly model: CompiledModel }) {
               <h3>{title}</h3>
               <p>{detail}</p>
             </div>
+            <button
+              type="button"
+              className="text-button"
+              aria-pressed={selectedStage === index}
+              aria-controls="gnn-walkthrough"
+              onClick={() => setSelectedStage(index)}
+            >
+              {selectedStage === index ? "✓ " : ""}Inspect {verb.toLowerCase()}
+            </button>
           </li>
         ))}
       </ol>
+      <section className="gnn-walkthrough" id="gnn-walkthrough" aria-label="GNN build walkthrough">
+        <div className="panel-heading">
+          <h3>
+            {selectedStage + 1}. {current[0]} · {current[1]}
+          </h3>
+          <button
+            type="button"
+            className="button"
+            onClick={() => setSelectedStage((index) => (index + 1) % stages.length)}
+          >
+            Next stage
+          </button>
+        </div>
+        <p className="small muted" role="status">
+          {current[2]} This walkthrough explains the build; it does not rerun the Python parser.
+        </p>
+        <div className="gnn-progress" aria-hidden="true">
+          {stages.map(([verb], index) => (
+            <span
+              key={verb}
+              className={`gnn-progress-segment ${index <= selectedStage ? "reached" : ""}`}
+            />
+          ))}
+        </div>
+        {selectedStage === 0 ? (
+          <pre className="gnn-source-sample">
+            <code>{specification.split("\n").slice(0, 18).join("\n")}</code>
+          </pre>
+        ) : (
+          <p className="small">
+            Checked specification SHA-256:{" "}
+            <code className="break-hash">{model.source.specificationSha256}</code>. Compare it with
+            the downloaded model and source to trace the same declaration through the build. The
+            executable model is limited to the explicitly supported static-fleet contract.
+          </p>
+        )}
+      </section>
       <div className="gnn-runtime-note reading-measure">
         <h3>Defaults and live settings are different</h3>
         <p>

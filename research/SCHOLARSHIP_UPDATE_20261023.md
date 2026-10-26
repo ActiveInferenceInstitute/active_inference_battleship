@@ -1,3 +1,5 @@
+> Historical record: statements below describe the dated pre-release candidate. Current organization ownership, releases, and DOI are documented in [publication details](../docs/PUBLICATION.md).
+
 # Primary-source scholarship update — October 23, 2026
 
 Research supplement for the **Active Inference Institute** Battleship project. This note supplements [SCHOLARSHIP.md](SCHOLARSHIP.md); it does not replace that dossier or amend the manuscript, bibliography, application, figures, data, or upstream software. Authored prose uses American English; published titles and identifiers retain their source spelling.

@@ -308,10 +308,10 @@ class ResearchCustodyTests(unittest.TestCase):
             project_metadata(self.root)
 
     def test_release_gate_rejects_missing_visible_text_and_wrong_link(self):
-        repository="https://github.com/ActInfInstitute/active_inference_battleship"
-        text="Active Inference Institute. Version 0.4.0. Zenodo DOI."
+        repository="https://github.com/ActiveInferenceInstitute/active_inference_battleship"
+        text="Active Inference Institute. Version 0.5.0. Zenodo DOI."
         require_release_statement(text,{repository},repository,"positive fixture")
-        for phrase in ("Institute","Version 0.4.0","Zenodo","DOI"):
+        for phrase in ("Institute","Version 0.5.0","Zenodo","DOI"):
             with self.assertRaisesRegex(ValueError,"published-release statement"):
                 require_release_statement(text.replace(phrase,""),{repository},repository,"negative fixture")
         with self.assertRaisesRegex(ValueError,"repository link"):

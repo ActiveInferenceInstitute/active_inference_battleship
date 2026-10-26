@@ -1,3 +1,5 @@
+> Historical record: statements below describe the dated pre-release candidate. Current organization ownership, releases, and DOI are documented in [publication details](PUBLICATION.md).
+
 # Numbered formalisms and visual manuscript opening
 
 The R4 manuscript candidate passed both independent review lanes on October 24, 2026. Root accepts the reviewed bytes for local integration. This is bounded manuscript acceptance, not a public release or scientific efficacy claim.

@@ -26,7 +26,7 @@ def project_metadata(root: Path = ROOT) -> dict:
     config = yaml.safe_load((root/"manuscript/config.yaml").read_text())
     if (metadata["organization"] != "Active Inference Institute" or
         metadata["language"] != "en-US" or metadata["releaseStatus"] != "published" or
-        metadata["repository"] != "https://github.com/ActInfInstitute/active_inference_battleship" or
+        metadata["repository"] != "https://github.com/ActiveInferenceInstitute/active_inference_battleship" or
         not re.fullmatch(r"10\.5281/zenodo\.[1-9][0-9]+", metadata.get("manuscriptDoi") or "") or
         metadata["softwareDoi"] is not None):
         raise ValueError("Inconsistent published project metadata")

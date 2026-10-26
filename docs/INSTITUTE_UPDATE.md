@@ -1,3 +1,5 @@
+> Historical record: statements below describe the dated pre-release candidate. Current organization ownership, releases, and DOI are documented in [publication details](PUBLICATION.md).
+
 # Historical Institute update — October 23, 2026
 
 This dated development record predates publication. For current public URLs, DOI, licensing, and citation, see [Publication](PUBLICATION.md) and [Release details](RELEASE_PLAN.md). The original statements below describe that earlier update.

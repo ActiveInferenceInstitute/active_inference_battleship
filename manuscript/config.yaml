@@ -1,7 +1,7 @@
 paper:
   title: GNN-based active inference for Battleship
   subtitle: Finite-catalog inference, interpretable decisions, and reproducible software
-  version: 0.4.0
+  version: 0.5.0
   date: '2026-10-26'
   cover:
     image: figures/graphical-abstract.png
@@ -14,7 +14,7 @@ authors:
       - Active Inference Institute
 publication:
   release_status: published
-  doi: 10.5281/zenodo.23670188
+  doi: 10.5281/zenodo.23676081
 metadata:
   language: en-US
 rendering:

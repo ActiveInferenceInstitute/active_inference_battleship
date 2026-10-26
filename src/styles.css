@@ -775,6 +775,93 @@ input[type="number"] {
   stroke: var(--line);
   stroke-width: 1;
 }
+.chart-latest {
+  margin-block: var(--s2) var(--s4);
+}
+.chart-trace {
+  stroke-dasharray: 1;
+  animation: chart-reveal 450ms ease-out both;
+}
+@keyframes chart-reveal {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.action-table-caption {
+  text-align: left;
+  color: var(--muted);
+  font-size: var(--small);
+  padding-block: var(--s2);
+}
+.action-table-caption button {
+  margin-inline-start: var(--s3);
+}
+.tradeoff-crosshair {
+  stroke: var(--text);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 5;
+  opacity: 0.75;
+}
+.tradeoff-readout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+  gap: var(--s4);
+  margin-block: var(--s6);
+}
+.tradeoff-readout div {
+  background: var(--raised);
+  padding: var(--s3);
+  border-radius: var(--radius-control);
+}
+.tradeoff-readout dt {
+  color: var(--muted);
+  font-size: var(--small);
+}
+.tradeoff-readout dd {
+  margin: var(--s2) 0 0;
+  font: 600 var(--body) var(--mono);
+}
+.gnn-stages .gnn-stage-selected {
+  outline: 2px solid var(--control-edge);
+  outline-offset: 2px;
+}
+.gnn-walkthrough {
+  padding: var(--s5);
+  background: var(--raised);
+  border-radius: var(--radius-panel);
+  margin-bottom: var(--s6);
+}
+.gnn-progress {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--s2);
+  margin-block: var(--s4);
+}
+.gnn-progress-segment {
+  height: 6px;
+  border: 1px solid var(--control-edge);
+  border-radius: var(--radius-control);
+}
+.gnn-progress .reached {
+  background: var(--accent);
+}
+.gnn-source-sample {
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  font: var(--small) / 1.6 var(--mono);
+  max-width: 100%;
+}
+.break-hash {
+  overflow-wrap: anywhere;
+}
+@media (prefers-reduced-motion: reduce) {
+  .chart-trace {
+    animation: none;
+  }
+}
 .chart-empty {
   height: 170px;
   display: flex;

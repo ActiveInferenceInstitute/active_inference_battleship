@@ -56,6 +56,20 @@ export function ActionTradeoff({
                   className="tradeoff-grid"
                 />
               ))}
+              <line
+                className="tradeoff-crosshair"
+                x1={x(selected)}
+                x2={x(selected)}
+                y1={y(selected)}
+                y2="100%"
+              />
+              <line
+                className="tradeoff-crosshair"
+                x1="0"
+                x2={x(selected)}
+                y1={y(selected)}
+                y2={y(selected)}
+              />
               {[0, 0.5, 1].map((value) => (
                 <line
                   key={`y${value}`}
@@ -110,10 +124,28 @@ export function ActionTradeoff({
           <span>Predicted hit probability →</span>
         </figcaption>
       </figure>
+      <dl className="tradeoff-readout" aria-label="Selected action plot values">
+        <div>
+          <dt>Selected coordinate</dt>
+          <dd>{coordinate(selected.cell, size)}</dd>
+        </div>
+        <div>
+          <dt>Predicted hit</dt>
+          <dd>{(selected.predictedHit * 100).toFixed(1)}%</dd>
+        </div>
+        <div>
+          <dt>Expected information</dt>
+          <dd>{selected.informationGain.toFixed(4)} nats</dd>
+        </div>
+        <div>
+          <dt>Choice probability</dt>
+          <dd>{(selected.probability * 100).toFixed(1)}%</dd>
+        </div>
+      </dl>
       <p className="small muted reading-measure">
         Inspect any legal coordinate with the map selector to read its values in the decision
-        receipt. The policy table lists up to eight leading actions. Use Export analysis JSON for
-        every legal action’s numbers. These controls never fire a shot.
+        receipt. The policy table initially lists up to eight leading actions; expand it to see
+        every legal action, or use Export analysis JSON. These controls never fire a shot.
       </p>
     </section>
   );

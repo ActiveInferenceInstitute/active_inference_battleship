@@ -3,10 +3,10 @@ message: Please cite the archived manuscript when using this software or its res
   materials.
 title: Active Inference Battleship
 type: software
-version: 0.4.0
+version: 0.5.0
 date-released: '2026-10-26'
-url: https://github.com/ActInfInstitute/active_inference_battleship
-repository-code: https://github.com/ActInfInstitute/active_inference_battleship
+url: https://github.com/ActiveInferenceInstitute/active_inference_battleship
+repository-code: https://github.com/ActiveInferenceInstitute/active_inference_battleship
 license: MIT
 authors: &id001
 - family-names: Friedman
@@ -18,8 +18,8 @@ preferred-citation:
   type: article
   title: GNN-based active inference for Battleship
   authors: *id001
-  doi: 10.5281/zenodo.23670188
-  url: https://doi.org/10.5281/zenodo.23670188
+  doi: 10.5281/zenodo.23676081
+  url: https://doi.org/10.5281/zenodo.23676081
   year: 2026
-  version: 0.4.0
+  version: 0.5.0
   date-released: '2026-10-26'

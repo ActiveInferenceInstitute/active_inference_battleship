@@ -1,3 +1,5 @@
+> Historical record: statements below describe the dated pre-release candidate. Current organization ownership, releases, and DOI are documented in [publication details](PUBLICATION.md).
+
 # Local package and manuscript update
 
 Version **0.4.0-draft**, from the **Active Inference Institute**. This is private, unreleased local software. The intended public repository is [ActInfInstitute/active_inference_battleship](https://github.com/ActInfInstitute/active_inference_battleship); the real release will also archive the manuscript PDF on Zenodo with a DOI. No source publication, registry publication, remote setup, DOI reservation, or upload is part of this update.

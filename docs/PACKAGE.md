@@ -1,6 +1,6 @@
 # Core package and headless workflows
 
-This is the **v0.4.0 public source and release-tarball distribution** from the **Active Inference Institute**. [GitHub release](https://github.com/ActInfInstitute/active_inference_battleship/releases/tag/v0.4.0) · [Manuscript archive, DOI 10.5281/zenodo.23670188](https://doi.org/10.5281/zenodo.23670188). The DOI identifies the manuscript and deposited companions; there is no separate software DOI or npm registry release. [Release details](RELEASE_PLAN.md).
+This is the **v0.5.0 public source and release-tarball distribution** from the **Active Inference Institute**. [GitHub release](https://github.com/ActiveInferenceInstitute/active_inference_battleship/releases/tag/v0.5.0) · [Manuscript archive, DOI 10.5281/zenodo.23676081](https://doi.org/10.5281/zenodo.23676081). The DOI identifies the manuscript and deposited companions; there is no separate software DOI or npm registry release. [Release details](RELEASE_PLAN.md).
 
 ## Build and reuse
 

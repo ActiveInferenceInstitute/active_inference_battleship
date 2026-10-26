@@ -364,7 +364,7 @@ test("CLI errors are nonzero, bounded, and do not emit misleading JSON", async (
   expect((await success(["node", cli, "--help"], consumer)).stdout).toContain(
     "Active Inference Institute",
   );
-  expect((await success(["node", cli, "--version"], consumer)).stdout.trim()).toBe("0.4.0");
+  expect((await success(["node", cli, "--version"], consumer)).stdout.trim()).toBe("0.5.0");
 }, 30000);
 
 test("CLI rejects named pipes without waiting for a writer", async () => {

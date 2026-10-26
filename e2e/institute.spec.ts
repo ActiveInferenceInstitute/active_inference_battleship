@@ -13,13 +13,19 @@ test("explains and downloads the actual GNN contract with published release meta
   await page.getByRole("button", { name: "Model & guide", exact: true }).click();
   await expect(page.locator(".gnn-stages li")).toHaveCount(5);
   await expect(page.locator(".gnn-pipeline")).toContainText("not a graph neural network");
-  await expect(page.locator(".release-plan")).toContainText("v0.4.0");
+  await expect(page.locator(".release-plan")).toContainText("v0.5.0");
   await expect(
-    page.getByRole("link", { name: "ActInfInstitute/active_inference_battleship", exact: true }),
-  ).toHaveAttribute("href", "https://github.com/ActInfInstitute/active_inference_battleship");
+    page.getByRole("link", {
+      name: "ActiveInferenceInstitute/active_inference_battleship",
+      exact: true,
+    }),
+  ).toHaveAttribute(
+    "href",
+    "https://github.com/ActiveInferenceInstitute/active_inference_battleship",
+  );
   await expect(
-    page.getByRole("link", { name: "Zenodo (DOI 10.5281/zenodo.23670188)", exact: true }),
-  ).toHaveAttribute("href", "https://doi.org/10.5281/zenodo.23670188");
+    page.getByRole("link", { name: "Zenodo (DOI 10.5281/zenodo.23676081)", exact: true }),
+  ).toHaveAttribute("href", "https://doi.org/10.5281/zenodo.23676081");
   const files: Record<string, string> = {};
   for (const [label, kind] of [
     ["Download GNN source", "source"],

@@ -15,11 +15,11 @@
 
 [ORCID 0000-0001-6232-9096](https://orcid.org/0000-0001-6232-9096) · [daniel@activeinference.institute](mailto:daniel@activeinference.institute)
 
-[DOI 10.5281/zenodo.23670188](https://doi.org/10.5281/zenodo.23670188) · [GitHub v0.4.0](https://github.com/ActInfInstitute/active_inference_battleship/releases/tag/v0.4.0)
+[DOI 10.5281/zenodo.23676081](https://doi.org/10.5281/zenodo.23676081) · [GitHub v0.5.0](https://github.com/ActiveInferenceInstitute/active_inference_battleship/releases/tag/v0.5.0)
 
 ![Graphical abstract of one observation and decision cycle. Public hit/miss feedback updates a joint belief over 256 fleet labels; the occupancy map uses a fixed 0–1 probability scale. Bars partition the policy over all unvisited cells into the three leading actions and their remainder. Values come from seed 1943 after six manual shots, with hit preference 2.5, information weight 1, precision 8, assumed noise 0.02, and uniform habits. Displayed probabilities illustrate the browser policy, not the follow-up study's greedy selections. The return arrow denotes repeated one-shot inference, not multi-step planning.](figures/graphical-abstract.png){width=6.25in}
 
-**Version 0.4.0 from the Active Inference Institute.** The graphical overview introduces the model and interface. It does not claim unrestricted Battleship inference, multi-step planning, parameter learning, or measured educational benefit.
+**Version 0.5.0 from the Active Inference Institute.** The graphical overview introduces the model and interface. It does not claim unrestricted Battleship inference, multi-step planning, parameter learning, or measured educational benefit.
 
 :::
 

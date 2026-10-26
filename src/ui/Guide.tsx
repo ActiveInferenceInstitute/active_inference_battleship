@@ -207,17 +207,17 @@ export function Guide({ model }: { readonly model: CompiledModel }) {
         </p>
       </section>
       <section className="panel prose release-plan">
-        <span className="overline">Active Inference Institute · v0.4.0</span>
+        <span className="overline">Active Inference Institute · v0.5.0</span>
         <h2>Public source and manuscript archive</h2>
         <p>
           Explore source, the GNN specification, and reproducibility instructions at{" "}
-          <a href={project.repository}>ActInfInstitute/active_inference_battleship</a>. The
+          <a href={project.repository}>ActiveInferenceInstitute/active_inference_battleship</a>. The
           manuscript and its companions are archived on{" "}
           <a href={`https://doi.org/${project.manuscriptDoi}`}>
             Zenodo (DOI {project.manuscriptDoi})
           </a>
           . Download the reader, dashboard, and core package from the{" "}
-          <a href={project.releaseUrl}>v0.4.0 release</a>. The manuscript DOI identifies the
+          <a href={project.releaseUrl}>v0.5.0 release</a>. The manuscript DOI identifies the
           deposited paper and companions; no separate software DOI is assigned.
         </p>
       </section>

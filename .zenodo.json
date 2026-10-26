@@ -9,31 +9,31 @@
       "orcid": "0000-0001-6232-9096"
     }
   ],
-  "version": "0.4.0",
+  "version": "0.5.0",
   "language": "eng",
   "license": "cc-by-4.0",
-  "doi": "10.5281/zenodo.23670188",
+  "doi": "10.5281/zenodo.23676081",
   "related_identifiers": [
     {
-      "identifier": "https://github.com/ActInfInstitute/active_inference_battleship/releases/tag/v0.4.0",
+      "identifier": "https://github.com/ActiveInferenceInstitute/active_inference_battleship/releases/tag/v0.5.0",
       "relation": "isSupplementTo",
       "scheme": "url"
     },
     {
-      "identifier": "https://github.com/ActInfInstitute/active_inference_battleship",
+      "identifier": "https://github.com/ActiveInferenceInstitute/active_inference_battleship",
       "relation": "isSupplementTo",
       "scheme": "url"
     },
     {
-      "identifier": "https://actinfinstitute.github.io/active_inference_battleship/",
+      "identifier": "https://activeinferenceinstitute.github.io/active_inference_battleship/",
       "relation": "isSupplementTo",
       "scheme": "url"
     },
     {
-      "identifier": "https://actinfinstitute.github.io/active_inference_battleship/paper/",
+      "identifier": "https://activeinferenceinstitute.github.io/active_inference_battleship/paper/",
       "relation": "isIdenticalTo",
       "scheme": "url"
     }
   ],
-  "description": "An inspectable Generalized Notation Notation (GNN)-specified active inference Battleship implementation, manuscript, and reproducibility materials. Finite-catalog Bayesian inference and one-shot objectives; no unrestricted optimality or empirical efficacy claim."
+  "description": "An inspectable Generalized Notation Notation (GNN)-specified active inference Battleship implementation, manuscript, and reproducibility materials. Finite-catalog Bayesian inference and one-shot objectives; no unrestricted optimality or empirical efficacy claim. Version 0.5.0 is the organization and visual-explanation edition: transferred GitHub repository, updated DOI-bearing manuscript, enhanced dashboard explanations, and a captioned 20-minute lecture with slides and transcript. Scientific traces and statistical design are unchanged. Synthetic local Aiden narration; original script and artwork are CC BY 4.0."
 }

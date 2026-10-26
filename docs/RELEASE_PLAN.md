@@ -1,10 +1,10 @@
 # GitHub release and Zenodo archive
 
-Version **0.4.0**, October 26, 2026, from the **Active Inference Institute**.
+Version **0.5.0**, October 26, 2026, from the **Active Inference Institute**.
 
-- [Live dashboard](https://actinfinstitute.github.io/active_inference_battleship/) and [online manuscript](https://actinfinstitute.github.io/active_inference_battleship/paper/), served by GitHub Pages.
-- [Public source](https://github.com/ActInfInstitute/active_inference_battleship) and [exact v0.4.0 release](https://github.com/ActInfInstitute/active_inference_battleship/releases/tag/v0.4.0).
-- [Manuscript and reproducibility archive: DOI 10.5281/zenodo.23670188](https://doi.org/10.5281/zenodo.23670188). The same DOI is printed on the PDF cover and in its abstract.
+- [Live dashboard](https://activeinferenceinstitute.github.io/active_inference_battleship/) and [online manuscript](https://activeinferenceinstitute.github.io/active_inference_battleship/paper/), served by GitHub Pages.
+- [Public source](https://github.com/ActiveInferenceInstitute/active_inference_battleship) and [exact v0.5.0 release](https://github.com/ActiveInferenceInstitute/active_inference_battleship/releases/tag/v0.5.0).
+- [Manuscript and reproducibility archive: DOI 10.5281/zenodo.23676081](https://doi.org/10.5281/zenodo.23676081). The same DOI is printed on the PDF cover and in its abstract.
 - Software: MIT. Manuscript, original figures, and research data: CC BY 4.0; cited works and third-party dependencies retain their own rights.
 - The manuscript deposit contains its PDF and companion editions, browser dashboard, typed core tarball, and reproducibility source archive. No separate software DOI or registry publication is claimed.
 
