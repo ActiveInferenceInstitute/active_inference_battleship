@@ -1,16 +1,25 @@
 cff-version: 1.2.0
-message: "Please cite the archived manuscript when using this software or its research materials."
-title: "GNN-based active inference for Battleship"
-type: article
+message: Please cite the archived manuscript when using this software or its research
+  materials.
+title: Active Inference Battleship
+type: software
 version: 0.4.0
-date-released: 2026-10-26
-doi: 10.5281/zenodo.23670188
+date-released: '2026-10-26'
 url: https://github.com/ActInfInstitute/active_inference_battleship
 repository-code: https://github.com/ActInfInstitute/active_inference_battleship
-license: CC-BY-4.0
-authors:
-  - family-names: Friedman
-    given-names: Daniel Ari
-    affiliation: Active Inference Institute
-    orcid: https://orcid.org/0000-0001-6232-9096
-    email: daniel@activeinference.institute
+license: MIT
+authors: &id001
+- family-names: Friedman
+  given-names: Daniel Ari
+  affiliation: Active Inference Institute
+  orcid: https://orcid.org/0000-0001-6232-9096
+  email: daniel@activeinference.institute
+preferred-citation:
+  type: article
+  title: GNN-based active inference for Battleship
+  authors: *id001
+  doi: 10.5281/zenodo.23670188
+  url: https://doi.org/10.5281/zenodo.23670188
+  year: 2026
+  version: 0.4.0
+  date-released: '2026-10-26'
