@@ -1,0 +1,40 @@
+{
+  "format": "battleship-illustrated-frontmatter",
+  "version": 1,
+  "generatorSha256": "00d5de06770e2b28e0fb2626f8f3313c59ef3111b18f0b40d98c8424c220b855",
+  "captureReceiptSha256": "7b551d87da121a3c92f03899960032948596c66ba7c140cc25fe884e16b7c779",
+  "generators": {
+    "research/frontmatter.py": "00d5de06770e2b28e0fb2626f8f3313c59ef3111b18f0b40d98c8424c220b855",
+    "research/graphical_abstract.py": "c3fe9d6bc1388f7cff50d17bf7f4f61420c0910f07bb37384d395d1954b2e078"
+  },
+  "assets": {
+    "manuscript/figures/graphical-abstract.png": "a688b385ab9c30f15fa6ebe62fa70396e89e7162612595a9ad0ede9460eb7ee1",
+    "manuscript/figures/graphical-abstract.pdf": "942b94fd805efedac8c72c90bacacc9aac145bff4634bd2d6c6c249f55167b00",
+    "manuscript/figures/graphical-abstract.svg": "fb11cb5c0b1498ff3042dc1f9da7ed109389f6f9f2bda66882d078bec47c1061",
+    "manuscript/figures/model-atlas.png": "f540f33c640737487e847900f1d990571106ac5241fb87b515670205a6608b2f",
+    "manuscript/figures/model-atlas.pdf": "5de7021456c934a9d656e4d5be4cb0a71461a4932dc174725c744e890e064405",
+    "manuscript/figures/model-atlas.svg": "4cfa7fc99e3ddd6bb496dffcbb3eba17bc4903633a587bf1fe5a7e9fab2a164e",
+    "manuscript/figures/dashboard-play.png": "25559a412746799fc2f9d65de4093dcabd4850b864646e8905a88a0211073f7e",
+    "manuscript/figures/dashboard-play.pdf": "687dd06d78f04ccb0d2fb72a36098294d19abedb74c265c90b19d5445780cf62",
+    "manuscript/figures/dashboard-play.svg": "94f34407b27c22563662c98a26339e0765187860e2607f01b638a6ad08f5d506",
+    "manuscript/figures/dashboard-decisions.png": "9dbdf6c6b2cfc824879914d3d57bf42375f6cc832a71c7eb553c35e3d96fbd03",
+    "manuscript/figures/dashboard-decisions.pdf": "19bb56b04bff1bbcf554de6d09bcae35af7bd0281e957d977110d84978c496e2",
+    "manuscript/figures/dashboard-decisions.svg": "e81279f347a85b2320563df5414e33db06c1d33c5d614df65ad60bd8637e9198"
+  },
+  "composition": "Whole bound DOM screenshots fitted without pixel retouching; original screenshots and experiment exports retained.",
+  "selectedCell": 24,
+  "selectedAction": {
+    "cell": 24,
+    "occupancy": 0.6093545214461323,
+    "predictedHit": 0.6049803405882871,
+    "informationGain": 0.5729014522956962,
+    "ambiguity": 0.098039113279732,
+    "risk": 1.0664388828218319,
+    "outcomeRisk": 0.3954983172464036,
+    "expectedUtility": -1.0664388828218319,
+    "habit": 0.010638297872340427,
+    "expectedFreeEnergy": 0.49353743052613563,
+    "probability": 0.8783431805897013
+  },
+  "scope": "Illustrative software state, not additional research outcomes."
+}

@@ -1,0 +1,410 @@
+{
+  "frame": {
+    "viewportWidth": 1440,
+    "viewportHeight": 1000,
+    "y": 13600,
+    "rectangles": [
+      {
+        "x": 343.5,
+        "y": 1.25,
+        "width": 670.9375,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "The source distribution retains the protocol, complete search traces,\nsummary CS"
+      },
+      {
+        "x": 343.5,
+        "y": 29.296875,
+        "width": 747.546875,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "The source distribution retains the protocol, complete search traces,\nsummary CS"
+      },
+      {
+        "x": 343.5,
+        "y": 57.34375,
+        "width": 706.734375,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "The source distribution retains the protocol, complete search traces,\nsummary CS"
+      },
+      {
+        "x": 343.5,
+        "y": 85.390625,
+        "width": 730.53125,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "The source distribution retains the protocol, complete search traces,\nsummary CS"
+      },
+      {
+        "x": 343.5,
+        "y": 113.4375,
+        "width": 742.953125,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "The source distribution retains the protocol, complete search traces,\nsummary CS"
+      },
+      {
+        "x": 343.5,
+        "y": 141.484375,
+        "width": 752.40625,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "The source distribution retains the protocol, complete search traces,\nsummary CS"
+      },
+      {
+        "x": 343.5,
+        "y": 169.53125,
+        "width": 220,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "The source distribution retains the protocol, complete search traces,\nsummary CS"
+      },
+      {
+        "x": 343.5,
+        "y": 214.578125,
+        "width": 509.734375,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "The build imports PDF, HTML, and DOCX renderers from the local\n"
+      },
+      {
+        "x": 857.234375,
+        "y": 218.578125,
+        "width": 156.09375,
+        "height": 16,
+        "color": "rgb(32, 44, 51)",
+        "text": "docxology/template"
+      },
+      {
+        "x": 343.5,
+        "y": 243.421875,
+        "width": 696.53125,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": " repository. It records the imported\ntemplate-source hashes and output digests, "
+      },
+      {
+        "x": 343.5,
+        "y": 271.46875,
+        "width": 671.84375,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": " repository. It records the imported\ntemplate-source hashes and output digests, "
+      },
+      {
+        "x": 343.5,
+        "y": 299.515625,
+        "width": 664.9375,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": " repository. It records the imported\ntemplate-source hashes and output digests, "
+      },
+      {
+        "x": 343.5,
+        "y": 327.5625,
+        "width": 712.703125,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": " repository. It records the imported\ntemplate-source hashes and output digests, "
+      },
+      {
+        "x": 343.5,
+        "y": 355.609375,
+        "width": 82.1875,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": " repository. It records the imported\ntemplate-source hashes and output digests, "
+      },
+      {
+        "x": 425.6875,
+        "y": 355.609375,
+        "width": 6.375,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "("
+      },
+      {
+        "x": 432.0625,
+        "y": 355.609375,
+        "width": 135.59375,
+        "height": 20,
+        "color": "rgb(24, 90, 135)",
+        "text": "Sandve et al.\n2013"
+      },
+      {
+        "x": 567.65625,
+        "y": 355.609375,
+        "width": 9.421875,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "; "
+      },
+      {
+        "x": 577.078125,
+        "y": 355.609375,
+        "width": 134.234375,
+        "height": 20,
+        "color": "rgb(24, 90, 135)",
+        "text": "Wilson\net al. 2014"
+      },
+      {
+        "x": 711.3125,
+        "y": 355.609375,
+        "width": 6.375,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": ")"
+      },
+      {
+        "x": 717.6875,
+        "y": 355.609375,
+        "width": 358.953125,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": ". Machine-readable provenance follows relevant\nFindable, Accessible, Interoperab"
+      },
+      {
+        "x": 343.5,
+        "y": 383.65625,
+        "width": 697.46875,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": ". Machine-readable provenance follows relevant\nFindable, Accessible, Interoperab"
+      },
+      {
+        "x": 343.5,
+        "y": 411.703125,
+        "width": 94.71875,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": ". Machine-readable provenance follows relevant\nFindable, Accessible, Interoperab"
+      },
+      {
+        "x": 438.21875,
+        "y": 411.703125,
+        "width": 6.375,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "("
+      },
+      {
+        "x": 444.59375,
+        "y": 411.703125,
+        "width": 117.421875,
+        "height": 20,
+        "color": "rgb(24, 90, 135)",
+        "text": "Wilkinson et al."
+      },
+      {
+        "x": 562.015625,
+        "y": 411.703125,
+        "width": 40.96875,
+        "height": 20,
+        "color": "rgb(24, 90, 135)",
+        "text": "\n2016"
+      },
+      {
+        "x": 602.984375,
+        "y": 411.703125,
+        "width": 6.375,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": ")"
+      },
+      {
+        "x": 343.5,
+        "y": 456.75,
+        "width": 660.046875,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "Verification is layered. Numerical tests exercise Bayesian updates,\nexpected and"
+      },
+      {
+        "x": 343.5,
+        "y": 484.796875,
+        "width": 750.03125,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "Verification is layered. Numerical tests exercise Bayesian updates,\nexpected and"
+      },
+      {
+        "x": 343.5,
+        "y": 512.84375,
+        "width": 714.5625,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "Verification is layered. Numerical tests exercise Bayesian updates,\nexpected and"
+      },
+      {
+        "x": 343.5,
+        "y": 540.890625,
+        "width": 729.171875,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "Verification is layered. Numerical tests exercise Bayesian updates,\nexpected and"
+      },
+      {
+        "x": 343.5,
+        "y": 568.9375,
+        "width": 744.03125,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "Verification is layered. Numerical tests exercise Bayesian updates,\nexpected and"
+      },
+      {
+        "x": 343.5,
+        "y": 596.984375,
+        "width": 729.265625,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "Verification is layered. Numerical tests exercise Bayesian updates,\nexpected and"
+      },
+      {
+        "x": 343.5,
+        "y": 625.03125,
+        "width": 716.09375,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "Verification is layered. Numerical tests exercise Bayesian updates,\nexpected and"
+      },
+      {
+        "x": 343.5,
+        "y": 653.078125,
+        "width": 590.859375,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "Verification is layered. Numerical tests exercise Bayesian updates,\nexpected and"
+      },
+      {
+        "x": 343.5,
+        "y": 698.125,
+        "width": 654.765625,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "Reproducibility supports examination; it does not establish the truth\nor general"
+      },
+      {
+        "x": 343.5,
+        "y": 726.171875,
+        "width": 109.5625,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "Reproducibility supports examination; it does not establish the truth\nor general"
+      },
+      {
+        "x": 453.0625,
+        "y": 726.171875,
+        "width": 6.375,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "("
+      },
+      {
+        "x": 459.4375,
+        "y": 726.171875,
+        "width": 75.9375,
+        "height": 20,
+        "color": "rgb(24, 90, 135)",
+        "text": "Peng 2011"
+      },
+      {
+        "x": 535.375,
+        "y": 726.171875,
+        "width": 6.375,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": ")"
+      },
+      {
+        "x": 541.75,
+        "y": 726.171875,
+        "width": 490.390625,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": ". Numerical correctness,\nbrowser operation, document rendering, empirical effica"
+      },
+      {
+        "x": 343.5,
+        "y": 754.21875,
+        "width": 695.9375,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": ". Numerical correctness,\nbrowser operation, document rendering, empirical effica"
+      },
+      {
+        "x": 343.5,
+        "y": 782.265625,
+        "width": 729.59375,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": ". Numerical correctness,\nbrowser operation, document rendering, empirical effica"
+      },
+      {
+        "x": 343.5,
+        "y": 810.3125,
+        "width": 530.671875,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": ". Numerical correctness,\nbrowser operation, document rendering, empirical effica"
+      },
+      {
+        "x": 343.5,
+        "y": 874.234375,
+        "width": 29.640625,
+        "height": 25,
+        "color": "rgb(32, 44, 51)",
+        "text": "7.1"
+      },
+      {
+        "x": 373.140625,
+        "y": 874.234375,
+        "width": 395.84375,
+        "height": 25,
+        "color": "rgb(32, 44, 51)",
+        "text": " Planned public release and\ncitation"
+      },
+      {
+        "x": 343.5,
+        "y": 923.21875,
+        "width": 670.484375,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": "The Active Inference Institute plans to publish the source and\nreproducibility m"
+      },
+      {
+        "x": 343.5,
+        "y": 951.265625,
+        "width": 330.203125,
+        "height": 20,
+        "color": "rgb(24, 90, 135)",
+        "text": "ActInfInstitute/active_inference_battleship"
+      },
+      {
+        "x": 673.703125,
+        "y": 951.265625,
+        "width": 392.671875,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": ",\nand to archive the final manuscript PDF on Zenodo with a DOI. This is a\nfuture"
+      },
+      {
+        "x": 343.5,
+        "y": 979.3125,
+        "width": 722.03125,
+        "height": 20,
+        "color": "rgb(32, 44, 51)",
+        "text": ",\nand to archive the final manuscript PDF on Zenodo with a DOI. This is a\nfuture"
+      }
+    ]
+  },
+  "provenance": {
+    "originalPacketCaptureManifestSha256": "a4b5096f0032ad1eefca06fd9fdcc92edb76ee6c0349189a38f54ad08789727d",
+    "originalCapture": "output/qa/html/light-1440-17.png",
+    "mechanism": "Real viewport capture missing lower raster text; paired fresh capture from the same rendered HTML and scroll position. No image pixels edited."
+  },
+  "files": {
+    "clipped.png": "83ac62399d4ab54cd1f86870d7f4cae1a31687e60b0cba62de8f828e8c1a62ee",
+    "painted.png": "003611f6315a53b0314bfba794a41677bfe7b50cef037aa14573fb30f694d22f"
+  }
+}

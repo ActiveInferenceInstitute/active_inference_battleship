@@ -1,0 +1,21 @@
+{
+  "provenance": {
+    "sourceReportSha256": "6b56b96221fb75bb7a18c23259e44266e168539d17d36ead585e5afeb74c0e45",
+    "scope": "actual Playwright reporter fields; configuration omitted"
+  },
+  "suites": [],
+  "stats": {
+    "startTime": "2026-10-24T04:44:30.584Z",
+    "duration": 5740.512000000001,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": [
+    {
+      "message": "Error: No tests found.\nMake sure that arguments are regular expressions matching test files.\nYou may need to escape symbols like \"$\" or \"*\" and quote the arguments.",
+      "stack": "Error: No tests found.\nMake sure that arguments are regular expressions matching test files.\nYou may need to escape symbols like \"$\" or \"*\" and quote the arguments."
+    }
+  ]
+}

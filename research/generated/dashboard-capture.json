@@ -1,0 +1,126 @@
+{
+  "format": "battleship-manuscript-dashboard-capture",
+  "version": 1,
+  "captureScriptSha256": "f34c5570fd6bc64567315b93dd8b384cca01be230be3047c50bb439310bf5e3f",
+  "url": "http://127.0.0.1:5186",
+  "capturedAt": "2026-10-24T21:11:14.160Z",
+  "browser": "156.0.8078.48",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+  "viewport": {
+    "width": 1440,
+    "height": 1000,
+    "deviceScaleFactor": 2
+  },
+  "seed": 1943,
+  "catalogueSize": 256,
+  "actor": "player",
+  "observations": [
+    {
+      "cell": 0,
+      "hit": false
+    },
+    {
+      "cell": 23,
+      "hit": true
+    },
+    {
+      "cell": 55,
+      "hit": false
+    },
+    {
+      "cell": 37,
+      "hit": false
+    },
+    {
+      "cell": 72,
+      "hit": false
+    },
+    {
+      "cell": 99,
+      "hit": false
+    }
+  ],
+  "controls": {
+    "epistemicWeight": 1,
+    "hitPreference": 2.5,
+    "policyPrecision": 8,
+    "sensorNoise": 0.02,
+    "habitStrength": 0
+  },
+  "servedAssets": {
+    "index.html": "690e6806b9e1073418f554c7b74b67c536b96204361d7b2c2fbdb2ffe96870d6",
+    "robots.txt": "16ceb5ee3e0dc13aa9adf31a3ebbe45a1d965b8c2b9f72eaf84e5911e140ed95",
+    "assets/index-mFztVPFl.css": "627ee1321a213a5c590b90b71704767ae99e4fd41494f9ef08115c55d6d9ad14",
+    "assets/index-DDYKU823.js.map": "f3f0e7b6eaa7be83a7b7f767eb9cc6526d0612cefa8265d818b10432d51b4076",
+    "assets/index-D_sACO1q.js.map": "3d05726eefcc3b059b4b68dcc77217ab08f13cb06cccef6b0bf7882208670ada",
+    "assets/index-DDYKU823.js": "0ee04117d74120f70155a53de2f67e5d6fcdfdd2fa92338b5dc1105c0439c6e4",
+    "assets/session.worker-SxKNVsLg.js": "c81f0a6669c72abbd504be452800ca99b4f80f7fae93b2ddf24088697f04a0c7",
+    "assets/session.worker-DwBOGEP-.js.map": "81843bceadcfb1ae2e93cf2c234b2325e9a180272352b6636db06035ce2a2cc3",
+    "assets/index-B_DmTTV3.css": "6487dfff52d2f5d24f6e29acc493595588d6c5c6ec69247deb29c2bd1652d250",
+    "assets/session.worker-DwBOGEP-.js": "a8eed960c8f06935ee1864efb31f36e489e781fdcc3786f4595f8475ad869c1c",
+    "assets/index-D_sACO1q.js": "da3cdbc70c3638ca3aca9f21c43e0ecea8ea9ffa1a02a468e0c9fcc50288d844",
+    "assets/session.worker-SxKNVsLg.js.map": "52eec4de2faa9d16dea07e18207c26768d63aba387d2263576fa1dfcaab0c5bb"
+  },
+  "captures": [
+    {
+      "path": "manuscript/figures/dashboard/play-boards.png",
+      "sha256": "880e097f2fd108dd550f4daa645fed731bde7371e2eccd4afb70c8598837034f",
+      "region": "panel board-panel",
+      "width": 1019.625,
+      "height": 766.96875
+    },
+    {
+      "path": "manuscript/figures/dashboard/play-metrics.png",
+      "sha256": "43f7d7f3ab968d0c03e7b1b7f83e5f79e66967ee7dee195f8d58f6e7e44bff1b",
+      "region": "panel metrics-strip",
+      "width": 1019.625,
+      "height": 145.390625
+    },
+    {
+      "path": "manuscript/figures/dashboard/play-dials.png",
+      "sha256": "cb4143176164f165ccf4725035512800ea5b04c9280f50096f11c7d344d8496b",
+      "region": "panel dials",
+      "width": 310,
+      "height": 186.390625
+    },
+    {
+      "path": "manuscript/figures/dashboard/masthead.png",
+      "sha256": "7508bc2ee302b967ef745d1dd5eb0a00486398c1187bf7e46a4125a63376de67",
+      "region": "masthead",
+      "width": 1353.625,
+      "height": 92
+    },
+    {
+      "path": "manuscript/figures/dashboard/decision-map.png",
+      "sha256": "79c30b0c52e07d6f1ba3586e5b8d4407bb956c1e19ef389cbaa7da69dc4560c3",
+      "region": "panel lab-map-panel",
+      "width": 1019.625,
+      "height": 617.515625
+    },
+    {
+      "path": "manuscript/figures/dashboard/decision-receipt.png",
+      "sha256": "8c69d86c70f326d4f4b96f61facbc5fbc8838b699f8a1524426e975fe318675c",
+      "region": "panel decision-receipt",
+      "width": 1019.625,
+      "height": 970.328125
+    },
+    {
+      "path": "manuscript/figures/dashboard/action-tradeoff.png",
+      "sha256": "ccaa33427f79b978f2547cafd5c29e965c4c736080ac79ad548da08c9bfea935",
+      "region": "panel action-tradeoff",
+      "width": 1019.625,
+      "height": 670
+    },
+    {
+      "path": "manuscript/figures/dashboard/action-tradeoff-plot.png",
+      "sha256": "31e2f452e9f0ff41148a53f25cc8d2f6709a755d8a008622a797999b11835706",
+      "region": "action-tradeoff-plot",
+      "width": 969.625,
+      "height": 364
+    }
+  ],
+  "replaySha256": "9cd389a9845ac77b8d372c35733fe7a45fd6c291682d70d7bce75f5a47008b78",
+  "analysisSha256": "4f9cb927b255c307fccea342ea02971b0a9cc502bc63cd782b0062bbec926d3c",
+  "errors": [],
+  "scope": "Cropped screenshots of the running production UI; illustrative local state, not benchmark outcomes or altered mock screens."
+}

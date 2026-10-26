@@ -1,0 +1,71 @@
+:root {
+  --bg: #0b1520;
+  --panel: #101e2b;
+  --raised: #172938;
+  --line: #2b4050;
+  --control-edge: #7c95a6;
+  --text: #ecf3f5;
+  --muted: #a3b6c3;
+  --accent: #75d9b1;
+  --accent-ink: #09281c;
+  --hit: #ff9c88;
+  --info: #9ec9ff;
+  --warning: #eac78a;
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --micro: 11px;
+  --caption: 14px;
+  --small: 15px;
+  --body: 17px;
+  --h2: 20px;
+  --stat: 24px;
+  --h1: 32px;
+  --display: 40px;
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 20px;
+  --s6: 24px;
+  --s7: 28px;
+  --s8: 32px;
+  --s10: 40px;
+  --s12: 48px;
+  --radius-control: 8px;
+  --board-gap: 3px;
+  --radius-cell: 3px;
+  --radius-panel: 12px;
+  --micro-time: 120ms ease-out;
+}
+:root[data-theme="light"] {
+  --bg: #f2f6f7;
+  --panel: #ffffff;
+  --raised: #e7eff1;
+  --line: #c2d0d4;
+  --control-edge: #607b89;
+  --text: #142b39;
+  --muted: #45606e;
+  --accent: #12694e;
+  --accent-ink: #ffffff;
+  --hit: #aa3929;
+  --info: #285e9a;
+  --warning: #795516;
+}
+
+/* The meaningful initial HTML must follow the system before JavaScript sets a theme. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --bg: #f2f6f7;
+    --panel: #ffffff;
+    --raised: #e7eff1;
+    --line: #c2d0d4;
+    --control-edge: #607b89;
+    --text: #142b39;
+    --muted: #45606e;
+    --accent: #12694e;
+    --accent-ink: #ffffff;
+    --hit: #aa3929;
+    --info: #285e9a;
+    --warning: #795516;
+  }
+}

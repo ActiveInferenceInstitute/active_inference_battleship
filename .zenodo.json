@@ -1,0 +1,39 @@
+{
+  "title": "GNN-based active inference for Battleship",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "creators": [
+    {
+      "name": "Friedman, Daniel Ari",
+      "affiliation": "Active Inference Institute",
+      "orcid": "0000-0001-6232-9096"
+    }
+  ],
+  "version": "0.4.0",
+  "language": "eng",
+  "license": "cc-by-4.0",
+  "doi": "10.5281/zenodo.23670188",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/ActInfInstitute/active_inference_battleship/releases/tag/v0.4.0",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/ActInfInstitute/active_inference_battleship",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://actinfinstitute.github.io/active_inference_battleship/",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://actinfinstitute.github.io/active_inference_battleship/paper/",
+      "relation": "isIdenticalTo",
+      "scheme": "url"
+    }
+  ],
+  "description": "An inspectable Generalized Notation Notation (GNN)-specified active inference Battleship implementation, manuscript, and reproducibility materials. Finite-catalog Bayesian inference and one-shot objectives; no unrestricted optimality or empirical efficacy claim."
+}

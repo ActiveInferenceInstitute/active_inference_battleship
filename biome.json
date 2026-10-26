@@ -1,0 +1,14 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.6.2/schema.json",
+  "files": { "includes": ["src/**", "scripts/**", "tests/**", "e2e/**", "*.ts", "!src/generated/**"] },
+  "formatter": { "enabled": true, "indentStyle": "space", "lineWidth": 100 },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended",
+      "complexity": { "useLiteralKeys": "off" },
+      "style": { "useImportType": "error", "noNonNullAssertion": "error" },
+      "suspicious": { "noExplicitAny": "error" }
+    }
+  }
+}

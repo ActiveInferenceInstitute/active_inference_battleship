@@ -1,0 +1,221 @@
+{
+  "schemaVersion": 1,
+  "contract": "binary-static-fleet-v1",
+  "modelName": "BattleshipFiniteCatalogue",
+  "parameters": {
+    "board_size": 10,
+    "ship_lengths": [
+      5,
+      4,
+      3,
+      3,
+      2
+    ],
+    "catalogue_size": 4096,
+    "epistemic_weight": 1,
+    "hit_preference": 2.5,
+    "policy_precision": 8,
+    "sensor_noise": 0.02,
+    "habit_strength": 0,
+    "seed": 1943
+  },
+  "source": {
+    "specificationSha256": "a425a3f6b0bdc8cb28a165f92c27c6ea329d3e48d2ea3f16136a93fbb447c91c",
+    "upstreamCommit": "073f21d5b25c403d1ef0c965dd945bb2287d4de4",
+    "parserClosureSha256": "1dea8f4f8fad2351fed768177d48512ef91a177d38e51ff1e95fb942f2c1ffdf",
+    "parserFiles": [
+      {
+        "path": "src/gnn/__init__.py",
+        "sha256": "6b4aab545048617cc18fa8a082c7a74c125e1ccd268b7347384755aa4c5f9f7c"
+      },
+      {
+        "path": "src/gnn/parsers/__init__.py",
+        "sha256": "257f10d65b54ed2cc421fe25257d6ae506dc3dbde8685b7a5672aba06f0c4991"
+      },
+      {
+        "path": "src/gnn/parsers/alloy_serializer.py",
+        "sha256": "bd01c0ef6cbceb4e19ed9d8b8d01b94e631e17f340adbb50bf9b953f16fa9840"
+      },
+      {
+        "path": "src/gnn/parsers/asn1_serializer.py",
+        "sha256": "e3afe43a7a6fec82d7608d9c16cef49e8f1b3e4420a25d78b5df5976e323037a"
+      },
+      {
+        "path": "src/gnn/parsers/base_serializer.py",
+        "sha256": "4604e615edd74218a74d1bfbeef9f36b23b90d7dc0a1640dd7f54d165c0b26ac"
+      },
+      {
+        "path": "src/gnn/parsers/basic.py",
+        "sha256": "78942a0f5d22f4ff16a6787e4d87bb579b136232a62728b15212a7155831d15d"
+      },
+      {
+        "path": "src/gnn/parsers/binary_parser.py",
+        "sha256": "1d4f420db7b6021f69b7ed18c81bb4ad1dc9e93c3c60ab3d7a6558501de373ca"
+      },
+      {
+        "path": "src/gnn/parsers/binary_serializer.py",
+        "sha256": "d187923fff8c487f1285387491395e2505cfc14eee731e09750cf8b025ab9c19"
+      },
+      {
+        "path": "src/gnn/parsers/common.py",
+        "sha256": "c27da82a05058ec2f96b4c675374a848e64535122bf3a63155a47b8b23e3076e"
+      },
+      {
+        "path": "src/gnn/parsers/converters.py",
+        "sha256": "e1ef9366ee5f3014fed75867f1b02c4f141b8496819b3bb47d6eaa5915fed9c0"
+      },
+      {
+        "path": "src/gnn/parsers/coq_parser.py",
+        "sha256": "13729eb749d1522ab34f391269c8c83f83a0d3d39ab0b6906c932ebb3876287e"
+      },
+      {
+        "path": "src/gnn/parsers/coq_serializer.py",
+        "sha256": "4f4aff83b457a50376f62b1a680f27e681a9980261b3c9d0846906d95620a08f"
+      },
+      {
+        "path": "src/gnn/parsers/frontmatter.py",
+        "sha256": "ff570ac6a83405c408f52272e666ba2fada8f763d762c66ad3bc74b876cee942"
+      },
+      {
+        "path": "src/gnn/parsers/functional_parser.py",
+        "sha256": "30d0ad1096928ebef78cc95212dfcdad99ffdd336ed1c83f8184e755ec8fa38c"
+      },
+      {
+        "path": "src/gnn/parsers/functional_serializer.py",
+        "sha256": "78a0c3a844df5f37a81fd1a6d34f4c0ef32dac340a4609a078fa3ccd9b55d334"
+      },
+      {
+        "path": "src/gnn/parsers/grammar_parser.py",
+        "sha256": "32022ee2b47edb87914650cd36707061184717c341434f5835fc846ef887c541"
+      },
+      {
+        "path": "src/gnn/parsers/grammar_serializer.py",
+        "sha256": "a0ab2dd3c86acb232933ff269c97f115bdc514693e5b7a637b49a06811772538"
+      },
+      {
+        "path": "src/gnn/parsers/isabelle_parser.py",
+        "sha256": "517528f63b7340457e0b6dfd4429f2f9468382dc679bf2f75abe1b219a39101f"
+      },
+      {
+        "path": "src/gnn/parsers/isabelle_serializer.py",
+        "sha256": "240b70000ac26ba8d6676ca71f3a97e12a58b3c6793e0c97450a8d74f12a467a"
+      },
+      {
+        "path": "src/gnn/parsers/json_parser.py",
+        "sha256": "6db10ede764af6ec41249dd4348a70e5042835273a6ee04a5402dbb211eb09ab"
+      },
+      {
+        "path": "src/gnn/parsers/json_serializer.py",
+        "sha256": "4c5b95d5d287cdd8edf4630a879540558b51cb83327e015cbbe59e047f689520"
+      },
+      {
+        "path": "src/gnn/parsers/lean_parser.py",
+        "sha256": "c14395bb7ae7100a98e6dbace5f77b4e845145faa7a58beaca1f249e961bdb43"
+      },
+      {
+        "path": "src/gnn/parsers/lean_serializer.py",
+        "sha256": "b0ffc74403bbdaa300eab12050e352eff88d632368eff8aacab614789c1a9f5b"
+      },
+      {
+        "path": "src/gnn/parsers/markdown_parser.py",
+        "sha256": "24a30ea7e67d597e891fe16e521e13be5f2013af90eeb282cfe257940b281e82"
+      },
+      {
+        "path": "src/gnn/parsers/markdown_parser_parameter.py",
+        "sha256": "2e94e88c79b8998387f2a1c53fe88dcc45adc498c47c30f7ec3bd577a8072061"
+      },
+      {
+        "path": "src/gnn/parsers/markdown_serializer.py",
+        "sha256": "601db6cd6d27db2177006f9de0bff757fa80e0e87ce51cee4dfde710a4ee3784"
+      },
+      {
+        "path": "src/gnn/parsers/maxima_parser.py",
+        "sha256": "020caf88ed81db5d6353598c0bb24c3064632419b39916e09eb949191f1b1f82"
+      },
+      {
+        "path": "src/gnn/parsers/maxima_serializer.py",
+        "sha256": "bb9b806e99e0b8228d0d5832a5d90a9aa13dfa56776c881ed1b02c895fda9e49"
+      },
+      {
+        "path": "src/gnn/parsers/pkl_serializer.py",
+        "sha256": "9a562eb4fda84138f3f188169eca263ee669b3922ca57b15c89e40cbff017c0e"
+      },
+      {
+        "path": "src/gnn/parsers/protobuf_parser.py",
+        "sha256": "59e167e75bba1ea9268f0ecdc44a0799eff9cac2c2c7b216540fc4730abd000b"
+      },
+      {
+        "path": "src/gnn/parsers/protobuf_serializer.py",
+        "sha256": "984f6b1cc82f4072fa69f8ab5cba1aa49ab39b4ddd4cd0b86cd33cfc8a6c61a6"
+      },
+      {
+        "path": "src/gnn/parsers/python_parser.py",
+        "sha256": "0f6bd6506353e25a52776cee08afe53275b5979f6912e1469483536f93e869a5"
+      },
+      {
+        "path": "src/gnn/parsers/python_serializer.py",
+        "sha256": "46ac6a9a86bcdce380a80c41f4df6d5600c6d39ae050bc5267b040dc81bd7e0f"
+      },
+      {
+        "path": "src/gnn/parsers/scala_parser.py",
+        "sha256": "54c415699728a19be1830eb3c54e05feb56476e0e90d4dd3e0a48271dbcdd500"
+      },
+      {
+        "path": "src/gnn/parsers/scala_serializer.py",
+        "sha256": "5d4de4914f083e9b7a9a504546bdea959341cbd5a1bf3fec11f6266ffba743b9"
+      },
+      {
+        "path": "src/gnn/parsers/schema_parser.py",
+        "sha256": "5cc7c5c5180b58adca322a0bcaf5c8a5dbd9b69ee6a88b015cf4e73a8d84a8f3"
+      },
+      {
+        "path": "src/gnn/parsers/schema_serializer.py",
+        "sha256": "ef44f87ff710187297367178bd7792e200fe4846651747d7d794b925c65aa8e1"
+      },
+      {
+        "path": "src/gnn/parsers/system.py",
+        "sha256": "137abdf98ce81ee9482c5562c0191e39e6da1bfef0ee843b7c132991ad484bde"
+      },
+      {
+        "path": "src/gnn/parsers/temporal_parser.py",
+        "sha256": "809fc03d63664d43573524ff00f37da77331bcfa41866dd457eaa5f443960d74"
+      },
+      {
+        "path": "src/gnn/parsers/temporal_serializer.py",
+        "sha256": "f71f744f0d6b8ccc0a4a4077cbfd8bcc8d22a31307f92d5ebdd23c19cd34e1e2"
+      },
+      {
+        "path": "src/gnn/parsers/unified_parser.py",
+        "sha256": "25f446a4174952d4df2dabe8ac750e5c2470ffa65a5e8fd420e384f3e4d8a870"
+      },
+      {
+        "path": "src/gnn/parsers/validators.py",
+        "sha256": "ea35a419dcc811da56021b9f3a5050b9dfa27a3c0515a744599107976c9fc11a"
+      },
+      {
+        "path": "src/gnn/parsers/xml_parser.py",
+        "sha256": "ec81207542783a5009b9b3f11e1139d8139cff2fa8611be58676a2f650fba090"
+      },
+      {
+        "path": "src/gnn/parsers/xml_serializer.py",
+        "sha256": "4ae7e97eaad76b8df99c06a9006dc6dbbcf141cb34a1d3a955c0019ec448957e"
+      },
+      {
+        "path": "src/gnn/parsers/xsd_serializer.py",
+        "sha256": "8c4434b0ffde8faa04cc419e37e2b98a03647b038ae2244076b7050239f68f9d"
+      },
+      {
+        "path": "src/gnn/parsers/yaml_parser.py",
+        "sha256": "86670aed8a81116a54a2fdcdfea1139c7eb387d7444883640d0e02fc8d3fa99b"
+      },
+      {
+        "path": "src/gnn/parsers/yaml_serializer.py",
+        "sha256": "5addbf37cc8e11e74b876bc421480833e69d7316539359984ee66189d0437343"
+      },
+      {
+        "path": "src/gnn/parsers/znotation_serializer.py",
+        "sha256": "fa3375bad47c5e087dde0cc03bf1281099f2936a7b6a80c1fa6cd9121ddef84c"
+      }
+    ]
+  }
+}

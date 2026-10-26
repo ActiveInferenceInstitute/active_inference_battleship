@@ -1,0 +1,24 @@
+paper:
+  title: GNN-based active inference for Battleship
+  subtitle: Finite-catalog inference, interpretable decisions, and reproducible software
+  version: 0.4.0
+  date: '2026-10-26'
+  cover:
+    image: figures/graphical-abstract.png
+    alt: Public hit or miss observations update a finite fleet belief and a one-shot policy; the heatmap and action probabilities come from one recorded dashboard state.
+authors:
+  - name: Daniel Ari Friedman
+    email: daniel@activeinference.institute
+    orcid: 0000-0001-6232-9096
+    affiliations:
+      - Active Inference Institute
+publication:
+  release_status: published
+  doi: 10.5281/zenodo.23670188
+metadata:
+  language: en-US
+rendering:
+  section_breaks: false
+  include_date: true
+  figure_height_fraction: 0.68
+  cover_height_fraction: 0.55

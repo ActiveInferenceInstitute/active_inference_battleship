@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "modelSha256": "a425a3f6b0bdc8cb28a165f92c27c6ea329d3e48d2ea3f16136a93fbb447c91c",
+  "seed": 1943,
+  "catalogueSize": 256,
+  "events": [
+    {
+      "type": "begin"
+    },
+    {
+      "type": "shot",
+      "cell": 0
+    },
+    {
+      "type": "shot",
+      "cell": 23
+    },
+    {
+      "type": "shot",
+      "cell": 55
+    },
+    {
+      "type": "shot",
+      "cell": 37
+    },
+    {
+      "type": "shot",
+      "cell": 72
+    },
+    {
+      "type": "shot",
+      "cell": 99
+    }
+  ]
+}

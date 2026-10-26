@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "task": "Single-fleet search until all 17 occupied cells have been hit",
+  "scope": "Descriptive, in-distribution finite-catalog demonstration; not competitive Battleship or optimality evidence",
+  "boardSize": 10,
+  "shipLengths": [5, 4, 3, 3, 2],
+  "catalogueSizes": [256, 4096],
+  "seeds": [11, 29, 47, 71, 101, 137, 173, 211, 257, 307, 367, 431, 503, 577, 659, 751],
+  "policies": ["random", "hit", "information", "efe"],
+  "controls": {
+    "epistemicWeight": 1,
+    "hitPreference": 2,
+    "policyPrecision": 4,
+    "sensorNoise": 0,
+    "habitStrength": 0
+  },
+  "selection": "Random uses an independent seeded stream. Other policies use greedy scores, then higher hit probability, then ascending cell index; EFE uses minimum G, not sampling q.",
+  "catalogueSeed": "case seed",
+  "truthSeed": "case seed + 1000003",
+  "randomPolicySeed": "case seed + 2000003",
+  "summary": "All 16 paired cases per catalog size; mean, median, range and mean paired difference from greedy hit. No significance tests or population confidence claims.",
+  "exclusions": "None. Any failed or unfinished search fails generation."
+}

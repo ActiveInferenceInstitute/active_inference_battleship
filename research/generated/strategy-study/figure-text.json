@@ -1,0 +1,18 @@
+{
+  "strategy-completion": {
+    "minimumSourceFontPt": 18.0,
+    "dpi": 220
+  },
+  "strategy-effects": {
+    "minimumSourceFontPt": 18.0,
+    "dpi": 220
+  },
+  "strategy-trajectories": {
+    "minimumSourceFontPt": 18.0,
+    "dpi": 220
+  },
+  "strategy-objectives": {
+    "minimumSourceFontPt": 18.0,
+    "dpi": 220
+  }
+}

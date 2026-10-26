@@ -1,0 +1,25 @@
+{
+  "frozenAt": "2026-10-26T00:05:01.213Z",
+  "productionStarted": false,
+  "sources": {
+    "research/strategy-protocol.json": "f017af631adbec1b55e057acd042ae6d395c741910cb91258c8c7c75197dcc0d",
+    "research/strategy-cases.json": "77e1dfb7828ea09949ce19ab032a1d12c4da57f593b5a27e9c6fa619ff7f32f2",
+    "scripts/strategy-study.ts": "c9763ba820d4b25182dbff349af1d2cf697e713cb6ba0725ab7ceb92d6d0cac3",
+    "src/research/paired-search.ts": "44c49bdaf59dc69e790eede9802c7c5d4d71c66599ea355223689e455c5abf10",
+    "src/core/fleet.ts": "0f3135aad0480ad2a1c03e999a0a9f00891a3f73202235623ab00b3a6de7bddb",
+    "src/core/inference.ts": "ab759481a83aa0874711e960f268ac62434386aea7a5110b70b12bacbe577f53",
+    "src/core/math.ts": "dd3ff700a2cbfee520804a2dfbdfdb9745d721975c5d6cc3e78cc015c2de0153",
+    "src/core/random.ts": "7bfc4bb6914850430944a30435de6e34412459c006fec5d2e84f4f1abbd1212e",
+    "src/generated/model.json": "f4148ef9ae3b330cd6dcacbf5997c13fd2a3b912b3e56113531c7139084323c5",
+    "models/battleship.gnn.md": "a425a3f6b0bdc8cb28a165f92c27c6ea329d3e48d2ea3f16136a93fbb447c91c",
+    "research/strategy_analysis.py": "011c9e27027806840735ac5b5138bad2bc6e117e6c3f2434d6a4fbfb5babbc7b",
+    "research/strategy_figures.py": "c5137c67de0738effcd9fee1b653d150bfcb3a2b51df51ae1921f576c544c1cc"
+  },
+  "runtime": {
+    "bun": "1.4.4",
+    "nodeCompatibility": "v26.3.0",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "pilotSha256": "308d3d0608575e2c2adba5b116d6734800e2853c4016572aecc2797d54d4a924"
+}

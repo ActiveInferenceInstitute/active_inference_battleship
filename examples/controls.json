@@ -1,0 +1,7 @@
+{
+  "epistemicWeight": 1,
+  "hitPreference": 2.5,
+  "policyPrecision": 8,
+  "sensorNoise": 0.02,
+  "habitStrength": 0
+}

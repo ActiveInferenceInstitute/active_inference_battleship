@@ -1,0 +1,98 @@
+{
+  "name": "active-inference-battleship",
+  "version": "0.4.0",
+  "private": true,
+  "type": "module",
+  "description": "A GNN-specified Battleship game and inspectable active inference dashboard from the Active Inference Institute",
+  "scripts": {
+    "dev": "bun run scripts/dev.ts",
+    "model:import": "bun run scripts/import-model.ts",
+    "model:check": "bun run scripts/import-model.ts --check",
+    "build": "bun run scripts/run.ts build",
+    "preview": "bun run scripts/run.ts preview",
+    "test": "bun run scripts/run.ts test",
+    "typecheck": "bun run scripts/run.ts typecheck",
+    "check": "bun run scripts/run.ts check",
+    "lint": "bun run scripts/run.ts lint",
+    "format": "bun run scripts/run.ts format",
+    "test:e2e": "bun run scripts/run.ts e2e",
+    "test:browser-matrix": "bun run scripts/browser-matrix.ts",
+    "test:negative": "bun run scripts/run.ts negative",
+    "audit:react": "bun run scripts/run.ts doctor",
+    "test:hmr": "bun run scripts/run.ts hmr",
+    "audit:performance": "bun run scripts/run.ts performance",
+    "research": "bun run scripts/run.ts research",
+    "research:strategies": "bun scripts/strategy-study.ts",
+    "research:analyze": "bun scripts/analyze-strategies.ts",
+    "manuscript:figures": "bun run scripts/manuscript.ts figures",
+    "manuscript:render": "bun run scripts/manuscript.ts render",
+    "manuscript:verify": "bun run scripts/manuscript.ts verify",
+    "test:reader-failure": "bun scripts/test-reader-failure.ts",
+    "test:reader-loading": "bun scripts/test-reader-loading.ts",
+    "test:reader-cascades": "bun scripts/test-reader-cascades.ts",
+    "test:manuscript": "bun run scripts/manuscript.ts test",
+    "manuscript:pages": "bun run scripts/manuscript.ts pages",
+    "build:package": "bun run scripts/run.ts package",
+    "cli": "bun run lib/cli.js",
+    "check:package": "bun run scripts/check-package.ts",
+    "demo": "vite --host 127.0.0.1",
+    "build:dashboard": "vite build"
+  },
+  "dependencies": {
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@biomejs/biome": "2.6.2",
+    "@playwright/test": "1.64.1",
+    "@types/bun": "1.4.3",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "lighthouse": "13.5.0",
+    "react-doctor": "0.9.18",
+    "react-grab": "0.2.0",
+    "react-scan": "0.5.7",
+    "typescript": "7.0.2",
+    "vite": "8.3.5",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "@phosphor-icons/react": "2.1.10",
+    "@types/node": "26.6.5"
+  },
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "import": "./lib/index.js"
+    }
+  },
+  "types": "./lib/types/index.d.ts",
+  "bin": {
+    "battleship": "./lib/cli.js"
+  },
+  "files": [
+    "lib/",
+    "models/battleship.gnn.md",
+    "project.json",
+    "docs/API.md",
+    "docs/PACKAGE.md",
+    "docs/GNN_SPECIFICATION.md",
+    "docs/MODEL.md",
+    "docs/RELEASE_PLAN.md",
+    "examples/"
+  ],
+  "engines": {
+    "node": ">=26",
+    "bun": ">=1.4.4"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/ActInfInstitute/active_inference_battleship",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ActInfInstitute/active_inference_battleship.git"
+  },
+  "author": {
+    "name": "Daniel Ari Friedman",
+    "email": "daniel@activeinference.institute"
+  }
+}

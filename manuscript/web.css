@@ -1,0 +1,358 @@
+/* Reading edition, layered through the template's CSS embedding API. */
+:root {
+  color-scheme: light dark;
+  --paper-background: #fafbf9;
+  --paper-text: #202c33;
+  --paper-link: #a61b1b;
+  --paper-rule: #b3c0c5;
+  --paper-code: #edf1f2;
+  --paper-hover: #e4edf2;
+  --paper-pressed: #ccdde8;
+  --paper-muted: #52616a;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper-background: #131c22;
+    --paper-text: #e7edf0;
+    --paper-link: #ffaaa0;
+    --paper-rule: #73858f;
+    --paper-code: #23323c;
+    --paper-hover: #243b4a;
+    --paper-pressed: #35546a;
+    --paper-muted: #a7b8c2;
+  }
+}
+html, body { background: var(--paper-background); color: var(--paper-text); }
+body {
+  box-sizing: border-box;
+  max-width: 76ch;
+  margin: 0 auto;
+  padding: 28px 20px 64px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  line-height: 1.65;
+}
+h1, h2, h3, h4 {
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--paper-text);
+  border: 0;
+  padding: 0;
+  line-height: 1.3;
+  margin-top: 1.8em;
+  hyphens: none;
+  word-break: normal;
+}
+h1 { font-size: 1.65rem; }
+h1.title { font-size: 1.85rem; margin-top: 0.8em; }
+h2 { font-size: 1.35rem; }
+h3 { font-size: 1.12rem; }
+p { text-align: left; hyphens: none; word-break: normal; }
+header { margin-bottom: 2rem; }
+header p { text-align: center; }
+a, a:link, a:visited { color: var(--paper-link) !important; background: transparent; text-decoration-line: underline !important; }
+a:hover { background: var(--paper-hover); text-decoration-thickness: 2px; }
+a:active { background: var(--paper-pressed); text-decoration-thickness: 3px; }
+a:focus-visible { outline: 3px solid var(--paper-link); outline-offset: 4px; }
+.figure-full-size-label { color: var(--paper-link); font-size: 15px; }
+.paper-math-loading {
+  margin-block: 1.5rem;
+  padding: 12px;
+  border: 1px solid var(--paper-rule);
+  border-radius: 4px;
+  background: var(--paper-code);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.paper-math-loading p { margin: 0; }
+#paper-math-status { min-height: 4.65em; }
+.paper-math-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-block: 8px; }
+.paper-math-actions a, .paper-math-actions button { box-sizing: border-box; display: inline-flex; align-items: center; min-height: 44px; padding: 8px; font: inherit; }
+.paper-math-actions button { border: 1px solid var(--paper-muted); border-radius: 4px; background: var(--paper-background); color: var(--paper-text); cursor: pointer; }
+.paper-math-actions button:disabled { color: var(--paper-muted); cursor: default; }
+.paper-math-actions button:not(:disabled):hover { background: var(--paper-hover); }
+.paper-math-actions button:not(:disabled):active { background: var(--paper-pressed); }
+.paper-math-actions button:focus-visible { outline: 3px solid var(--paper-link); outline-offset: 3px; }
+@media (min-width: 700px) { #paper-math-status { min-height: 3.1em; } }
+@media print { .paper-math-loading { display: none; } }
+.front-cover, .visual-plate {
+  margin-block: 2rem 3rem;
+  padding-block: 0.5rem 1.5rem;
+  border-bottom: 1px solid var(--paper-rule);
+}
+.front-cover figure, .visual-plate figure { margin-block: 1rem; }
+.front-cover p, .visual-plate > p { max-width: 70ch; }
+.visual-plate h1 { margin-top: 0.5rem; font-size: 1.55rem; }
+.definition, .proposition, .example {
+  margin-block: 1.5rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--paper-rule);
+  border-radius: 4px;
+}
+.definition > :first-child, .proposition > :first-child, .example > :first-child { margin-top: 0; }
+.definition > :last-child, .proposition > :last-child, .example > :last-child { margin-bottom: 0; }
+@media print {
+  .front-cover, .visual-plate { break-after: page; border: 0; }
+  .definition, .proposition, .example { break-inside: avoid; }
+}
+.figure-full-size-link:focus-visible { outline-color: var(--paper-link); }
+.skip-link { background: var(--paper-code); }
+nav#TOC a { display: inline-block; vertical-align: top; min-height: 44px; padding: 6px 0; }
+nav#TOC li { margin-block: 8px; }
+nav#TOC ul { padding-left: 1.2rem; }
+code, pre { background: var(--paper-code); color: var(--paper-text); }
+code, .csl-entry a { overflow-wrap: anywhere; }
+figure { max-width: 100%; margin: 1.8rem 0; }
+figure img { max-width: 100%; height: auto; }
+figcaption, caption { font-size: 15px; line-height: 1.55; color: var(--paper-text); }
+table {
+  display: table;
+  overflow: visible;
+  max-width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  line-height: 1.5;
+}
+th, td { padding: 0.45rem 0.65rem; white-space: nowrap; border-color: var(--paper-rule); }
+.table-scroll { overflow-x: auto; container-type: inline-size; }
+.table-scroll:focus-visible { outline: 3px solid var(--paper-link); outline-offset: 4px; }
+caption { text-align: left; margin-bottom: 0.6rem; width: 100cqw; max-width: 100cqw; white-space: normal; box-sizing: border-box; }
+mjx-container[display="true"] { max-width: 100%; overflow-x: auto; overflow-y: hidden; padding: 20px 0; }
+mjx-container[display="true"] mjx-help { top: 2px !important; right: 2px !important; }
+mjx-container .mjx-selected {
+  color: var(--paper-text) !important;
+  background-color: var(--paper-code) !important;
+  outline-color: var(--paper-link) !important;
+}
+/* Keep MathJax's own commands and event handling. Compact cascades overlap
+   deliberately, with the parent reachable at the leading edge or ArrowLeft. */
+.CtxtMenu_ContextMenu {
+  box-sizing: border-box;
+  max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 24px);
+  overflow: auto;
+  background: var(--paper-background) !important;
+  color: var(--paper-text) !important;
+  border-color: var(--paper-link) !important;
+}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem {
+  position: relative;
+  box-sizing: border-box;
+  min-height: 44px;
+  padding: 10px 32px !important;
+  margin-bottom: 8px !important;
+  line-height: 24px !important;
+  white-space: normal;
+  color: var(--paper-text) !important;
+  background: var(--paper-background) !important;
+}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem.CtxtMenu_MenuDisabled {
+  color: var(--paper-muted) !important;
+  opacity: 1 !important;
+}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem.CtxtMenu_MenuActive {
+  color: var(--paper-text) !important;
+  background: var(--paper-pressed) !important;
+}
+.CtxtMenu_ContextMenu:focus-visible,
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus-visible,
+.CtxtMenu_ContextMenu input:focus-visible,
+.CtxtMenu_Info:focus-visible,
+.CtxtMenu_InfoContent:focus-visible {
+  outline: 3px solid var(--paper-link) !important;
+  outline-offset: -3px !important;
+}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuSlider {
+  display: grid;
+  grid-template-columns: minmax(44px, 1fr) 5ch;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px !important;
+}
+.CtxtMenu_MenuSlider > span:first-child {
+  grid-column: 1 / -1;
+  color: var(--paper-text) !important;
+  font-size: 15px !important;
+  line-height: 1.4;
+}
+.CtxtMenu_MenuSlider > span:nth-child(2) { min-width: 0; }
+.CtxtMenu_ContextMenu input.CtxtMenu_SliderBar {
+  box-sizing: border-box;
+  width: 100% !important;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0 8px;
+  accent-color: var(--paper-link);
+  border: 1px solid var(--paper-link);
+  background: var(--paper-code);
+}
+.CtxtMenu_MenuSlider .CtxtMenu_SliderValue {
+  position: static !important;
+  color: var(--paper-text) !important;
+  background: transparent !important;
+  font-size: 15px !important;
+  line-height: 1.4;
+  white-space: nowrap;
+  text-align: right;
+}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuRule {
+  min-height: 0 !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: 8px 0 !important;
+}
+.CtxtMenu_MenuArrow, .CtxtMenu_MenuCheck, .CtxtMenu_MenuRadioCheck {
+  color: inherit !important;
+  text-shadow: none !important;
+  top: 50% !important;
+  transform: translateY(-50%);
+}
+.CtxtMenu_Info {
+  box-sizing: border-box;
+  left: 50% !important;
+  top: 12px !important;
+  margin-left: 0 !important;
+  transform: translateX(-50%);
+  max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 24px);
+  overflow: auto;
+  background: var(--paper-background) !important;
+  color: var(--paper-text) !important;
+  border-color: var(--paper-link) !important;
+  font-size: 16px !important;
+}
+.CtxtMenu_InfoTitle { display: block; padding-right: 52px; min-height: 44px; }
+.CtxtMenu_InfoContent {
+  background: var(--paper-code) !important;
+  color: var(--paper-text) !important;
+  box-sizing: border-box;
+  max-width: 100%;
+  max-height: none !important;
+  overflow: visible !important;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  font-size: 16px !important;
+}
+.CtxtMenu_InfoSignature { font-size: 15px !important; }
+.CtxtMenu_InfoSignature a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 10px; }
+.CtxtMenu_Info .CtxtMenu_InfoClose[role="button"] {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 44px !important;
+  height: 44px !important;
+  top: 8px !important;
+  right: 8px !important;
+  color: var(--paper-text) !important;
+  background: var(--paper-code) !important;
+  border: 1px solid var(--paper-link) !important;
+}
+.CtxtMenu_Info .CtxtMenu_InfoClose[role="button"]:hover { background: var(--paper-hover) !important; }
+.CtxtMenu_Info .CtxtMenu_InfoClose[role="button"]:active { background: var(--paper-pressed) !important; }
+.CtxtMenu_Info .CtxtMenu_InfoClose[role="button"]:focus-visible { outline: 3px solid var(--paper-link); outline-offset: 2px; }
+.CtxtMenu_Info .CtxtMenu_InfoClose[role="button"] > span:not(.paper-math-tooltip) { position: static !important; color: var(--paper-text) !important; background: transparent !important; border: none !important; text-shadow: none !important; font-size: 24px !important; line-height: 1; }
+.CtxtMenu_Info .CtxtMenu_InfoClose[role="button"] .paper-math-tooltip {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: max-content;
+  padding: 8px 10px;
+  color: var(--paper-text) !important;
+  background: var(--paper-code) !important;
+  border: 1px solid var(--paper-link) !important;
+  font-size: 15px;
+  line-height: 1.4;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.CtxtMenu_Info .CtxtMenu_InfoClose[role="button"]:hover .paper-math-tooltip,
+.CtxtMenu_Info .CtxtMenu_InfoClose[role="button"]:focus-visible .paper-math-tooltip { display: block; }
+@media (max-width: 600px) {
+  .CtxtMenu_ContextMenu {
+    position: fixed !important;
+    top: 12px !important;
+    left: 12px !important;
+  }
+  .CtxtMenu_ContextMenu ~ .CtxtMenu_ContextMenu {
+    left: auto !important;
+    right: 12px !important;
+  }
+}
+.csl-entry { margin-bottom: 1rem; }
+@media (max-width: 600px) {
+  body { padding: 20px 18px 48px; font-size: 17px; }
+  h1.title { font-size: 1.55rem; }
+}
+@media print {
+  :root { color-scheme: light; --paper-background: white; --paper-text: black; --paper-link: #a61b1b; --paper-code: #eeeeee; --paper-hover: transparent; --paper-pressed: transparent; }
+  html, body { background: white; color: black; }
+  a, a:visited { background: transparent !important; }
+  nav#TOC a { min-height: 0; padding: 0; }
+  nav#TOC li { margin-block: 0; }
+}
+
+/* Native preference groups reflow; handlers, values, and DOM order stay native. */
+.CtxtMenu_Info.CtxtMenu_Selection {
+  position: fixed !important;
+  left: max(12px, calc(50vw - 36rem)) !important;
+  transform: none;
+  width: min(72rem, calc(100vw - 24px)) !important;
+}
+.CtxtMenu_Selection > .CtxtMenu_InfoTitle {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: var(--paper-background);
+}
+.CtxtMenu_SelectionBox {
+  position: relative !important;
+  z-index: 0 !important;
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  white-space: normal !important;
+}
+.CtxtMenu_SelectionDivider { display: contents !important; }
+.CtxtMenu_SelectionMenu {
+  position: static !important;
+  float: none !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: 0;
+  padding: 8px !important;
+  border: 1px solid var(--paper-link) !important;
+  color: var(--paper-text) !important;
+  background: var(--paper-code) !important;
+}
+.CtxtMenu_SelectionMenu > .CtxtMenu_MenuItem {
+  position: relative !important;
+  box-sizing: border-box;
+  min-height: 44px;
+  margin-bottom: 8px !important;
+  padding: 10px 32px !important;
+  font-size: 15px !important;
+  line-height: 24px !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  color: var(--paper-text) !important;
+  background: var(--paper-code) !important;
+}
+.CtxtMenu_SelectionMenu > .CtxtMenu_MenuActive {
+  background: var(--paper-pressed) !important;
+}
+.CtxtMenu_SelectionMenu > .CtxtMenu_MenuRule {
+  min-height: 0;
+  height: 1px;
+  padding: 0 !important;
+}
+.CtxtMenu_SelectionMenu > .CtxtMenu_MenuLabel { font-weight: 600; }
+.CtxtMenu_SelectionMenu > .CtxtMenu_MenuItem:focus-visible {
+  outline: 3px solid var(--paper-link) !important;
+  outline-offset: -3px;
+}
+@media (max-width: 600px) {
+  .CtxtMenu_SelectionBox { grid-template-columns: minmax(0, 1fr); }
+}

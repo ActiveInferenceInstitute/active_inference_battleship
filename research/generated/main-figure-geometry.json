@@ -1,0 +1,14 @@
+{
+  "architecture": {
+    "minimumSourceFontPt": 18.0,
+    "dpi": 220,
+    "textBoundsChecked": 6,
+    "boxedLabelsChecked": 4
+  },
+  "analytic-tradeoff": {
+    "minimumSourceFontPt": 18.0,
+    "dpi": 220,
+    "textBoundsChecked": 26,
+    "boxedLabelsChecked": 0
+  }
+}
