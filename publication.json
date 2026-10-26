@@ -1,6 +1,9 @@
 {
-  "version": "0.4.0",
-  "doi": "10.5281/zenodo.23670188",
-  "repository": "https://github.com/ActInfInstitute/active_inference_battleship",
-  "release": "https://github.com/ActInfInstitute/active_inference_battleship/releases/tag/v0.4.0"
+  "version": "0.5.0",
+  "sourceCommit": "8437415516c8e4cec67a218ad34a3489b3284137",
+  "repository": "https://github.com/ActiveInferenceInstitute/active_inference_battleship",
+  "doi": "10.5281/zenodo.23676081",
+  "manuscript": "paper/",
+  "release": "https://github.com/ActiveInferenceInstitute/active_inference_battleship/releases/tag/v0.5.0",
+  "lecture": "https://github.com/ActiveInferenceInstitute/active_inference_battleship/releases/download/v0.5.0/Active_Inference_Battleship.mp4"
 }
