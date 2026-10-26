@@ -1,0 +1,2575 @@
+{
+  "schemaVersion": 1,
+  "masterSeed": 20261025,
+  "derivation": "SHA256 aib-strategy-v1|20261025|final|N|i|role|j; first 4 bytes unsigned big-endian; global collision rejection",
+  "pilotSeeds": [
+    900001,
+    900002,
+    900003,
+    900004,
+    900005,
+    900006
+  ],
+  "cases": [
+    {
+      "count": 256,
+      "index": 0,
+      "catalogSeed": 4279600956,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1620820257,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2126816015,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 1,
+      "catalogSeed": 4222620379,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3359567609,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1216483052,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 2,
+      "catalogSeed": 1900367033,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2971342748,
+      "truthCollisionCounter": 0,
+      "randomSeed": 303881655,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 3,
+      "catalogSeed": 2831217914,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3476259719,
+      "truthCollisionCounter": 0,
+      "randomSeed": 994728865,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 4,
+      "catalogSeed": 18211544,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 303194724,
+      "truthCollisionCounter": 0,
+      "randomSeed": 199758519,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 5,
+      "catalogSeed": 3397365735,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1950058568,
+      "truthCollisionCounter": 0,
+      "randomSeed": 4086139408,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 6,
+      "catalogSeed": 2593821651,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3091688410,
+      "truthCollisionCounter": 0,
+      "randomSeed": 956663848,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 7,
+      "catalogSeed": 1958323830,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1750223006,
+      "truthCollisionCounter": 0,
+      "randomSeed": 4204676782,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 8,
+      "catalogSeed": 118054238,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3884829530,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2038780562,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 9,
+      "catalogSeed": 3063943987,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1958766750,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1792637760,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 10,
+      "catalogSeed": 681366521,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3135702813,
+      "truthCollisionCounter": 0,
+      "randomSeed": 4064639238,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 11,
+      "catalogSeed": 513087957,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1717900172,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3848825123,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 12,
+      "catalogSeed": 2622918801,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3583812473,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1043835436,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 13,
+      "catalogSeed": 428469832,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1501573319,
+      "truthCollisionCounter": 0,
+      "randomSeed": 900018018,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 14,
+      "catalogSeed": 2699980738,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3549747363,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2634086036,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 15,
+      "catalogSeed": 1011495015,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1146950694,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3827488732,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 16,
+      "catalogSeed": 2909216099,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 185593254,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1354693998,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 17,
+      "catalogSeed": 2608031583,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 309223489,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2997831794,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 18,
+      "catalogSeed": 3432562695,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 288221432,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2168506423,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 19,
+      "catalogSeed": 1691285345,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1663741561,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1014511336,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 20,
+      "catalogSeed": 3346905229,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1246945612,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1451260656,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 21,
+      "catalogSeed": 827806881,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1762801848,
+      "truthCollisionCounter": 0,
+      "randomSeed": 789305166,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 22,
+      "catalogSeed": 3375106462,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3247011324,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2591474689,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 23,
+      "catalogSeed": 4248438445,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3960626495,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1774265143,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 24,
+      "catalogSeed": 2337693941,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2117837095,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2136788881,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 25,
+      "catalogSeed": 3293901271,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2438510460,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3486762719,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 26,
+      "catalogSeed": 3924748336,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 651231166,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1063032154,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 27,
+      "catalogSeed": 3491122579,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3488278486,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3790016980,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 28,
+      "catalogSeed": 2721329623,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 349251830,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2351741105,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 29,
+      "catalogSeed": 3715687706,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3925976776,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1222358672,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 30,
+      "catalogSeed": 2174964722,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1845121767,
+      "truthCollisionCounter": 0,
+      "randomSeed": 962923860,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 31,
+      "catalogSeed": 4274675539,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3352623844,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1415458293,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 32,
+      "catalogSeed": 700451950,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2819495145,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3797819053,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 33,
+      "catalogSeed": 2180196410,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 4172474573,
+      "truthCollisionCounter": 0,
+      "randomSeed": 137333907,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 34,
+      "catalogSeed": 3810447813,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3299093810,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1243523340,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 35,
+      "catalogSeed": 856663753,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2986487364,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2501478688,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 36,
+      "catalogSeed": 681278732,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3728943454,
+      "truthCollisionCounter": 0,
+      "randomSeed": 531214344,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 37,
+      "catalogSeed": 3224011486,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 671543417,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3754461783,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 38,
+      "catalogSeed": 3401819406,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3884285859,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1486139344,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 39,
+      "catalogSeed": 1102982719,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 558646661,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2461224868,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 40,
+      "catalogSeed": 1894324476,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3158056392,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3758203751,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 41,
+      "catalogSeed": 3954363555,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 747368454,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3277983255,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 42,
+      "catalogSeed": 1513415481,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3994285536,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1508013995,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 43,
+      "catalogSeed": 3994476780,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 4039068162,
+      "truthCollisionCounter": 0,
+      "randomSeed": 644369732,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 44,
+      "catalogSeed": 3662043622,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 115936768,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3900428765,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 45,
+      "catalogSeed": 3939441310,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 4209085284,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2512660885,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 46,
+      "catalogSeed": 69998917,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2494068401,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1437679966,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 47,
+      "catalogSeed": 3659870097,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3974177947,
+      "truthCollisionCounter": 0,
+      "randomSeed": 555293925,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 48,
+      "catalogSeed": 2565218270,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1276596441,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1703921860,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 49,
+      "catalogSeed": 884787328,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 376460424,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1556573103,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 50,
+      "catalogSeed": 3453397280,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 648623836,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1655746400,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 51,
+      "catalogSeed": 3010843230,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1421487159,
+      "truthCollisionCounter": 0,
+      "randomSeed": 729639779,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 52,
+      "catalogSeed": 343345994,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1811850898,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2771653892,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 53,
+      "catalogSeed": 979854224,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2933988589,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1599653118,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 54,
+      "catalogSeed": 2116690819,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2645426439,
+      "truthCollisionCounter": 0,
+      "randomSeed": 820404912,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 55,
+      "catalogSeed": 917766524,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1047690574,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1729675516,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 56,
+      "catalogSeed": 1200499503,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1353468993,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1030828271,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 57,
+      "catalogSeed": 3058726080,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3311881681,
+      "truthCollisionCounter": 0,
+      "randomSeed": 532169522,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 58,
+      "catalogSeed": 846613647,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1105856632,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2996644953,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 59,
+      "catalogSeed": 3667129612,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1107364175,
+      "truthCollisionCounter": 0,
+      "randomSeed": 433425053,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 60,
+      "catalogSeed": 2065009068,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 4216032273,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1968602175,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 61,
+      "catalogSeed": 1566329628,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1264348302,
+      "truthCollisionCounter": 0,
+      "randomSeed": 975123452,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 62,
+      "catalogSeed": 366833519,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1732033078,
+      "truthCollisionCounter": 0,
+      "randomSeed": 252186094,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 63,
+      "catalogSeed": 2991047097,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2595756701,
+      "truthCollisionCounter": 0,
+      "randomSeed": 487359316,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 64,
+      "catalogSeed": 2467872457,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 4245965143,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1189986067,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 65,
+      "catalogSeed": 320070101,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 685778496,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2210258154,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 66,
+      "catalogSeed": 399209951,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 436102922,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1048287459,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 67,
+      "catalogSeed": 4161562846,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1733603045,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3524316747,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 68,
+      "catalogSeed": 984229752,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 314059248,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2414894885,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 69,
+      "catalogSeed": 1015913764,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3933087477,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2155259076,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 70,
+      "catalogSeed": 411753550,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2110680410,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2346873728,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 71,
+      "catalogSeed": 3143562723,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1875874067,
+      "truthCollisionCounter": 0,
+      "randomSeed": 899151393,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 72,
+      "catalogSeed": 720414347,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3721291575,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3247005582,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 73,
+      "catalogSeed": 915330966,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1727348856,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2710483608,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 74,
+      "catalogSeed": 1866078680,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 862843837,
+      "truthCollisionCounter": 0,
+      "randomSeed": 192598091,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 75,
+      "catalogSeed": 2452673186,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 929816740,
+      "truthCollisionCounter": 0,
+      "randomSeed": 465283705,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 76,
+      "catalogSeed": 4101827173,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2001409131,
+      "truthCollisionCounter": 0,
+      "randomSeed": 179943838,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 77,
+      "catalogSeed": 2919829215,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 131311075,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2120932054,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 78,
+      "catalogSeed": 3210508457,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1965271714,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2130066397,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 79,
+      "catalogSeed": 381184136,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1616180734,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2238086365,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 80,
+      "catalogSeed": 3088926705,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1890217063,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1795265019,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 81,
+      "catalogSeed": 3345918599,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1211463066,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1535296693,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 82,
+      "catalogSeed": 1709106407,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1021899036,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3252529490,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 83,
+      "catalogSeed": 4051738840,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2927387142,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2547210722,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 84,
+      "catalogSeed": 297382894,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3037996837,
+      "truthCollisionCounter": 0,
+      "randomSeed": 891119082,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 85,
+      "catalogSeed": 3550880825,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2118633160,
+      "truthCollisionCounter": 0,
+      "randomSeed": 590968395,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 86,
+      "catalogSeed": 2351902218,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1126900962,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1224997596,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 87,
+      "catalogSeed": 315330061,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 633775950,
+      "truthCollisionCounter": 0,
+      "randomSeed": 492923622,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 88,
+      "catalogSeed": 1059856943,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 912535002,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2069996306,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 89,
+      "catalogSeed": 949616666,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3509630070,
+      "truthCollisionCounter": 0,
+      "randomSeed": 213277406,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 90,
+      "catalogSeed": 3968028586,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3509136562,
+      "truthCollisionCounter": 0,
+      "randomSeed": 380326483,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 91,
+      "catalogSeed": 1256125624,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1858314618,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1773392090,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 92,
+      "catalogSeed": 3401800600,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3620558699,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2074425287,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 93,
+      "catalogSeed": 3637427826,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 87226962,
+      "truthCollisionCounter": 0,
+      "randomSeed": 457440104,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 94,
+      "catalogSeed": 2402038564,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 4215484598,
+      "truthCollisionCounter": 0,
+      "randomSeed": 4108759437,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 95,
+      "catalogSeed": 4051529185,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 4070782020,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3956578126,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 96,
+      "catalogSeed": 128562235,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3065479012,
+      "truthCollisionCounter": 0,
+      "randomSeed": 4051898926,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 97,
+      "catalogSeed": 3636093102,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3134960926,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1469848365,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 98,
+      "catalogSeed": 3586476656,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3454005013,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2955873057,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 99,
+      "catalogSeed": 855612462,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 4216348324,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1032725173,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 100,
+      "catalogSeed": 3852881124,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 126470809,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3975841294,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 101,
+      "catalogSeed": 38765908,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1325720832,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2670536319,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 102,
+      "catalogSeed": 3524524485,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3692285859,
+      "truthCollisionCounter": 0,
+      "randomSeed": 58912198,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 103,
+      "catalogSeed": 513107004,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2139223421,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1127207554,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 104,
+      "catalogSeed": 4658696,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3960561261,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2873980384,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 105,
+      "catalogSeed": 3766085634,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3556150294,
+      "truthCollisionCounter": 0,
+      "randomSeed": 669564203,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 106,
+      "catalogSeed": 2209674491,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2855788896,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1853142457,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 107,
+      "catalogSeed": 3010660671,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3494438888,
+      "truthCollisionCounter": 0,
+      "randomSeed": 550132241,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 108,
+      "catalogSeed": 2010068682,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3425422917,
+      "truthCollisionCounter": 0,
+      "randomSeed": 166937353,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 109,
+      "catalogSeed": 3641009135,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1585994593,
+      "truthCollisionCounter": 0,
+      "randomSeed": 251657705,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 110,
+      "catalogSeed": 223147595,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2435092212,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2473724643,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 111,
+      "catalogSeed": 4176042729,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2623393885,
+      "truthCollisionCounter": 0,
+      "randomSeed": 780921777,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 112,
+      "catalogSeed": 2915412504,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2503724010,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1516981113,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 113,
+      "catalogSeed": 3701900952,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2949090146,
+      "truthCollisionCounter": 0,
+      "randomSeed": 391617862,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 114,
+      "catalogSeed": 881925725,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 167345396,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2712348852,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 115,
+      "catalogSeed": 1646651647,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2628749371,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2217911252,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 116,
+      "catalogSeed": 3719948617,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3810855208,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1141067345,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 117,
+      "catalogSeed": 3128303842,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1591788088,
+      "truthCollisionCounter": 0,
+      "randomSeed": 955148887,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 118,
+      "catalogSeed": 2657803145,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3987274980,
+      "truthCollisionCounter": 0,
+      "randomSeed": 886736395,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 119,
+      "catalogSeed": 1526428220,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 351442764,
+      "truthCollisionCounter": 0,
+      "randomSeed": 525152977,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 120,
+      "catalogSeed": 1428208488,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 887530052,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1596991064,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 121,
+      "catalogSeed": 2163945821,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1918454405,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2889524864,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 122,
+      "catalogSeed": 1703148162,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 4071383444,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1652001223,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 123,
+      "catalogSeed": 3222300316,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2688807203,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3513712863,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 124,
+      "catalogSeed": 4190708750,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3927570383,
+      "truthCollisionCounter": 0,
+      "randomSeed": 691236998,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 125,
+      "catalogSeed": 384889255,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3668759126,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1310980516,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 126,
+      "catalogSeed": 826888858,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2763802593,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3987392474,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 256,
+      "index": 127,
+      "catalogSeed": 64193497,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3499393075,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3688179050,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 0,
+      "catalogSeed": 66106220,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3763162687,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3713682273,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 1,
+      "catalogSeed": 3617867516,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 201998359,
+      "truthCollisionCounter": 0,
+      "randomSeed": 4198315139,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 2,
+      "catalogSeed": 3717925502,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1030950048,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2141567606,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 3,
+      "catalogSeed": 1502803228,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3841664159,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1219200298,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 4,
+      "catalogSeed": 2614192113,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 825600389,
+      "truthCollisionCounter": 0,
+      "randomSeed": 264351463,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 5,
+      "catalogSeed": 466019356,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 419009821,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3843668689,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 6,
+      "catalogSeed": 2294541615,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 216741994,
+      "truthCollisionCounter": 0,
+      "randomSeed": 227027431,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 7,
+      "catalogSeed": 522072405,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3040445893,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2373057628,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 8,
+      "catalogSeed": 477908362,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2326719731,
+      "truthCollisionCounter": 0,
+      "randomSeed": 933691370,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 9,
+      "catalogSeed": 3386053504,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2900439568,
+      "truthCollisionCounter": 0,
+      "randomSeed": 4029435394,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 10,
+      "catalogSeed": 1949199916,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1833080838,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3495246246,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 11,
+      "catalogSeed": 2466633959,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1173603430,
+      "truthCollisionCounter": 0,
+      "randomSeed": 500319644,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 12,
+      "catalogSeed": 1383718072,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1111747058,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1783465514,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 13,
+      "catalogSeed": 326284483,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1985797708,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1094467336,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 14,
+      "catalogSeed": 139664688,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 605077509,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3569088116,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 15,
+      "catalogSeed": 3237113661,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3510991058,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3844248534,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 16,
+      "catalogSeed": 2573039834,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1805280722,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1867551106,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 17,
+      "catalogSeed": 408168915,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2896691262,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1926897444,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 18,
+      "catalogSeed": 1136966592,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2293455302,
+      "truthCollisionCounter": 0,
+      "randomSeed": 609141635,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 19,
+      "catalogSeed": 4252029327,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1379651946,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1373148131,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 20,
+      "catalogSeed": 2782515673,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3240881648,
+      "truthCollisionCounter": 0,
+      "randomSeed": 296340537,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 21,
+      "catalogSeed": 2238181286,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3678425809,
+      "truthCollisionCounter": 0,
+      "randomSeed": 872459761,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 22,
+      "catalogSeed": 3926850688,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 388674135,
+      "truthCollisionCounter": 0,
+      "randomSeed": 335123470,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 23,
+      "catalogSeed": 2598257446,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2610817744,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3835620029,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 24,
+      "catalogSeed": 2108758006,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2494709270,
+      "truthCollisionCounter": 0,
+      "randomSeed": 634523424,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 25,
+      "catalogSeed": 2197796891,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 4285932914,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3320493419,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 26,
+      "catalogSeed": 636052015,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 4052089876,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1924095256,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 27,
+      "catalogSeed": 159113027,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1350069791,
+      "truthCollisionCounter": 0,
+      "randomSeed": 221343091,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 28,
+      "catalogSeed": 617206205,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1593743916,
+      "truthCollisionCounter": 0,
+      "randomSeed": 996028293,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 29,
+      "catalogSeed": 185424157,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1903881263,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2227754363,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 30,
+      "catalogSeed": 178889556,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1727052038,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3936061537,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 31,
+      "catalogSeed": 2887212005,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1551897125,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1168608107,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 32,
+      "catalogSeed": 2082703936,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2148623792,
+      "truthCollisionCounter": 0,
+      "randomSeed": 907131092,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 33,
+      "catalogSeed": 938532618,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3119043261,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2778454578,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 34,
+      "catalogSeed": 1149939493,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3229037420,
+      "truthCollisionCounter": 0,
+      "randomSeed": 626819205,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 35,
+      "catalogSeed": 4092918648,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 13203413,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1773000382,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 36,
+      "catalogSeed": 4026050745,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2668857136,
+      "truthCollisionCounter": 0,
+      "randomSeed": 4076212007,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 37,
+      "catalogSeed": 1558114844,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3494377105,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3617271666,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 38,
+      "catalogSeed": 2697766369,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 479443089,
+      "truthCollisionCounter": 0,
+      "randomSeed": 482611054,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 39,
+      "catalogSeed": 2425280848,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2005884780,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1693761762,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 40,
+      "catalogSeed": 3317576643,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2603771834,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2977662810,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 41,
+      "catalogSeed": 768688650,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2418754841,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3514799824,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 42,
+      "catalogSeed": 4288396077,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 162308380,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1139698789,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 43,
+      "catalogSeed": 1537998271,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2709672302,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1746776271,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 44,
+      "catalogSeed": 2681051076,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1838645346,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3033502808,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 45,
+      "catalogSeed": 3344857879,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2448084591,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2852618974,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 46,
+      "catalogSeed": 1503219437,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2225559455,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2532469852,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 47,
+      "catalogSeed": 2571988542,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 4036564701,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2922485627,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 48,
+      "catalogSeed": 2958179459,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3916653600,
+      "truthCollisionCounter": 0,
+      "randomSeed": 4243051871,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 49,
+      "catalogSeed": 2826328053,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3280406940,
+      "truthCollisionCounter": 0,
+      "randomSeed": 4082522388,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 50,
+      "catalogSeed": 2836046512,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 4224300854,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2335467067,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 51,
+      "catalogSeed": 3445909901,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1773442221,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1341145936,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 52,
+      "catalogSeed": 1669225740,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1173552826,
+      "truthCollisionCounter": 0,
+      "randomSeed": 4221316653,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 53,
+      "catalogSeed": 445553986,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 649634405,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2762023896,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 54,
+      "catalogSeed": 3956462060,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2668529786,
+      "truthCollisionCounter": 0,
+      "randomSeed": 910559533,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 55,
+      "catalogSeed": 2278975366,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 963988493,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3999323594,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 56,
+      "catalogSeed": 814613461,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2429969671,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2440019534,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 57,
+      "catalogSeed": 2368559126,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 766159867,
+      "truthCollisionCounter": 0,
+      "randomSeed": 50411186,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 58,
+      "catalogSeed": 1909008417,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2508061662,
+      "truthCollisionCounter": 0,
+      "randomSeed": 4095888926,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 59,
+      "catalogSeed": 1351435638,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 29922162,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2559465792,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 60,
+      "catalogSeed": 2600082447,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2781146253,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2288697969,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 61,
+      "catalogSeed": 2858171737,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 357221978,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1144092920,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 62,
+      "catalogSeed": 2486257940,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3721179663,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3135769417,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 63,
+      "catalogSeed": 2761169472,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 971084385,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1777358207,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 64,
+      "catalogSeed": 1181826459,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 4268423100,
+      "truthCollisionCounter": 0,
+      "randomSeed": 4206665169,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 65,
+      "catalogSeed": 1080244990,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2849491465,
+      "truthCollisionCounter": 0,
+      "randomSeed": 4148348247,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 66,
+      "catalogSeed": 3691366809,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3052207659,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1399908734,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 67,
+      "catalogSeed": 544038623,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 278152262,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3159265392,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 68,
+      "catalogSeed": 3924938304,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 807376838,
+      "truthCollisionCounter": 0,
+      "randomSeed": 946845632,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 69,
+      "catalogSeed": 3827645409,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3083834782,
+      "truthCollisionCounter": 0,
+      "randomSeed": 823782154,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 70,
+      "catalogSeed": 1366014822,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3264906789,
+      "truthCollisionCounter": 0,
+      "randomSeed": 868092431,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 71,
+      "catalogSeed": 121147248,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 175451255,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2600113803,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 72,
+      "catalogSeed": 4266092769,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 518263589,
+      "truthCollisionCounter": 0,
+      "randomSeed": 4287277793,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 73,
+      "catalogSeed": 3401240766,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1135773429,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2657769893,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 74,
+      "catalogSeed": 4071146803,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3064078843,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1301043441,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 75,
+      "catalogSeed": 766317779,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3667285425,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1903361063,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 76,
+      "catalogSeed": 527682609,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1878133058,
+      "truthCollisionCounter": 0,
+      "randomSeed": 180953195,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 77,
+      "catalogSeed": 1711675823,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3090457190,
+      "truthCollisionCounter": 0,
+      "randomSeed": 334997879,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 78,
+      "catalogSeed": 2202122033,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 222445939,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3553454270,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 79,
+      "catalogSeed": 2581243283,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 103911845,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1207573716,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 80,
+      "catalogSeed": 4088719550,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 4196357108,
+      "truthCollisionCounter": 0,
+      "randomSeed": 233447539,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 81,
+      "catalogSeed": 222122000,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2482639695,
+      "truthCollisionCounter": 0,
+      "randomSeed": 265221764,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 82,
+      "catalogSeed": 2189523425,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 272696498,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2040846594,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 83,
+      "catalogSeed": 712229717,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3476546038,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1972142070,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 84,
+      "catalogSeed": 1442629369,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 995977798,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3008888815,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 85,
+      "catalogSeed": 2194046094,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2532912343,
+      "truthCollisionCounter": 0,
+      "randomSeed": 814740691,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 86,
+      "catalogSeed": 2741712604,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 543685226,
+      "truthCollisionCounter": 0,
+      "randomSeed": 858331780,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 87,
+      "catalogSeed": 3012214733,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 66675560,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2338526041,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 88,
+      "catalogSeed": 3019459343,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2501909870,
+      "truthCollisionCounter": 0,
+      "randomSeed": 497465741,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 89,
+      "catalogSeed": 3964419362,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1583565326,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2862125191,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 90,
+      "catalogSeed": 2102159989,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3601444775,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2118365103,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 91,
+      "catalogSeed": 3428924559,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3068838525,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1876250152,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 92,
+      "catalogSeed": 1746201858,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 225804035,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2212449662,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 93,
+      "catalogSeed": 2233220657,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2019806224,
+      "truthCollisionCounter": 0,
+      "randomSeed": 433070148,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 94,
+      "catalogSeed": 2193442941,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2387067487,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2268836004,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 95,
+      "catalogSeed": 298919418,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3437684020,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1493988691,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 96,
+      "catalogSeed": 3616631855,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1865554387,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3156156497,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 97,
+      "catalogSeed": 3500238883,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 96377238,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1520169165,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 98,
+      "catalogSeed": 4167269329,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2207271522,
+      "truthCollisionCounter": 0,
+      "randomSeed": 4085016379,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 99,
+      "catalogSeed": 2558810246,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2953215715,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3366260672,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 100,
+      "catalogSeed": 1437052039,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2661976432,
+      "truthCollisionCounter": 0,
+      "randomSeed": 652523773,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 101,
+      "catalogSeed": 603984213,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2290798528,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3785597327,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 102,
+      "catalogSeed": 2582900243,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3533758072,
+      "truthCollisionCounter": 0,
+      "randomSeed": 537396536,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 103,
+      "catalogSeed": 2134662260,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 853341500,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1259821668,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 104,
+      "catalogSeed": 303808662,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3941380813,
+      "truthCollisionCounter": 0,
+      "randomSeed": 109900688,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 105,
+      "catalogSeed": 3402059591,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 4242397498,
+      "truthCollisionCounter": 0,
+      "randomSeed": 745876189,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 106,
+      "catalogSeed": 2399319419,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 244964011,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2558241752,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 107,
+      "catalogSeed": 1715414748,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 4107220577,
+      "truthCollisionCounter": 0,
+      "randomSeed": 612233461,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 108,
+      "catalogSeed": 1724941393,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3784539759,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1986998033,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 109,
+      "catalogSeed": 2050357506,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 257090154,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1680787075,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 110,
+      "catalogSeed": 3730592850,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2472559927,
+      "truthCollisionCounter": 0,
+      "randomSeed": 176878481,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 111,
+      "catalogSeed": 4032613139,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2680956497,
+      "truthCollisionCounter": 0,
+      "randomSeed": 634413647,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 112,
+      "catalogSeed": 3914009636,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3704739788,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2017015367,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 113,
+      "catalogSeed": 1236935398,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2329053037,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2443151995,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 114,
+      "catalogSeed": 863546256,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1428838108,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2283395380,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 115,
+      "catalogSeed": 2778999340,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2086364044,
+      "truthCollisionCounter": 0,
+      "randomSeed": 1856596665,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 116,
+      "catalogSeed": 2547495221,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 4141723390,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2405492472,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 117,
+      "catalogSeed": 1434228399,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 129257560,
+      "truthCollisionCounter": 0,
+      "randomSeed": 353543289,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 118,
+      "catalogSeed": 1450831864,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 259308686,
+      "truthCollisionCounter": 0,
+      "randomSeed": 530805201,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 119,
+      "catalogSeed": 544010741,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2500603226,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3458435696,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 120,
+      "catalogSeed": 547680775,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1730302453,
+      "truthCollisionCounter": 0,
+      "randomSeed": 4063951394,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 121,
+      "catalogSeed": 4286298868,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2210724309,
+      "truthCollisionCounter": 0,
+      "randomSeed": 672196443,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 122,
+      "catalogSeed": 2714630855,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3956663873,
+      "truthCollisionCounter": 0,
+      "randomSeed": 822030755,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 123,
+      "catalogSeed": 3494191945,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1091448298,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3577504445,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 124,
+      "catalogSeed": 2742274441,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2003912677,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3054520910,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 125,
+      "catalogSeed": 3710288223,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 1724815727,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2346536899,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 126,
+      "catalogSeed": 1295582486,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 2613207332,
+      "truthCollisionCounter": 0,
+      "randomSeed": 2529138612,
+      "randomCollisionCounter": 0
+    },
+    {
+      "count": 4096,
+      "index": 127,
+      "catalogSeed": 413768400,
+      "catalogCollisionCounter": 0,
+      "truthSeed": 3167208200,
+      "truthCollisionCounter": 0,
+      "randomSeed": 3180617043,
+      "randomCollisionCounter": 0
+    }
+  ]
+}

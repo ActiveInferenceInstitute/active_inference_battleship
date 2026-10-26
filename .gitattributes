@@ -1,0 +1,6 @@
+# Preserve scientific source/data bytes exactly, including recorded line endings.
+* -text
+# Generated vector figures are byte-bound render artifacts.
+*.svg binary
+# csv.writer emits CRLF; validate whitespace while treating CR as an EOL byte.
+*.csv whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

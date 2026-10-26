@@ -1,0 +1,3317 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.12.1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Daniel Ari Friedman" />
+  <meta name="description" content="Finite-catalog inference, interpretable decisions, and reproducible software" />
+  <title>GNN-based active inference for Battleship</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      color: light-dark(#1a1a1a, #fdfdfd);
+      background-color: #fdfdfd;
+      background-color: light-dark(#fdfdfd, #1a1a1a);
+      color-scheme: light dark;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        color-scheme: light only;
+      }
+      html, body, pre, code {
+        background-color: transparent;
+      }
+      body, a, a:visited, blockquote {
+        color: black;
+      }
+      pre, code {
+        padding: 0;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a, a:visited {
+      color: inherit;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid;
+      border-color: #e6e6e6;
+      border-color: light-dark(#e6e6e6, #4c4c4c);
+      color: #606060;
+      color: light-dark(#606060, #b6b6b6);
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid currentColor;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+    }
+    th {
+      border-top: 1px solid currentColor;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+  <script data-template-mathjax-config>
+window.MathJax = window.MathJax || {};
+window.MathJax.chtml = Object.assign({}, window.MathJax.chtml, {
+  fontURL: "https://cdn.jsdelivr.net/npm/@mathjax/mathjax-newcm-font@4.0.0/chtml/woff2",
+  dynamicPrefix: "https://cdn.jsdelivr.net/npm/@mathjax/mathjax-newcm-font@4.0.0/chtml/dynamic"
+});
+var templateMathOutput = window.MathJax.output || {};
+window.MathJax.output = Object.assign({}, templateMathOutput, {
+  displayOverflow: "linebreak",
+  linebreaks: Object.assign({}, templateMathOutput.linebreaks, {
+    inline: true,
+    width: "100%",
+    lineleading: 0.5
+  })
+});
+window.normalizeTemplateMathJaxAria = function () {
+  document.querySelectorAll("mjx-speech[aria-roledescription]").forEach(function (node) {
+    var roleDescription = node.getAttribute("aria-roledescription") || "";
+    if (/[-]/.test(roleDescription)) {
+      node.setAttribute("aria-roledescription", "mathematical expression");
+    }
+  });
+};
+window.MathJax.startup = Object.assign({}, window.MathJax.startup, {
+  ready: function () {
+    var measuredWidth = document.documentElement.clientWidth;
+    var reflowQueued = false;
+    window.MathJax.startup.defaultReady();
+    window.templateMathJaxReflowPromise = window.MathJax.startup.promise.then(
+      window.normalizeTemplateMathJaxAria
+    );
+    function reflowDisplayMath() {
+      if (reflowQueued || document.documentElement.clientWidth === measuredWidth) return;
+      reflowQueued = true;
+      window.templateMathJaxReflowPromise = window.templateMathJaxReflowPromise
+        .catch(function () { /* A later resize may retry a failed render. */ })
+        .then(async function () {
+          var width = document.documentElement.clientWidth;
+          try {
+            // MathJax 4 MathItem.STATE.METRICS = 110. The default RERENDER
+            // state retains old container metrics and cannot reflow on zoom.
+            await window.MathJax.startup.document.rerenderPromise(110);
+            window.normalizeTemplateMathJaxAria();
+            window.templateMathJaxReflowError = null;
+          } catch (error) {
+            window.templateMathJaxReflowError = String(error);
+            console.error("MathJax viewport reflow failed", error);
+            throw error;
+          } finally {
+            measuredWidth = width;
+            reflowQueued = false;
+          }
+        })
+        .then(reflowDisplayMath);
+      // Keep failure observable to callers without an unhandled rejection.
+      window.templateMathJaxReflowPromise.catch(function () {});
+    }
+    window.addEventListener("resize", reflowDisplayMath);
+    // Also cover a resize that happened during the initial asynchronous render.
+    window.templateMathJaxReflowPromise.then(reflowDisplayMath);
+  }
+});
+</script>
+<script defer=""
+  type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@4.0.0/tex-chtml.js" integrity="sha384-2BWc4dVaHADUocwKrUrK9u3iDwHxVMKXWEcoRmUkXYSFKhAsgVAYClu9ydNuo5Oz" crossorigin="anonymous"></script>
+
+<link data-template-favicon rel="icon" href="favicon.ico">
+
+<style>
+:root {
+  --brand-1: #5b6ee0;
+  --web-bg: #f8f8f8;
+  --web-surface: #ffffff;
+  --web-text: #2c3e50;
+  --web-border: #bdc3c7;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --brand-1: #7e8ce8;
+    --web-bg: #0f1420;
+    --web-surface: #161c2b;
+    --web-text: #e6eaf2;
+    --web-border: #2a3447;
+  }
+}
+.theorem-box {
+  border-left: 4px solid var(--brand-1);
+  background: var(--web-surface);
+  padding: 0.6em 1em;
+  margin: 1.1em 0;
+  border-radius: 0 4px 4px 0;
+}
+.theorem-box.definition { border-left-style: dashed; }
+.theorem-box > p:first-child { margin-top: 0; }
+.theorem-box > p:last-child { margin-bottom: 0; }
+.figure-long-description {
+  border: 1px solid var(--web-border);
+  border-radius: 4px;
+  margin-block: 0.75rem;
+  padding: 0.5rem 0.75rem;
+}
+.figure-long-description > summary { cursor: pointer; font-weight: 700; }
+.figure-long-description > p { max-width: 80ch; overflow-wrap: anywhere; }
+.figure-exact-values { max-width: 80ch; overflow-wrap: anywhere; }
+code { overflow-wrap: anywhere; word-break: break-word; }
+pre {
+  max-width: 100%;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+pre code { overflow-wrap: inherit; white-space: inherit; word-break: inherit; }
+div.sourceCode { max-width: 100%; overflow: visible; }
+pre.sourceCode { background: #2c3e50; color: #ecf0f1; }
+pre.sourceCode code,
+pre.sourceCode code span { color: inherit; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span {
+  display: block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+mjx-container[display="true"] { max-width: 100%; overflow: visible; }
+.table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-gutter: stable;
+}
+.table-scroll:focus-visible {
+  outline: 3px solid var(--brand-1);
+  outline-offset: 3px;
+}
+.table-scroll > table { margin-block: 0; min-width: 100%; width: max-content; }
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+body {
+  font-family: 'Liberation Serif', 'Times New Roman', serif;
+  line-height: 1.6;
+  width: min(100%, 800px);
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f8f8;
+  color: #1a1a1a;
+  overflow-wrap: break-word;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+main,
+nav,
+section,
+article,
+figure,
+figcaption {
+  min-width: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  padding: 0.65rem 0.9rem;
+  transform: translateY(-120%);
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font-family: sans-serif;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.skip-link:visited {
+  color: #ffffff;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+@media (max-width: 600px) {
+  body {
+    width: 100%;
+    max-width: 100%;
+    padding: 16px;
+  }
+
+  figure img {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 800px) {
+  body {
+    width: 100%;
+    max-width: 100vw;
+    margin: 0 auto;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 5px;
+  overflow-wrap: anywhere;
+}
+
+code {
+  background-color: #ecf0f1;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: 'Liberation Mono', 'Courier New', monospace;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+pre {
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  padding: 15px;
+  border-radius: 5px;
+  max-width: 100%;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  overflow-wrap: inherit;
+  white-space: inherit;
+  word-break: inherit;
+}
+
+div.sourceCode {
+  max-width: 100%;
+  overflow: visible;
+}
+
+pre.sourceCode {
+  background: #2c3e50;
+  color: #ecf0f1;
+}
+
+pre.sourceCode code,
+pre.sourceCode code span {
+  color: inherit;
+}
+
+pre > code.sourceCode {
+  white-space: pre-wrap;
+}
+
+pre > code.sourceCode > span {
+  display: block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-gutter: stable;
+}
+
+.table-scroll:focus-visible {
+  outline: 3px solid #1f6f8b;
+  outline-offset: 3px;
+}
+
+.table-scroll > table {
+  margin-block: 0;
+  min-width: 100%;
+  width: max-content;
+}
+
+figure {
+  max-width: 100%;
+  margin: 1.5rem 0;
+}
+
+th, td {
+  border: 1px solid #bdc3c7;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #1f6f8b;
+  color: white;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #bdc3c7;
+  border-radius: 5px;
+  margin: 20px 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+a {
+  color: #b91c1c;
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.14em;
+  overflow-wrap: anywhere;
+}
+
+a:visited {
+  color: #8f1d1d;
+}
+
+a:hover {
+  text-decoration-thickness: 0.14em;
+}
+
+a:focus-visible {
+  outline: 3px solid #1f6f8b;
+  outline-offset: 3px;
+}
+
+.toc {
+  background-color: #ecf0f1;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.toc a,
+#TOC a {
+  color: #b91c1c;
+  display: inline-block;
+  min-height: 28px;
+  line-height: 1.5;
+  padding-block: 2px;
+}
+
+.toc li,
+#TOC li {
+  margin-block: 1px;
+}
+
+.math {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 1.1em;
+}
+
+mjx-container[display="true"] {
+  display: block;
+  max-width: 100%;
+  overflow: visible;
+  padding-bottom: 0.25rem;
+}
+
+.figure {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.figure img {
+  max-width: 100%;
+  height: auto;
+  border: 2px solid #3498db;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* A reading column keeps prose comfortable, but dense scientific figures need
+   a larger inspection surface.  The rendered image remains responsive and the
+   explicit link opens its source-resolution asset without changing the PDF. */
+.figure-full-size-link {
+  color: inherit;
+  display: block;
+  max-width: 100%;
+  text-align: center;
+}
+
+.figure-full-size-link img {
+  cursor: zoom-in;
+  margin-bottom: 0.45rem;
+}
+
+.figure-full-size-label {
+  color: #1f6f8b;
+  display: inline-block;
+  font-family: sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  text-decoration: underline;
+  text-underline-offset: 0.14em;
+}
+
+.figure-full-size-link:focus-visible {
+  outline: 3px solid #1f6f8b;
+  outline-offset: 4px;
+}
+
+@media (min-width: 1000px) {
+  /* Wide figure links stay within the viewport but extend beyond the prose
+     column. Do not clip their labels at the narrower body boundary. */
+  body {
+    overflow-x: visible;
+  }
+
+  .figure-full-size-link {
+    left: 50%;
+    max-width: none;
+    position: relative;
+    transform: translateX(-50%);
+    width: min(1080px, calc(100vw - 3rem));
+  }
+}
+
+.figure-caption {
+  font-style: italic;
+  color: #4b5563;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.figure-long-description,
+.figure-exact-values {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+</style>
+
+<style>
+:root {
+  --brand-1: #5b6ee0;
+  --web-bg: #f8f8f8;
+  --web-surface: #ffffff;
+  --web-text: #2c3e50;
+  --web-border: #bdc3c7;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --brand-1: #7e8ce8;
+    --web-bg: #0f1420;
+    --web-surface: #161c2b;
+    --web-text: #e6eaf2;
+    --web-border: #2a3447;
+  }
+}
+.theorem-box {
+  border-left: 4px solid var(--brand-1);
+  background: var(--web-surface);
+  padding: 0.6em 1em;
+  margin: 1.1em 0;
+  border-radius: 0 4px 4px 0;
+}
+.theorem-box.definition { border-left-style: dashed; }
+.theorem-box > p:first-child { margin-top: 0; }
+.theorem-box > p:last-child { margin-bottom: 0; }
+.figure-long-description {
+  border: 1px solid var(--web-border);
+  border-radius: 4px;
+  margin-block: 0.75rem;
+  padding: 0.5rem 0.75rem;
+}
+.figure-long-description > summary { cursor: pointer; font-weight: 700; }
+.figure-long-description > p { max-width: 80ch; overflow-wrap: anywhere; }
+.figure-exact-values { max-width: 80ch; overflow-wrap: anywhere; }
+code { overflow-wrap: anywhere; word-break: break-word; }
+pre {
+  max-width: 100%;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+pre code { overflow-wrap: inherit; white-space: inherit; word-break: inherit; }
+div.sourceCode { max-width: 100%; overflow: visible; }
+pre.sourceCode { background: #2c3e50; color: #ecf0f1; }
+pre.sourceCode code,
+pre.sourceCode code span { color: inherit; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span {
+  display: block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+mjx-container[display="true"] { max-width: 100%; overflow: visible; }
+.table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-gutter: stable;
+}
+.table-scroll:focus-visible {
+  outline: 3px solid var(--brand-1);
+  outline-offset: 3px;
+}
+.table-scroll > table { margin-block: 0; min-width: 100%; width: max-content; }
+/* Reading edition, layered through the template's CSS embedding API. */
+:root {
+  color-scheme: light dark;
+  --paper-background: #fafbf9;
+  --paper-text: #202c33;
+  --paper-link: #a61b1b;
+  --paper-rule: #b3c0c5;
+  --paper-code: #edf1f2;
+  --paper-hover: #e4edf2;
+  --paper-pressed: #ccdde8;
+  --paper-muted: #52616a;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper-background: #131c22;
+    --paper-text: #e7edf0;
+    --paper-link: #ffaaa0;
+    --paper-rule: #73858f;
+    --paper-code: #23323c;
+    --paper-hover: #243b4a;
+    --paper-pressed: #35546a;
+    --paper-muted: #a7b8c2;
+  }
+}
+html, body { background: var(--paper-background); color: var(--paper-text); }
+body {
+  box-sizing: border-box;
+  max-width: 76ch;
+  margin: 0 auto;
+  padding: 28px 20px 64px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  line-height: 1.65;
+}
+h1, h2, h3, h4 {
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--paper-text);
+  border: 0;
+  padding: 0;
+  line-height: 1.3;
+  margin-top: 1.8em;
+  hyphens: none;
+  word-break: normal;
+}
+h1 { font-size: 1.65rem; }
+h1.title { font-size: 1.85rem; margin-top: 0.8em; }
+h2 { font-size: 1.35rem; }
+h3 { font-size: 1.12rem; }
+p { text-align: left; hyphens: none; word-break: normal; }
+header { margin-bottom: 2rem; }
+header p { text-align: center; }
+a, a:link, a:visited { color: var(--paper-link) !important; background: transparent; text-decoration-line: underline !important; }
+a:hover { background: var(--paper-hover); text-decoration-thickness: 2px; }
+a:active { background: var(--paper-pressed); text-decoration-thickness: 3px; }
+a:focus-visible { outline: 3px solid var(--paper-link); outline-offset: 4px; }
+.figure-full-size-label { color: var(--paper-link); font-size: 15px; }
+.paper-math-loading {
+  margin-block: 1.5rem;
+  padding: 12px;
+  border: 1px solid var(--paper-rule);
+  border-radius: 4px;
+  background: var(--paper-code);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.paper-math-loading p { margin: 0; }
+#paper-math-status { min-height: 4.65em; }
+.paper-math-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-block: 8px; }
+.paper-math-actions a, .paper-math-actions button { box-sizing: border-box; display: inline-flex; align-items: center; min-height: 44px; padding: 8px; font: inherit; }
+.paper-math-actions button { border: 1px solid var(--paper-muted); border-radius: 4px; background: var(--paper-background); color: var(--paper-text); cursor: pointer; }
+.paper-math-actions button:disabled { color: var(--paper-muted); cursor: default; }
+.paper-math-actions button:not(:disabled):hover { background: var(--paper-hover); }
+.paper-math-actions button:not(:disabled):active { background: var(--paper-pressed); }
+.paper-math-actions button:focus-visible { outline: 3px solid var(--paper-link); outline-offset: 3px; }
+@media (min-width: 700px) { #paper-math-status { min-height: 3.1em; } }
+@media print { .paper-math-loading { display: none; } }
+.front-cover, .visual-plate {
+  margin-block: 2rem 3rem;
+  padding-block: 0.5rem 1.5rem;
+  border-bottom: 1px solid var(--paper-rule);
+}
+.front-cover figure, .visual-plate figure { margin-block: 1rem; }
+.front-cover p, .visual-plate > p { max-width: 70ch; }
+.visual-plate h1 { margin-top: 0.5rem; font-size: 1.55rem; }
+.definition, .proposition, .example {
+  margin-block: 1.5rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--paper-rule);
+  border-radius: 4px;
+}
+.definition > :first-child, .proposition > :first-child, .example > :first-child { margin-top: 0; }
+.definition > :last-child, .proposition > :last-child, .example > :last-child { margin-bottom: 0; }
+@media print {
+  .front-cover, .visual-plate { break-after: page; border: 0; }
+  .definition, .proposition, .example { break-inside: avoid; }
+}
+.figure-full-size-link:focus-visible { outline-color: var(--paper-link); }
+.skip-link { background: var(--paper-code); }
+nav#TOC a { display: inline-block; vertical-align: top; min-height: 44px; padding: 6px 0; }
+nav#TOC li { margin-block: 8px; }
+nav#TOC ul { padding-left: 1.2rem; }
+code, pre { background: var(--paper-code); color: var(--paper-text); }
+code, .csl-entry a { overflow-wrap: anywhere; }
+figure { max-width: 100%; margin: 1.8rem 0; }
+figure img { max-width: 100%; height: auto; }
+figcaption, caption { font-size: 15px; line-height: 1.55; color: var(--paper-text); }
+table {
+  display: table;
+  overflow: visible;
+  max-width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  line-height: 1.5;
+}
+th, td { padding: 0.45rem 0.65rem; white-space: nowrap; border-color: var(--paper-rule); }
+.table-scroll { overflow-x: auto; container-type: inline-size; }
+.table-scroll:focus-visible { outline: 3px solid var(--paper-link); outline-offset: 4px; }
+caption { text-align: left; margin-bottom: 0.6rem; width: 100cqw; max-width: 100cqw; white-space: normal; box-sizing: border-box; }
+mjx-container[display="true"] { max-width: 100%; overflow-x: auto; overflow-y: hidden; padding: 20px 0; }
+mjx-container[display="true"] mjx-help { top: 2px !important; right: 2px !important; }
+mjx-container .mjx-selected {
+  color: var(--paper-text) !important;
+  background-color: var(--paper-code) !important;
+  outline-color: var(--paper-link) !important;
+}
+/* Keep MathJax's own commands and event handling. Compact cascades overlap
+   deliberately, with the parent reachable at the leading edge or ArrowLeft. */
+.CtxtMenu_ContextMenu {
+  box-sizing: border-box;
+  max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 24px);
+  overflow: auto;
+  background: var(--paper-background) !important;
+  color: var(--paper-text) !important;
+  border-color: var(--paper-link) !important;
+}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem {
+  position: relative;
+  box-sizing: border-box;
+  min-height: 44px;
+  padding: 10px 32px !important;
+  margin-bottom: 8px !important;
+  line-height: 24px !important;
+  white-space: normal;
+  color: var(--paper-text) !important;
+  background: var(--paper-background) !important;
+}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem.CtxtMenu_MenuDisabled {
+  color: var(--paper-muted) !important;
+  opacity: 1 !important;
+}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem.CtxtMenu_MenuActive {
+  color: var(--paper-text) !important;
+  background: var(--paper-pressed) !important;
+}
+.CtxtMenu_ContextMenu:focus-visible,
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus-visible,
+.CtxtMenu_ContextMenu input:focus-visible,
+.CtxtMenu_Info:focus-visible,
+.CtxtMenu_InfoContent:focus-visible {
+  outline: 3px solid var(--paper-link) !important;
+  outline-offset: -3px !important;
+}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuSlider {
+  display: grid;
+  grid-template-columns: minmax(44px, 1fr) 5ch;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px !important;
+}
+.CtxtMenu_MenuSlider > span:first-child {
+  grid-column: 1 / -1;
+  color: var(--paper-text) !important;
+  font-size: 15px !important;
+  line-height: 1.4;
+}
+.CtxtMenu_MenuSlider > span:nth-child(2) { min-width: 0; }
+.CtxtMenu_ContextMenu input.CtxtMenu_SliderBar {
+  box-sizing: border-box;
+  width: 100% !important;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0 8px;
+  accent-color: var(--paper-link);
+  border: 1px solid var(--paper-link);
+  background: var(--paper-code);
+}
+.CtxtMenu_MenuSlider .CtxtMenu_SliderValue {
+  position: static !important;
+  color: var(--paper-text) !important;
+  background: transparent !important;
+  font-size: 15px !important;
+  line-height: 1.4;
+  white-space: nowrap;
+  text-align: right;
+}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuRule {
+  min-height: 0 !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: 8px 0 !important;
+}
+.CtxtMenu_MenuArrow, .CtxtMenu_MenuCheck, .CtxtMenu_MenuRadioCheck {
+  color: inherit !important;
+  text-shadow: none !important;
+  top: 50% !important;
+  transform: translateY(-50%);
+}
+.CtxtMenu_Info {
+  box-sizing: border-box;
+  left: 50% !important;
+  top: 12px !important;
+  margin-left: 0 !important;
+  transform: translateX(-50%);
+  max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 24px);
+  overflow: auto;
+  background: var(--paper-background) !important;
+  color: var(--paper-text) !important;
+  border-color: var(--paper-link) !important;
+  font-size: 16px !important;
+}
+.CtxtMenu_InfoTitle { display: block; padding-right: 52px; min-height: 44px; }
+.CtxtMenu_InfoContent {
+  background: var(--paper-code) !important;
+  color: var(--paper-text) !important;
+  box-sizing: border-box;
+  max-width: 100%;
+  max-height: none !important;
+  overflow: visible !important;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  font-size: 16px !important;
+}
+.CtxtMenu_InfoSignature { font-size: 15px !important; }
+.CtxtMenu_InfoSignature a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 10px; }
+.CtxtMenu_Info .CtxtMenu_InfoClose[role="button"] {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 44px !important;
+  height: 44px !important;
+  top: 8px !important;
+  right: 8px !important;
+  color: var(--paper-text) !important;
+  background: var(--paper-code) !important;
+  border: 1px solid var(--paper-link) !important;
+}
+.CtxtMenu_Info .CtxtMenu_InfoClose[role="button"]:hover { background: var(--paper-hover) !important; }
+.CtxtMenu_Info .CtxtMenu_InfoClose[role="button"]:active { background: var(--paper-pressed) !important; }
+.CtxtMenu_Info .CtxtMenu_InfoClose[role="button"]:focus-visible { outline: 3px solid var(--paper-link); outline-offset: 2px; }
+.CtxtMenu_Info .CtxtMenu_InfoClose[role="button"] > span:not(.paper-math-tooltip) { position: static !important; color: var(--paper-text) !important; background: transparent !important; border: none !important; text-shadow: none !important; font-size: 24px !important; line-height: 1; }
+.CtxtMenu_Info .CtxtMenu_InfoClose[role="button"] .paper-math-tooltip {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: max-content;
+  padding: 8px 10px;
+  color: var(--paper-text) !important;
+  background: var(--paper-code) !important;
+  border: 1px solid var(--paper-link) !important;
+  font-size: 15px;
+  line-height: 1.4;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.CtxtMenu_Info .CtxtMenu_InfoClose[role="button"]:hover .paper-math-tooltip,
+.CtxtMenu_Info .CtxtMenu_InfoClose[role="button"]:focus-visible .paper-math-tooltip { display: block; }
+@media (max-width: 600px) {
+  .CtxtMenu_ContextMenu {
+    position: fixed !important;
+    top: 12px !important;
+    left: 12px !important;
+  }
+  .CtxtMenu_ContextMenu ~ .CtxtMenu_ContextMenu {
+    left: auto !important;
+    right: 12px !important;
+  }
+}
+.csl-entry { margin-bottom: 1rem; }
+@media (max-width: 600px) {
+  body { padding: 20px 18px 48px; font-size: 17px; }
+  h1.title { font-size: 1.55rem; }
+}
+@media print {
+  :root { color-scheme: light; --paper-background: white; --paper-text: black; --paper-link: #a61b1b; --paper-code: #eeeeee; --paper-hover: transparent; --paper-pressed: transparent; }
+  html, body { background: white; color: black; }
+  a, a:visited { background: transparent !important; }
+  nav#TOC a { min-height: 0; padding: 0; }
+  nav#TOC li { margin-block: 0; }
+}
+
+/* Native preference groups reflow; handlers, values, and DOM order stay native. */
+.CtxtMenu_Info.CtxtMenu_Selection {
+  position: fixed !important;
+  left: max(12px, calc(50vw - 36rem)) !important;
+  transform: none;
+  width: min(72rem, calc(100vw - 24px)) !important;
+}
+.CtxtMenu_Selection > .CtxtMenu_InfoTitle {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: var(--paper-background);
+}
+.CtxtMenu_SelectionBox {
+  position: relative !important;
+  z-index: 0 !important;
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  white-space: normal !important;
+}
+.CtxtMenu_SelectionDivider { display: contents !important; }
+.CtxtMenu_SelectionMenu {
+  position: static !important;
+  float: none !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: 0;
+  padding: 8px !important;
+  border: 1px solid var(--paper-link) !important;
+  color: var(--paper-text) !important;
+  background: var(--paper-code) !important;
+}
+.CtxtMenu_SelectionMenu > .CtxtMenu_MenuItem {
+  position: relative !important;
+  box-sizing: border-box;
+  min-height: 44px;
+  margin-bottom: 8px !important;
+  padding: 10px 32px !important;
+  font-size: 15px !important;
+  line-height: 24px !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  color: var(--paper-text) !important;
+  background: var(--paper-code) !important;
+}
+.CtxtMenu_SelectionMenu > .CtxtMenu_MenuActive {
+  background: var(--paper-pressed) !important;
+}
+.CtxtMenu_SelectionMenu > .CtxtMenu_MenuRule {
+  min-height: 0;
+  height: 1px;
+  padding: 0 !important;
+}
+.CtxtMenu_SelectionMenu > .CtxtMenu_MenuLabel { font-weight: 600; }
+.CtxtMenu_SelectionMenu > .CtxtMenu_MenuItem:focus-visible {
+  outline: 3px solid var(--paper-link) !important;
+  outline-offset: -3px;
+}
+@media (max-width: 600px) {
+  .CtxtMenu_SelectionBox { grid-template-columns: minmax(0, 1fr); }
+}
+
+</style>
+<script data-template-source-font-loader src="assets/source-web-fonts.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<header id="title-block-header">
+<h1 class="title">GNN-based active inference for Battleship</h1>
+<p class="subtitle">Finite-catalog inference, interpretable decisions,
+and reproducible software</p>
+<p class="author">Daniel Ari Friedman</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#abstract" id="toc-abstract">Abstract</a></li>
+<li><a href="#battleship-as-a-model-of-active-sensing"
+id="toc-battleship-as-a-model-of-active-sensing"><span
+class="toc-section-number">1</span> Battleship as a model of active
+sensing</a>
+<ul>
+<li><a href="#prior-work-on-information-gathering-and-target-search"
+id="toc-prior-work-on-information-gathering-and-target-search"><span
+class="toc-section-number">1.1</span> Prior work on information
+gathering and target search</a>
+<ul>
+<li><a href="#human-search-and-question-asking-in-battleship-tasks"
+id="toc-human-search-and-question-asking-in-battleship-tasks"><span
+class="toc-section-number">1.1.1</span> Human search and question asking
+in Battleship tasks</a></li>
+<li><a href="#the-meaning-of-expected-free-energy"
+id="toc-the-meaning-of-expected-free-energy"><span
+class="toc-section-number">1.1.2</span> The meaning of expected free
+energy</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#finite-fleet-beliefs-and-one-step-action-selection"
+id="toc-finite-fleet-beliefs-and-one-step-action-selection"><span
+class="toc-section-number">2</span> Finite fleet beliefs and one step
+action selection</a>
+<ul>
+<li><a href="#hidden-fleet-labels-and-public-observations"
+id="toc-hidden-fleet-labels-and-public-observations"><span
+class="toc-section-number">2.1</span> Hidden fleet labels and public
+observations</a></li>
+<li><a href="#expected-information-and-outcome-preferences"
+id="toc-expected-information-and-outcome-preferences"><span
+class="toc-section-number">2.2</span> Expected information and outcome
+preferences</a></li>
+<li><a href="#observed-updates-and-hypothetical-outcomes"
+id="toc-observed-updates-and-hypothetical-outcomes"><span
+class="toc-section-number">2.3</span> Observed updates and hypothetical
+outcomes</a></li>
+</ul></li>
+<li><a href="#from-the-gnn-specification-to-browser-decisions"
+id="toc-from-the-gnn-specification-to-browser-decisions"><span
+class="toc-section-number">3</span> From the GNN specification to
+browser decisions</a></li>
+<li><a href="#study-designs-and-statistical-comparisons"
+id="toc-study-designs-and-statistical-comparisons"><span
+class="toc-section-number">4</span> Study designs and statistical
+comparisons</a>
+<ul>
+<li><a href="#an-analytic-check-of-preference-and-information"
+id="toc-an-analytic-check-of-preference-and-information"><span
+class="toc-section-number">4.1</span> An analytic check of preference
+and information</a></li>
+<li><a href="#the-exploratory-sixteen-case-comparison"
+id="toc-the-exploratory-sixteen-case-comparison"><span
+class="toc-section-number">4.2</span> The exploratory sixteen case
+comparison</a></li>
+<li><a href="#a-paired-comparison-of-five-search-strategies"
+id="toc-a-paired-comparison-of-five-search-strategies"><span
+class="toc-section-number">4.3</span> A paired comparison of five search
+strategies</a>
+<ul>
+<li><a href="#shared-cases-and-declared-selectors"
+id="toc-shared-cases-and-declared-selectors"><span
+class="toc-section-number">4.3.1</span> Shared cases and declared
+selectors</a></li>
+<li><a href="#endpoints-and-paired-statistical-analysis"
+id="toc-endpoints-and-paired-statistical-analysis"><span
+class="toc-section-number">4.3.2</span> Endpoints and paired statistical
+analysis</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#strategy-performance-across-three-search-objectives"
+id="toc-strategy-performance-across-three-search-objectives"><span
+class="toc-section-number">5</span> Strategy performance across three
+search objectives</a>
+<ul>
+<li><a href="#all-planned-comparisons-and-their-uncertainty"
+id="toc-all-planned-comparisons-and-their-uncertainty"><span
+class="toc-section-number">5.1</span> All planned comparisons and their
+uncertainty</a>
+<ul>
+<li><a href="#completion-shots" id="toc-completion-shots"><span
+class="toc-section-number">5.1.1</span> Completion shots</a></li>
+<li><a href="#hits-after-five-shots"
+id="toc-hits-after-five-shots"><span
+class="toc-section-number">5.1.2</span> Hits after five shots</a></li>
+<li><a href="#normalized-label-entropy-after-five-shots"
+id="toc-normalized-label-entropy-after-five-shots"><span
+class="toc-section-number">5.1.3</span> Normalized label entropy after
+five shots</a></li>
+</ul></li>
+<li><a href="#the-original-exploratory-comparison"
+id="toc-the-original-exploratory-comparison"><span
+class="toc-section-number">5.2</span> The original exploratory
+comparison</a></li>
+</ul></li>
+<li><a href="#what-the-strategy-comparisons-establish"
+id="toc-what-the-strategy-comparisons-establish"><span
+class="toc-section-number">6</span> What the strategy comparisons
+establish</a>
+<ul>
+<li><a href="#why-the-objectives-can-select-different-shots"
+id="toc-why-the-objectives-can-select-different-shots"><span
+class="toc-section-number">6.1</span> Why the objectives can select
+different shots</a></li>
+<li><a href="#inference-support-and-external-validity"
+id="toc-inference-support-and-external-validity"><span
+class="toc-section-number">6.2</span> Inference support and external
+validity</a></li>
+<li><a href="#planning-horizon-and-feedback-assumptions"
+id="toc-planning-horizon-and-feedback-assumptions"><span
+class="toc-section-number">6.3</span> Planning horizon and feedback
+assumptions</a></li>
+<li><a href="#educational-use-and-specification-limits"
+id="toc-educational-use-and-specification-limits"><span
+class="toc-section-number">6.4</span> Educational use and specification
+limits</a></li>
+</ul></li>
+<li><a href="#reproducing-the-software-and-manuscript"
+id="toc-reproducing-the-software-and-manuscript"><span
+class="toc-section-number">7</span> Reproducing the software and
+manuscript</a>
+<ul>
+<li><a href="#github-release-and-zenodo-archive"
+id="toc-github-release-and-zenodo-archive"><span
+class="toc-section-number">7.1</span> GitHub release and Zenodo
+archive</a></li>
+</ul></li>
+<li><a href="#conclusions-and-next-experiments"
+id="toc-conclusions-and-next-experiments"><span
+class="toc-section-number">8</span> Conclusions and next
+experiments</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+</ul>
+</nav>
+<main id="main-content" tabindex="-1">
+<aside class="paper-math-loading" aria-label="Mathematical notation" aria-busy="true" data-state="loading">
+  <p id="paper-math-status" role="status" aria-live="polite">Loading mathematical notation.</p>
+  <div class="paper-math-actions">
+    <button type="button" id="paper-math-retry" disabled aria-describedby="paper-math-retry-help">Retry notation</button>
+    <a href="editions/active_inference_battleship_combined.pdf">Open PDF</a>
+    <a href="editions/active_inference_battleship.docx">Open Word</a>
+  </div>
+  <p id="paper-math-retry-help">Retry reloads this manuscript. The PDF and Word editions already contain rendered equations.</p>
+  <noscript><p>JavaScript is required to typeset equations in this reader. Open the PDF or Word edition for rendered equations.</p></noscript>
+</aside>
+<div id="graphical-overview" class="front-cover">
+<p><a href="https://orcid.org/0000-0001-6232-9096">ORCID
+0000-0001-6232-9096</a> · <a
+href="mailto:daniel@activeinference.institute">daniel@activeinference.institute</a></p>
+<p><a href="https://doi.org/10.5281/zenodo.23670188">DOI
+10.5281/zenodo.23670188</a> · <a
+href="https://github.com/ActInfInstitute/active_inference_battleship/releases/tag/v0.4.0">GitHub
+v0.4.0</a></p>
+<figure>
+<a class="figure-full-size-link" href="figures/graphical-abstract.png" target="_blank" rel="noopener" aria-label="Open full-size figure, Graphical abstract of one observation and decision cycle."><img src="figures/graphical-abstract.png" style="width:6.25in"
+alt="Graphical abstract of one observation and decision cycle. Public hit/miss feedback updates a joint belief over 256 fleet labels; the occupancy map uses a fixed 0–1 probability scale. Bars partition the policy over all unvisited cells into the three leading actions and their remainder. Values come from seed 1943 after six manual shots, with hit preference 2.5, information weight 1, precision 8, assumed noise 0.02, and uniform habits. Displayed probabilities illustrate the browser policy, not the follow-up study’s greedy selections. The return arrow denotes repeated one-shot inference, not multi-step planning." /><span class="figure-full-size-label" aria-hidden="true">Open full-size figure</span></a>
+<figcaption>Graphical abstract of one observation and
+decision cycle. Public hit/miss feedback updates a joint belief over 256
+fleet labels; the occupancy map uses a fixed 0–1 probability scale. Bars
+partition the policy over all unvisited cells into the three leading
+actions and their remainder. Values come from seed 1943 after six manual
+shots, with hit preference 2.5, information weight 1, precision 8,
+assumed noise 0.02, and uniform habits. Displayed probabilities
+illustrate the browser policy, not the follow-up study’s greedy
+selections. The return arrow denotes repeated one-shot inference, not
+multi-step planning.</figcaption>
+</figure>
+<p><strong>Version 0.4.0 from the Active Inference Institute.</strong>
+The graphical overview introduces the model and interface. It does not
+claim unrestricted Battleship inference, multi-step planning, parameter
+learning, or measured educational benefit.</p>
+</div>
+<section id="visual-model" class="unnumbered unlisted visual-plate">
+<h1 id="from-gnn-to-a-decision" class="unnumbered unlisted">From GNN to
+a decision</h1>
+<figure>
+<a class="figure-full-size-link" href="figures/model-atlas.png" target="_blank" rel="noopener" aria-label="Open full-size figure, The GNN model and its information boundary."><img src="figures/model-atlas.png" style="width:6.25in"
+alt="The GNN model and its information boundary. A catalog label specifies a complete fleet. A is the hit/miss likelihood, B the static transition, C outcome preferences, D the label prior, and E the action prior. Only the environment accesses the selected label. Public coordinates and outcomes update the assistant; one chosen coordinate returns for execution. Assumed noise changes inference, while environment feedback remains truthful. This schematic defines information access, not measured strategy performance." /><span class="figure-full-size-label" aria-hidden="true">Open full-size figure</span></a>
+<figcaption>The GNN model and its information
+boundary. A catalog label specifies a complete fleet. A is the hit/miss
+likelihood, B the static transition, C outcome preferences, D the label
+prior, and E the action prior. Only the environment accesses the
+selected label. Public coordinates and outcomes update the assistant;
+one chosen coordinate returns for execution. Assumed noise changes
+inference, while environment feedback remains truthful. This schematic
+defines information access, not measured strategy
+performance.</figcaption>
+</figure>
+</section>
+<section id="visual-play" class="unnumbered unlisted visual-plate">
+<h1 id="play-and-inspect-beliefs" class="unnumbered unlisted">Play and
+inspect beliefs</h1>
+<figure>
+<a class="figure-full-size-link" href="figures/dashboard-play.png" target="_blank" rel="noopener" aria-label="Open full-size figure, Playing and inspecting the recorded six-shot example."><img src="figures/dashboard-play.png" style="width:6.25in"
+alt="Playing and inspecting the recorded six-shot example. The Play view pairs player and opponent observations with posterior belief overlays and numerical diagnostics. Hit/miss symbols encode actual outcomes; overlay intensity represents the assistant’s belief rather than access to hidden occupancy. Whole DOM regions were captured from one Chrome session with seed 1943 and 256 labels. Cropped panels are parts of that single illustrative state, not independent observations or evidence of human performance." /><span class="figure-full-size-label" aria-hidden="true">Open full-size figure</span></a>
+<figcaption>Playing and inspecting the recorded
+six-shot example. The Play view pairs player and opponent observations
+with posterior belief overlays and numerical diagnostics. Hit/miss
+symbols encode actual outcomes; overlay intensity represents the
+assistant’s belief rather than access to hidden occupancy. Whole DOM
+regions were captured from one Chrome session with seed 1943 and 256
+labels. Cropped panels are parts of that single illustrative state, not
+independent observations or evidence of human performance.</figcaption>
+</figure>
+</section>
+<section id="visual-decisions" class="unnumbered unlisted visual-plate">
+<h1 id="explain-the-next-action" class="unnumbered unlisted">Explain the
+next action</h1>
+<figure>
+<a class="figure-full-size-link" href="figures/dashboard-decisions.png" target="_blank" rel="noopener" aria-label="Open full-size figure, Explaining an action in the same recorded session."><img src="figures/dashboard-decisions.png" style="width:6.25in"
+alt="Explaining an action in the same recorded session. The map locates legal cells; the scatterplot relates predicted hit probability to expected information gain in nats for every unvisited action. Distinct selected and leading-action marks identify choices even when points overlap. The numerical receipt comes from the exported six-shot snapshot. Under fixed symmetric binary noise, information is determined by the hit forecast; these axes are not independent measurements. Sandbox inspection changes hypothetical scores without firing a shot." /><span class="figure-full-size-label" aria-hidden="true">Open full-size figure</span></a>
+<figcaption>Explaining an action in the same recorded
+session. The map locates legal cells; the scatterplot relates predicted
+hit probability to expected information gain in nats for every unvisited
+action. Distinct selected and leading-action marks identify choices even
+when points overlap. The numerical receipt comes from the exported
+six-shot snapshot. Under fixed symmetric binary noise, information is
+determined by the hit forecast; these axes are not independent
+measurements. Sandbox inspection changes hypothetical scores without
+firing a shot.</figcaption>
+</figure>
+</section>
+<hr />
+<h1 class="unnumbered" id="abstract">Abstract</h1>
+<p>Active inference models connect beliefs, preferred outcomes, and
+information-seeking actions, but an implementation can obscure the
+assumptions behind its displayed quantities. We present a browser-based
+Battleship dashboard whose executable contract begins with a Generalized
+Notation Notation (GNN) specification. The assistant performs exact
+categorical Bayesian inference conditional on a reproducibly sampled
+finite catalog of legal fleets, and evaluates a one-step
+preference-and-information objective. An interactive decision explorer
+exposes occupancy, observation forecasts, information gain, preference
+cost, action probabilities, hypothetical posteriors, and parameter
+sensitivity for either actor. The selected fleet remains outside the
+assistant’s information boundary. We derive the implemented quantities,
+distinguish expected from realized information, and connect the model to
+active learning, active search, partially observable planning, and prior
+Battleship research. A two-fleet example isolates the
+preference–information trade-off. A retained descriptive demonstration
+motivates a prospectively specified 1,280-search follow-up across 256
+fresh paired catalog/truth units and five strategies. Completion shots,
+five-shot hits, and normalized label entropy receive 24 planned
+Holm-adjusted paired sign tests, alongside descriptive paired
+mean-effect intervals. Standard greedy EFE and pragmatic completion
+counts tie in every pair. Pure epistemic selection has less favorable
+completion sign balance in both size strata. At 4096 labels, information
+weighting has favorable five-shot label-uncertainty sign balance; its
+completion comparison is not rejected. These findings concern the
+declared generator and objectives, not a generally superior strategy.
+Seeded traces, source hashes, tests, and a three-edition manuscript
+build support inspection and reuse. The contribution is an explicit,
+composable implementation and its interpretable evidence, rather than a
+new inference principle, an unrestricted Battleship solver, or a
+validated educational intervention.</p>
+<p>A typed core package and headless replay-analysis commands support
+reuse outside the browser. The Active Inference Institute publishes
+version 0.4.0 with source and reproducibility materials at <a
+href="https://github.com/ActInfInstitute/active_inference_battleship">ActInfInstitute/active_inference_battleship</a>
+and the manuscript archived on <a
+href="https://doi.org/10.5281/zenodo.23670188">Zenodo, DOI
+10.5281/zenodo.23670188</a>. The <a
+href="https://github.com/ActInfInstitute/active_inference_battleship/releases/tag/v0.4.0">tagged
+GitHub release</a> distributes the manuscript, interactive reader,
+dashboard, and reusable core package.</p>
+<p><strong>Keywords:</strong> active inference; Bayesian active sensing;
+expected information gain; Battleship; Generalized Notation Notation;
+reproducible software.</p>
+<hr />
+<h1 data-number="1" id="battleship-as-a-model-of-active-sensing"><span
+class="header-section-number">1</span> Battleship as a model of active
+sensing</h1>
+<p>Battleship offers a concrete setting for inspecting the relationship
+between finding a target and learning where targets might be. A shot
+returns a small observation, yet constrains a correlated collection of
+possible fleets. A cell with high occupancy probability can be
+attractive because it is likely to yield a hit. A cell with intermediate
+probability can be attractive because its possible outcomes distinguish
+hypotheses. Those objectives need not select the same action, and
+neither immediate criterion by itself solves a multi-step search
+problem.</p>
+<p>Discrete active inference provides a useful language for making these
+choices explicit: hidden states, observation likelihoods, prior beliefs,
+outcome preferences, and policy distributions <span class="citation"
+data-cites="friston2017process dacosta2020synthesis">(<a
+href="#ref-friston2017process" role="doc-biblioref">Friston et al.
+2017</a>; <a href="#ref-dacosta2020synthesis" role="doc-biblioref">Da
+Costa et al. 2020</a>)</span>. Its epistemic and pragmatic action values
+motivate the decomposition displayed here <span class="citation"
+data-cites="friston2015epistemic">(<a href="#ref-friston2015epistemic"
+role="doc-biblioref">Friston et al. 2015</a>)</span>. Existing practical
+resources already support model construction and discrete-state
+implementation, including a step-by-step tutorial and the
+<code>pymdp</code> library <span class="citation"
+data-cites="smith2022tutorial heins2022pymdp">(<a
+href="#ref-smith2022tutorial" role="doc-biblioref">Smith et al.
+2022</a>; <a href="#ref-heins2022pymdp" role="doc-biblioref">Heins et
+al. 2022</a>)</span>. The present dashboard complements that work with a
+small browser implementation in which a reader can connect a spatial
+decision to numerical inputs, hypothetical outcomes, and an exported
+record. Whether this improves learning is a question for a future
+educational study.</p>
+<p>We distinguish the environment that generates shot outcomes from the
+assistant’s subjective generative model. The likelihood’s noise setting
+describes the assistant’s assumptions, while the environment returns
+deterministic occupancy. This uses discrete active-inference vocabulary
+without implementing neuronal process dynamics or learning model
+parameters <span class="citation"
+data-cites="friston2017process smith2022tutorial">(<a
+href="#ref-friston2017process" role="doc-biblioref">Friston et al.
+2017</a>; <a href="#ref-smith2022tutorial" role="doc-biblioref">Smith et
+al. 2022</a>)</span>.</p>
+<p>The contribution has three parts. First, a source-identifiable GNN
+specification is imported through the actual upstream parser and
+constrained by a strict executable adapter. Second, separate game,
+inference, analysis, session, and interface modules expose a complete
+inspectable path from public observations to actions. Third,
+reproducible examples and a scholarly manuscript explain the implemented
+mathematics and its limits. The paper does not claim priority for
+Bayesian Battleship search, information gain, or the integration of
+epistemic and pragmatic action values.</p>
+<h2 data-number="1.1"
+id="prior-work-on-information-gathering-and-target-search"><span
+class="header-section-number">1.1</span> Prior work on information
+gathering and target search</h2>
+<p>Information-based query selection predates this application. MacKay
+emphasizes that an acquisition objective depends on the information
+sought and the assumed hypothesis space <span class="citation"
+data-cites="mackay1992selection">(<a href="#ref-mackay1992selection"
+role="doc-biblioref">MacKay 1992</a>)</span>. Bayesian active learning
+expresses expected posterior entropy reduction as predictive entropy
+minus expected conditional entropy <span class="citation"
+data-cites="houlsby2011bald">(<a href="#ref-houlsby2011bald"
+role="doc-biblioref">Houlsby et al. 2011</a>)</span>. Shannon’s discrete
+entropy supplies the units and mathematical vocabulary <span
+class="citation" data-cites="shannon1948communication">(<a
+href="#ref-shannon1948communication" role="doc-biblioref">Shannon
+1948</a>)</span>. Here the target of inference is a finite latent fleet
+label, rather than a Gaussian-process parameter, a neural network, or a
+learned likelihood.</p>
+<p>Active search asks a different question from generic uncertainty
+reduction: how should observations be chosen to discover targets under a
+task-specific utility? Garnett and colleagues formalize that distinction
+and show why planning horizon matters <span class="citation"
+data-cites="garnett2012search">(<a href="#ref-garnett2012search"
+role="doc-biblioref">Garnett et al. 2012</a>)</span>. Likewise, a
+partially observable Markov decision process (POMDP) can value
+information through its consequences for later reward; information
+gathering is not absent from conventional reward-based planning <span
+class="citation" data-cites="kaelbling1998pomdp">(<a
+href="#ref-kaelbling1998pomdp" role="doc-biblioref">Kaelbling et al.
+1998</a>)</span>. Our one-shot score is an interpretable restriction,
+not an alternative proof of optimal planning.</p>
+<h3 data-number="1.1.1"
+id="human-search-and-question-asking-in-battleship-tasks"><span
+class="header-section-number">1.1.1</span> Human search and question
+asking in Battleship tasks</h3>
+<p>Battleship-related research includes several distinct problems:
+choosing where to look, constructing questions about a hidden
+arrangement, and planning actions whose value depends on later
+observations. Human spatial-search studies provide especially relevant
+precedent. Gureckis and Markant studied a 10×10 task in which
+participants uncovered cells to identify three hidden colored rectangles
+and subsequently reconstructed the arrangement <span class="citation"
+data-cites="gureckis2009active">(<a href="#ref-gureckis2009active"
+role="doc-biblioref">Gureckis and Markant 2009</a>)</span>. Their
+Bayesian observer valued observations through expected savings under
+sampling and reconstruction costs. Although visually similar to
+Battleship, this task revealed rectangle identity rather than binary
+occupancy, and success concerned recovering the arrangement rather than
+hitting every ship segment. It therefore supplies a precedent for
+model-based information search, rather than a benchmark directly
+interchangeable with the present game.</p>
+<p>The distinction between learning and task utility also appears within
+this experimental lineage. Markant and Gureckis compared expected
+information gain with expected savings, including a modified search task
+using letter-shaped targets <span class="citation"
+data-cites="markant2012does">(<a href="#ref-markant2012does"
+role="doc-biblioref">Markant and Gureckis 2012</a>)</span>. Their
+subsequent work separated uncertainty about the next feedback label from
+information gained about the hidden configuration by introducing
+unreliable observations near adjacent shapes <span class="citation"
+data-cites="markant2014preference">(<a href="#ref-markant2014preference"
+role="doc-biblioref">Markant and Gureckis 2014</a>)</span>. These
+distinctions matter when interpreting our information display. Under the
+dashboard’s stated likelihood, conditional observation entropy is
+constant across candidate actions, so information gain and predictive
+binary entropy rank cells identically. This algebraic equivalence does
+not establish which calculation a person uses, and the dashboard’s
+subjective noise setting does not reproduce the location-dependent
+interference manipulation.</p>
+<p>A separate line of work expands the query space beyond individual
+cells. Rothe, Lake, and Gureckis represented questions as programs that
+return answers when evaluated on possible worlds, combining
+informativeness with complexity and answer-type features <span
+class="citation" data-cites="rothe2017program">(<a
+href="#ref-rothe2017program" role="doc-biblioref">Rothe et al.
+2017</a>)</span>. Their task used three colored ships of variable length
+on a 6×6 board. Participants could ask questions with single-word
+answers about properties such as size or spatial relations. This is a
+substantially richer action space than firing at one coordinate. A
+question can distinguish many configurations without identifying the
+occupancy of any particular targeted cell, and its answer need not be
+binary. Their program model consequently addresses the construction of
+queries as well as their evaluation.</p>
+<p>Related experiments distinguish generating a question from
+recognizing a useful one. Rothe and colleagues compared freely produced
+questions with rankings of supplied questions using Bayesian measures of
+question quality <span class="citation"
+data-cites="rothe2018questions">(<a href="#ref-rothe2018questions"
+role="doc-biblioref">Rothe et al. 2018</a>)</span>. They later extended
+the analysis to goals that concern particular properties of a board and
+to question evaluation after an earlier answer <span class="citation"
+data-cites="rothe2019goals">(<a href="#ref-rothe2019goals"
+role="doc-biblioref">Rothe et al. 2019</a>)</span>. The latter
+experiments asked participants to rank supplied candidates; they should
+not be described as unrestricted sequential gameplay. Grand and
+colleagues subsequently combined language-based question proposals,
+translation into executable programs, and expected-information
+evaluation in the single-turn Battleship question task <span
+class="citation" data-cites="grand2024lips">(<a
+href="#ref-grand2024lips" role="doc-biblioref">Grand et al.
+2024</a>)</span>. Together, these studies motivate explicit attention to
+the hypothesis space, query language, answer model, and task objective.
+They do not establish educational efficacy or strategy superiority for
+this application.</p>
+<p>Crombez and colleagues analyze a different Battleship problem after a
+first hit: a single known shape is translated on an infinite lattice,
+and an adaptive binary decision tree minimizes worst-case misses <span
+class="citation" data-cites="crombez2020battleship">(<a
+href="#ref-crombez2020battleship" role="doc-biblioref">Crombez et al.
+2020</a>)</span>. Its cost is not simply the tree height. That result
+concerns neither full-fleet catalog search nor the five selectors tested
+here; it clarifies why observations, planning horizon, and stopping
+objective must be matched before comparing strategies.</p>
+<p>Other precedents further delimit the comparison. Silver and Veness
+evaluated Monte Carlo planning in a single-agent Battleship search
+environment with different placement constraints and a long-run
+objective <span class="citation" data-cites="silver2010pomcp">(<a
+href="#ref-silver2010pomcp" role="doc-biblioref">Silver and Veness
+2010</a>)</span>. Grand and colleagues’ collaborative question-and-shot
+paradigm combines actions absent from the present interface <span
+class="citation" data-cites="grand2026shoot">(<a
+href="#ref-grand2026shoot" role="doc-biblioref">Grand et al.
+2026</a>)</span>. Even physical Battleship rules require qualification:
+the inspected Hasbro A3264 sheet matches the five ship lengths but
+identifies the ship on a hit, whereas our inference input retains only
+hit or miss <span class="citation" data-cites="hasbro2016battleship">(<a
+href="#ref-hasbro2016battleship" role="doc-biblioref">Hasbro
+2016</a>)</span>. Finally, Sevenster’s complexity result concerns the
+solitaire layout puzzle, not this fixed-size shot-selection model <span
+class="citation" data-cites="sevenster2004battleships">(<a
+href="#ref-sevenster2004battleships" role="doc-biblioref">Sevenster
+2004</a>)</span>. Our contribution is an inspectable finite-catalog
+implementation with explicitly bounded observations and one-step
+valuations. It is not a new general theory of Bayesian Battleship, a
+question-generating agent, or a proof of optimal play.</p>
+<h3 data-number="1.1.2" id="the-meaning-of-expected-free-energy"><span
+class="header-section-number">1.1.2</span> The meaning of expected free
+energy</h3>
+<p>Expected free energy (EFE) also requires careful terminology.
+Technical treatments distinguish it from simply projecting variational
+free energy into the future <span class="citation"
+data-cites="millidge2021whence">(<a href="#ref-millidge2021whence"
+role="doc-biblioref">Millidge et al. 2021</a>)</span>. Parr and
+Friston’s named <em>generalized free energy</em> formulation is a
+different construction <span class="citation"
+data-cites="parr2019generalised">(<a href="#ref-parr2019generalised"
+role="doc-biblioref">Parr and Friston 2019</a>)</span>. The dashboard’s
+phrase “generalized EFE” denotes only its explicitly defined
+information-weighted score. We use “weighted one-step objective” when
+discussing that extension, without identifying it with the named
+generalized-free-energy formulation.</p>
+<hr />
+<h1 data-number="2"
+id="finite-fleet-beliefs-and-one-step-action-selection"><span
+class="header-section-number">2</span> Finite fleet beliefs and one step
+action selection</h1>
+<p>Definitions fix the assumed distributions and objective; propositions
+state identities under those assumptions. The posterior update appears
+in eq. <a href="#eq:posterior">3</a>, the action policy in eq. <a
+href="#eq:policy">6</a>, and the realized surprise identity in eq. <a
+href="#eq:conditional-surprise">9</a>. These labels and formalism
+numbers are generated consistently across editions.</p>
+<h2 data-number="2.1"
+id="hidden-fleet-labels-and-public-observations"><span
+class="header-section-number">2.1</span> Hidden fleet labels and public
+observations</h2>
+<div id="def:fleet" class="definition" title="Finite fleet model">
+<p><strong>Definition 1 (Finite fleet model).</strong> Let <span
+class="math inline">\(S=\{1,\ldots,M\}\)</span> index a catalog of
+complete legal fleets on an <span class="math inline">\(N\times
+N\)</span> board. Let <span
+class="math inline">\(x(s,a)\in\{0,1\}\)</span> indicate occupancy of
+cell <span class="math inline">\(a\)</span> in entry <span
+class="math inline">\(s\)</span>. Ships are straight, do not overlap,
+and may touch. The default model has <span
+class="math inline">\(N=10\)</span>, ship lengths <span
+class="math inline">\((5,4,3,3,2)\)</span>, and <span
+class="math inline">\(M=4096\)</span>. A seeded bounded randomized
+placement procedure constructs the catalog; it is not a uniform sampler
+over the space of all legal fleets. The environment draws a label
+uniformly from that same catalog. Duplicate entries retain their
+multiplicity and prior mass.</p>
+<p>The state is static. A shot queries one previously unvisited cell and
+returns <span class="math inline">\(o\in\{0,1\}\)</span>, denoting miss
+or hit. The assistant’s subjective likelihood and prior are</p>
+<p><span id="eq:likelihood"><span class="math display">\[A(1\mid
+s,a)=\epsilon+(1-2\epsilon)x(s,a),\qquad
+A(0\mid s,a)=1-A(1\mid s,a),\qquad{(1)}\]</span></span></p>
+<p><span id="eq:static-prior"><span class="math display">\[B(s&#39;\mid
+s)=\mathbf{1}[s&#39;=s],\qquad
+D(s)=M^{-1}.\qquad{(2)}\]</span></span></p>
+</div>
+<p>The permitted likelihood parameter is <span
+class="math inline">\(0\leq\epsilon\leq0.25\)</span>. Actual game
+feedback always equals selected-fleet occupancy. Thus positive <span
+class="math inline">\(\epsilon\)</span> is a subjective model mismatch,
+not a physical corruption process. It does not make the environment
+stochastic, and the program does not learn its value. Sunk-ship
+announcements are interface metadata excluded from the observation
+adapter.</p>
+<div id="def:belief" class="definition"
+title="Belief conditional on public observations">
+<p><strong>Definition 2 (Belief conditional on public
+observations).</strong> For public history <span
+class="math inline">\(h_t=((a_1,o_1),\ldots,(a_t,o_t))\)</span>, the
+posterior is</p>
+<p><span id="eq:posterior"><span
+class="math display">\[q_t(s)=\frac{D(s)\prod_{i=1}^{t} A(o_i\mid
+s,a_i)}
+{\sum_{j=1}^{M}D(j)\prod_{i=1}^{t}A(o_i\mid
+j,a_i)}.\qquad{(3)}\]</span></span></p>
+</div>
+<p>The belief in <a href="#def:belief">Definition 2</a> is exact
+categorical Bayes for the declared catalog, evaluated numerically with
+log weights and log-sum-exp normalization. It is not exact inference
+over every legal physical fleet. If the denominator is zero, inference
+returns a specific unsupported-observation error instead of substituting
+a uniform posterior. Ordinary truthful play at <span
+class="math inline">\(\epsilon=0\)</span> preserves the selected label
+in support. Turn order, fired cells, and terminal conditions are game
+bookkeeping; a full game-state POMDP would also include those variables
+or equivalent history-dependent action availability.</p>
+<h2 data-number="2.2"
+id="expected-information-and-outcome-preferences"><span
+class="header-section-number">2.2</span> Expected information and
+outcome preferences</h2>
+<p>For an available action define occupancy <span
+class="math inline">\(p_a=\sum_s q_t(s)x(s,a)\)</span> and the
+subjective hit forecast <span
+class="math inline">\(r_a=\epsilon+(1-2\epsilon)p_a\)</span>. Occupancy
+and forecast coincide only at zero noise or particular probabilities.
+With natural logarithms, binary entropy is <span
+class="math inline">\(h(p)=-p\log p-(1-p)\log(1-p)\)</span>, with <span
+class="math inline">\(0\log0=0\)</span>. Conditional likelihood entropy
+is the same for every state, so</p>
+<p><span id="eq:information"><span
+class="math display">\[I_a=I_q(S;O\mid
+a,h_t)=h(r_a)-h(\epsilon).\qquad{(4)}\]</span></span></p>
+<p>This is expected information about a fleet label from one
+observation. The identity is a specialization of the active-learning
+entropy decomposition <span class="citation"
+data-cites="houlsby2011bald">(<a href="#ref-houlsby2011bald"
+role="doc-biblioref">Houlsby et al. 2011</a>)</span>, with direct
+Battleship-related precedent <span class="citation"
+data-cites="grand2026shoot">(<a href="#ref-grand2026shoot"
+role="doc-biblioref">Grand et al. 2026</a>)</span>. Its tighter bound is
+<span class="math inline">\(0\leq I_a\leq\log2-h(\epsilon)\)</span>. It
+is measured in nats, not bits, and is not a measure of a reader’s
+understanding.</p>
+<p>Preferred outcome probabilities are <span
+class="math inline">\(P_C=\operatorname{softmax}([0,c])\)</span>, in
+miss/hit order. Their expected negative log preference is</p>
+<p><span id="eq:preference-cost"><span
+class="math display">\[L_a=-\sum_o q(o\mid a)\log P_C(o)=\log(1+e^c)-c
+r_a.\qquad{(5)}\]</span></span></p>
+<p>The normalization term is constant across actions at fixed <span
+class="math inline">\(c\)</span>, but must remain in displayed absolute
+costs and expected log-preference rewards. The GNN source names <span
+class="math inline">\(L_a\)</span> “risk.” To avoid a common ambiguity,
+we reserve <em>outcome Kullback–Leibler (KL) risk</em> for <span
+class="math inline">\(D_{\mathrm{KL}}(q(o\mid a)\Vert P_C)\)</span>,
+which equals <span class="math inline">\(L_a-h(r_a)\)</span>.</p>
+<div id="def:policy" class="definition"
+title="Weighted one-step objective and policy">
+<p><strong>Definition 3 (Weighted one-step objective and
+policy).</strong> The weighted objective and policy are</p>
+<p><span id="eq:policy"><span
+class="math display">\[G_\beta(a)=L_a-\beta I_a,\qquad
+q(a)=\frac{E(a)e^{-\gamma G_\beta(a)}}
+{\sum_{b\text{ available}}E(b)e^{-\gamma
+G_\beta(b)}}.\qquad{(6)}\]</span></span></p>
+</div>
+<p>Here <span class="math inline">\(0\leq\beta\leq4\)</span> weights
+information and <span class="math inline">\(0\leq\gamma\leq32\)</span>
+controls policy concentration. The hit preference ranges from zero to
+eight. A nonnegative hand-set spatial parameter <span
+class="math inline">\(k\leq4\)</span> defines <span
+class="math inline">\(E(a)\propto e^{kz_a}\)</span>, where</p>
+<p><span id="eq:habit"><span
+class="math display">\[z_a=1-\frac{|\operatorname{row}(a)-(N-1)/2|+
+|\operatorname{col}(a)-(N-1)/2|}{N-1}.\qquad{(7)}\]</span></span></p>
+<p>This “habit” is a specified policy prior, not a learned behavior.
+Fired cells are excluded before normalizing <span
+class="math inline">\(E\)</span> and <span
+class="math inline">\(q\)</span>. At <span
+class="math inline">\(\gamma=0\)</span>, <span
+class="math inline">\(q=E\)</span>; at <span
+class="math inline">\(k=0\)</span>, <span
+class="math inline">\(E\)</span> is uniform. Changing <span
+class="math inline">\(\gamma\)</span> does not change beliefs about
+fleets. Greedy action selection and seeded sampling from <span
+class="math inline">\(q\)</span> are separate execution modes.</p>
+<div id="prop:efe" class="proposition"
+title="Preference and information identity">
+<p><strong>Proposition 1 (Preference and information identity).</strong>
+At <span class="math inline">\(\beta=1\)</span> the implemented score
+has the exact finite-model identity</p>
+<p><span id="eq:risk-ambiguity"><span
+class="math display">\[G_1(a)=D_{\mathrm{KL}}(q(o\mid a)\Vert
+P_C)+h(\epsilon).\qquad{(8)}\]</span></span></p>
+</div>
+<p>The identity in <a href="#prop:efe">Proposition 1</a> follows by
+adding and subtracting predictive entropy. At other weights, the same
+risk–ambiguity identity does not hold. Stating these distributions
+directly avoids importing approximation assumptions from a broader
+active-inference derivation without justification <span class="citation"
+data-cites="dacosta2020synthesis millidge2021whence">(<a
+href="#ref-dacosta2020synthesis" role="doc-biblioref">Da Costa et al.
+2020</a>; <a href="#ref-millidge2021whence"
+role="doc-biblioref">Millidge et al. 2021</a>)</span>.</p>
+<h2 data-number="2.3"
+id="observed-updates-and-hypothetical-outcomes"><span
+class="header-section-number">2.3</span> Observed updates and
+hypothetical outcomes</h2>
+<div id="def:diagnostics" class="definition"
+title="Realized update diagnostics">
+<p><strong>Definition 4 (Realized update diagnostics).</strong> Before
+observing a shot, <span class="math inline">\(I_a\)</span> averages over
+possible outcomes. After outcome <span
+class="math inline">\(o_t\)</span>, the realized diagnostic is <span
+class="math inline">\(K_t=D_{\mathrm{KL}}(q_t\Vert q_{t-1})\)</span>.
+Define accuracy <span class="math inline">\(U_t=\mathbb{E}_{q_t}\log
+A(o_t\mid s,a_t)\)</span> and conditional variational free energy <span
+class="math inline">\(F_t=K_t-U_t\)</span>.</p>
+</div>
+<div id="prop:surprise" class="proposition"
+title="Conditional surprise identity">
+<p><strong>Proposition 2 (Conditional surprise identity).</strong> Exact
+Bayes gives</p>
+<p><span id="eq:conditional-surprise"><span
+class="math display">\[F_t=-\log\sum_s q_{t-1}(s)A(o_t\mid
+s,a_t).\qquad{(9)}\]</span></span></p>
+</div>
+<p>Using <a href="#def:diagnostics">Definition 4</a> and <a
+href="#prop:surprise">Proposition 2</a>, the dashboard displays the
+residual between the two sides, cumulative conditional surprise,
+entropy, effective sample size <span class="math inline">\(1/\sum_s
+q_t(s)^2\)</span>, and the one-shot Brier loss <span
+class="math inline">\((r_{a_t}-o_t)^2\)</span>. Retained log
+probabilities prevent an underflowed prior weight from becoming an
+artificial infinite KL when later evidence favors it. These are
+finite-precision diagnostics, not proof that the model describes an
+external sensor.</p>
+<p>The decision explorer also computes <span
+class="math inline">\(q(s\mid o,a)\)</span> for each possible outcome. A
+zero-evidence branch has no normalized posterior and is labeled
+impossible. A very rare finite log-evidence branch is kept distinct from
+impossibility. Expected posterior entropy reduction and expected branch
+KL both equal <span class="math inline">\(I_a\)</span>, while an
+individual branch can increase entropy. Realized entropy reduction and
+posterior/prior divergence are different quantities; their equality
+holds after averaging over the predictive outcomes, not for each
+observation <span class="citation" data-cites="mackay1992selection">(<a
+href="#ref-mackay1992selection" role="doc-biblioref">MacKay
+1992</a>)</span>. Counterfactual branches and fixed-belief parameter
+sweeps remain one-shot calculations; they are not contingent multi-step
+planning.</p>
+<p>Label entropy and effective sample size depend on representation. If
+every catalog label is duplicated equally, forecasts and information
+gain are unchanged, but entropy increases by the logarithm of the
+duplication factor and effective sample size scales with it. Uniform
+labels do not imply uniform distinct layouts. Identical occupancy maps
+can remain observationally indistinguishable even when their ship
+partitions differ. The diagnostics therefore describe the stated
+catalog, not the number of all physically possible fleets.</p>
+<hr />
+<h1 data-number="3"
+id="from-the-gnn-specification-to-browser-decisions"><span
+class="header-section-number">3</span> From the GNN specification to
+browser decisions</h1>
+<p>GNN 4.3.0 source revision:
+<code>073f21d5b25c403d1ef0c965dd945bb2287d4de4</code>. The <a
+href="https://github.com/ActiveInferenceInstitute/Generalized_Notation_Notation/tree/073f21d5b25c403d1ef0c965dd945bb2287d4de4">pinned
+source revision</a> identifies the exact software used; the software DOI
+denotes its broader archival record. The compiled model and analysis
+exports additionally retain the specification and parser-source
+digests.</p>
+<p>Generalized Notation Notation (GNN) denotes the model-description
+approach, not a graph neural network <span class="citation"
+data-cites="smekal2023gnn">(<a href="#ref-smekal2023gnn"
+role="doc-biblioref">Smékal and Friedman 2023</a>)</span>. The original
+GNN manuscript discusses textual, graphical, and executable forms, while
+improved rendering and integration were described as future work; that
+proposal alone does not establish universal backend equivalence or
+educational benefit <span class="citation"
+data-cites="smekal2023gnn">(<a href="#ref-smekal2023gnn"
+role="doc-biblioref">Smékal and Friedman 2023</a>)</span>. The local
+upstream software supplies the actual <code>MarkdownGNNParser</code>
+used by this project <span class="citation"
+data-cites="friedman2026gnnsoftware">(<a
+href="#ref-friedman2026gnnsoftware" role="doc-biblioref">Friedman
+2026</a>)</span>. Its parsed output crosses a strict adapter for the
+named <code>binary-static-fleet-v1</code> backend. The adapter checks
+model identity, variables, dimensions, graph, parameter bounds, equation
+text, and discrete one-step time semantics. Duplicate declarations and
+unsupported horizons are rejected. Equations are not evaluated as
+arbitrary code. A compiled JSON artifact records the specification hash,
+upstream revision, and parser-source closure digest.</p>
+<p>The default source declares <span
+class="math inline">\(A[2,M,N^2]\)</span>, <span
+class="math inline">\(B[M,M]\)</span>, <span
+class="math inline">\(C[2]\)</span>, <span
+class="math inline">\(D[M]\)</span>, and <span
+class="math inline">\(E[N^2]\)</span>. These are mathematical
+dimensions, not dense runtime allocations: occupancy arrays implement
+the likelihood procedurally and the static transition is an identity.
+This choice makes the factorization inspectable while avoiding a dense
+<span class="math inline">\(M^2\)</span> transition matrix. The adapter
+is intentionally bounded, rather than a universal interpreter for every
+GNN model.</p>
+<figure id="fig:architecture">
+<a class="figure-full-size-link" href="figures/architecture.png" target="_blank" rel="noopener" aria-label="Open full-size Figure 1, From specification to a public-information decision."><img src="figures/architecture.png" style="width:95.0%"
+alt="Figure 1: From specification to a public-information decision. The upstream MarkdownGNNParser reads the GNN declarations; the strict backend adapter validates dimensions, equations, graph, parameters, and one-step time semantics before producing source-bound JSON. TypeScript constructs the finite catalog and evaluates posterior beliefs and action scores. The environment alone owns the selected fleet. Its outgoing arrow carries a public cell/outcome observation; the returning arrow carries one chosen coordinate. This structural diagram describes permitted information flow, not a performance result or evidence that every upstream GNN backend is equivalent." /><span class="figure-full-size-label" aria-hidden="true">Open full-size figure</span></a>
+<figcaption>Figure 1: From specification to a
+public-information decision. The upstream MarkdownGNNParser reads the
+GNN declarations; the strict backend adapter validates dimensions,
+equations, graph, parameters, and one-step time semantics before
+producing source-bound JSON. TypeScript constructs the finite catalog
+and evaluates posterior beliefs and action scores. The environment alone
+owns the selected fleet. Its outgoing arrow carries a public
+cell/outcome observation; the returning arrow carries one chosen
+coordinate. This structural diagram describes permitted information
+flow, not a performance result or evidence that every upstream GNN
+backend is equivalent.</figcaption>
+</figure>
+<p>The Model &amp; guide view follows the actual source-to-runtime path
+and downloads the verbatim GNN source and compiled JSON. A five-stage
+explanation separates declaration, upstream parsing, strict contract
+validation, compilation, and numerical execution. Runtime control
+overrides and catalog counts are recorded separately from the immutable
+specification defaults and digest. The decision explorer adds a
+fixed-axis plot of predicted hit probability against expected
+information gain for every legal action; it shares the policy table’s
+values, marks the selected and leading cells with distinct shapes, and
+explicitly discloses overlapping points. Under the symmetric binary
+likelihood, information is a function of the forecast and noise, so the
+plot is an interpretation aid rather than independent performance
+evidence.</p>
+<p>Separate modules own legal fleets and random streams, game
+transitions, Bayesian inference and action scores, hypothetical
+analysis, event-sourced sessions, worker lifecycle, and reusable
+interface components. This arrangement follows the scientific-software
+principle of small components with explicit interfaces <span
+class="citation" data-cites="wilson2014practices">(<a
+href="#ref-wilson2014practices" role="doc-biblioref">Wilson et al.
+2014</a>)</span>. The browser has four views: Play, Agent diagnostics,
+Decision explorer, and Model &amp; guide. Shared boards, controls,
+charts, and tables connect the same quantities across views. Six maps
+separately show occupancy, hit forecast, information gain, preference
+cost, weighted EFE, and action probability, with explicit scales and
+directions.</p>
+<p>A separate typed ESM package exposes the core without browser,
+worker, Bun, or Python runtime imports. Its bundled default model is the
+already checked GNN compilation; consumption does not execute arbitrary
+GNN or revalidate a remote source. Headless commands run the actual
+two-actor game to a resumable replay or analyze either actor’s public
+observations with explicit temporary control overrides. These
+competitive games are distinct from the single-fleet demonstration
+below. Analysis reports are also distinct from replay files: they
+preserve impossible log weights with an explicit negative-infinity
+string instead of JSON’s silent conversion to null, and reject
+unexpected nonfinite values. CLI analysis reports record their
+runtime/version. Version-one replays carry no producer metadata and
+recompute opponent actions; retain the producing runtime separately and
+compare reconstructed histories when moving between engines. Final
+floating-point bits and near-tied choices can differ between engines.
+Source/artifact receipts and real Node, Bun, TypeScript-consumer, and
+local-archive checks support reuse; they do not establish scientific
+efficacy. Version 0.4.0 is publicly distributed through the release and
+archive identified below.</p>
+<p>The sandbox starts from live controls, recalculates subjective
+beliefs when noise changes, and commits only through an explicit Apply
+action without firing a shot. Beta and precision sweeps instead hold the
+posterior fixed. Analysis snapshots contain public history, settings,
+posterior weights, action scores, counterfactual branches, and model
+identity. They are distinct from resumable replay files. Replays bind
+the model hash and preserve ordered action-relevant controls for
+runtime-sensitive seeded reconstruction. Workers support cancellation,
+stale-result protection, explicit failures, and bounded timeouts. The
+selected fleets can be reconstructed from local seeds: this is not
+cryptographically private multiplayer software.</p>
+<h1 data-number="4" id="study-designs-and-statistical-comparisons"><span
+class="header-section-number">4</span> Study designs and statistical
+comparisons</h1>
+<h2 data-number="4.1"
+id="an-analytic-check-of-preference-and-information"><span
+class="header-section-number">4.1</span> An analytic check of preference
+and information</h2>
+<div id="example:two-fleet" class="example"
+title="A guaranteed hit and a distinguishing observation">
+<p><strong>Example 1 (A guaranteed hit and a distinguishing
+observation).</strong> Consider two equally probable legal length-two
+fleets at cells <span class="math inline">\((0,1)\)</span> and <span
+class="math inline">\((1,2)\)</span> of a six-by-six board. Cell 1 is
+occupied under both hypotheses; cells 0 and 2 each distinguish them. For
+a common cell, <span class="math inline">\(p=1\)</span>, <span
+class="math inline">\(r=1-\epsilon\)</span>, and <span
+class="math inline">\(I=0\)</span>. For either distinguishing cell,
+<span class="math inline">\(p=1/2\)</span>, <span
+class="math inline">\(r=1/2\)</span>, and <span
+class="math inline">\(I=\log2-h(\epsilon)\)</span>. With uniform <span
+class="math inline">\(E\)</span>, the pairwise score difference is</p>
+<p><span id="eq:two-fleet"><span
+class="math display">\[G_\beta(\text{uncertain})-G_\beta(\text{common})
+=(1/2-\epsilon)c-\beta[\log2-h(\epsilon)].\qquad{(10)}\]</span></span></p>
+</div>
+<p>In this example, for <span class="math inline">\(\beta=1\)</span> and
+<span class="math inline">\(\epsilon=0\)</span>, the preference
+crossover is <span class="math inline">\(c=2\log2\)</span>. At <span
+class="math inline">\(c=1\)</span> the distinguishing cell has lower
+score; at <span class="math inline">\(c=2\)</span> the guaranteed hit
+has lower score. The pairwise policy odds are <span
+class="math inline">\(\exp[-\gamma\Delta G]\)</span> even though other
+available cells share the policy’s denominator. The plot in fig. <a
+href="#fig:tradeoff">2</a> shows this exact calculation from runtime
+scores. The example demonstrates an immediate trade-off, not fewer total
+shots: after the fleet is identified, its remaining occupied cells still
+need to be fired upon.</p>
+<figure id="fig:tradeoff">
+<a class="figure-full-size-link" href="figures/analytic-tradeoff.png" target="_blank" rel="noopener" aria-label="Open full-size Figure 2, A deterministic preference–information trade-off in two equally weighted hypotheses."><img src="figures/analytic-tradeoff.png" style="width:95.0%"
+alt="Figure 2: A deterministic preference–information trade-off in two equally weighted hypotheses. On a 6 × 6 board, length-two fleets occupy cells {0,1} or {1,2}: the common cell guarantees occupancy, while either distinguishing cell has occupancy probability one half. The horizontal axis varies hit log-preference c, holding β = 1 and policy precision γ = 4. Left, negative ΔG favors the distinguishing action; right, exp(−γΔG) gives its policy odds against the common action, not the total probability of all informative actions. Colors, dash patterns, and marker shapes jointly identify assumed-noise ε series. Curves are computed from runtime scores, with no sampled units, intervals, or significance tests. Positive assumed noise changes the subjective likelihood, not the truthful environment." /><span class="figure-full-size-label" aria-hidden="true">Open full-size figure</span></a>
+<figcaption>Figure 2: A deterministic
+preference–information trade-off in two equally weighted hypotheses. On
+a 6 × 6 board, length-two fleets occupy cells {0,1} or {1,2}: the common
+cell guarantees occupancy, while either distinguishing cell has
+occupancy probability one half. The horizontal axis varies hit
+log-preference c, holding β = 1 and policy precision γ = 4. Left,
+negative ΔG favors the distinguishing action; right, exp(−γΔG) gives its
+policy odds against the common action, not the total probability of all
+informative actions. Colors, dash patterns, and marker shapes jointly
+identify assumed-noise ε series. Curves are computed from runtime
+scores, with no sampled units, intervals, or significance tests.
+Positive assumed noise changes the subjective likelihood, not the
+truthful environment.</figcaption>
+</figure>
+<h2 data-number="4.2" id="the-exploratory-sixteen-case-comparison"><span
+class="header-section-number">4.2</span> The exploratory sixteen case
+comparison</h2>
+<p>The finite benchmark asks how many distinct shots are needed to find
+all 17 occupied cells of one selected fleet. It excludes alternating
+turns, strategic placement, opponent behavior, and competitive win
+rates. Four strategies receive the same catalog and their own public
+outcomes: uniform random without replacement, greedy hit forecast,
+greedy information gain, and greedy minimum <span
+class="math inline">\(G_1\)</span>. The last is deterministic score
+selection, not sampling from the displayed <span
+class="math inline">\(q(a)\)</span>.</p>
+<p>The protocol was written before the first result generation and fixes
+16 seeds at each of two catalog sizes, 256 and 4096. Every seed–size
+case is run under all four policies, yielding 128 searches with no
+exclusions. Controls are <span
+class="math inline">\(\epsilon=0\)</span>, <span
+class="math inline">\(c=2\)</span>, <span
+class="math inline">\(\beta=1\)</span>, <span
+class="math inline">\(\gamma=4\)</span>, and <span
+class="math inline">\(k=0\)</span>. These deliberately differ from the
+browser’s startup defaults. Nonrandom scores break ties by higher
+predicted hit probability, then ascending cell index. Independent seeded
+streams construct the catalog, select the environment fleet, and choose
+random actions. The protocol records the exact offsets and seeds in
+machine-readable form.</p>
+<p>Each policy selector receives only available action scores; an
+environment callback owns occupancy truth. Termination uses the public
+fleet segment count and observed hits. Every search must finish within
+the 100-cell board, with 17 hits and no repeated cell; failure aborts
+generation. Per-shot forecasts, expected information, posterior entropy,
+outcomes, catalog hashes, and source hashes are retained. Reporting is
+descriptive: all 16 cases, means, medians, ranges, and paired mean
+differences from greedy hit. No significance tests, tuned best-seed
+selection, or population confidence claims are made. The two catalog
+sizes alter both the prior support and the pool from which truth is
+selected, so differences between sizes are not an isolated computational
+scaling experiment.</p>
+<h2 data-number="4.3"
+id="a-paired-comparison-of-five-search-strategies"><span
+class="header-section-number">4.3</span> A paired comparison of five
+search strategies</h2>
+<p>The known descriptive results motivated a separately specified
+follow-up; they are not retroactively converted into an inferential
+study. Before final searches, a private protocol, explicit case
+manifest, source hashes, runtime metadata, and dated pre-execution
+receipt fix 128 fresh catalog/truth units at each of 256 and 4096
+labels. This is prospective specification, not public preregistration.
+SHA-256 derives separate 32-bit catalog, truth-selection, and
+random-policy seeds from master seed 20261025, with globally recorded
+collision rejection and exclusion of historical and pilot stream states.
+Each unit constructs a fresh catalog and selects one label uniformly;
+all five profiles share that unit’s catalog and truth. Independence is
+an assumption about the separately derived pseudorandom streams. The
+inferential target is this frozen generator and label-selection
+distribution within each size, not unrestricted Battleship. The strata
+are analyzed separately because changing size also changes support and
+the truth pool.</p>
+<p>In the manuscript and figures, <span class="math inline">\(M\)</span>
+consistently denotes catalog-label count, <span
+class="math inline">\(N\)</span> remains board width, and <span
+class="math inline">\(n=128\)</span> denotes paired units per stratum.
+The retained machine-readable protocol and seed-derivation description
+use N as a local catalog-size placeholder; that metadata spelling is
+preserved without changing any seeds or model dimensions.</p>
+<h3 data-number="4.3.1" id="shared-cases-and-declared-selectors"><span
+class="header-section-number">4.3.1</span> Shared cases and declared
+selectors</h3>
+<p>The profiles are uniform random without replacement; pragmatic
+maximization of predicted hit probability; epistemic maximization of
+expected information gain; combined minimization of standard one-step
+<span class="math inline">\(G_1\)</span>; and minimization of
+information-weighted <span class="math inline">\(G_4\)</span>. The last
+is an explicit generalized objective, not standard EFE. All use <span
+class="math inline">\(c=2\)</span>, <span
+class="math inline">\(\epsilon=0\)</span>, uniform habits, and displayed
+precision <span class="math inline">\(\gamma=4\)</span>; precision does
+not affect these greedy choices. A new, prospectively fixed global
+absolute score band of <span class="math inline">\(10^{-12}\)</span> is
+followed by the same band around maximum predicted hit and then
+ascending cell index. It avoids a nontransitive approximate sort and is
+distinct from the historical exact floating-point tie rule. No profile
+receives selected truth; only the environment callback returns
+outcomes.</p>
+<p>The primary endpoint is completion shots <span
+class="math inline">\(T\)</span>, the shot receiving hit 17. Secondary
+endpoints are cumulative hits <span class="math inline">\(K_5\)</span>
+after five shots and normalized catalog-label entropy <span
+class="math inline">\(H_5/\log M\)</span>. Lower favors a profile for
+completion and entropy; higher favors it for hits. Entropy counts label
+multiplicity, not distinct physical layouts. A zero-noise, uniform-label
+specialization filters surviving hypotheses using public observations
+and reuses the unchanged action scorer. Predetermined excluded pilots at
+both target sizes must agree with unchanged full-history inference
+within <span class="math inline">\(10^{-12}\)</span> for occupancy,
+entropy, forecasts, information, and scores, with exactly matching
+selected cells. Deliberate numerical perturbations must fail. Complete
+legal traces, catalog hashes, selected-label identities, and time-zero
+conditions are retained. All 128 units per size and all five profiles
+are mandatory; failure aborts, with no exclusions, seed replacement, or
+optional stopping.</p>
+<h3 data-number="4.3.2"
+id="endpoints-and-paired-statistical-analysis"><span
+class="header-section-number">4.3.2</span> Endpoints and paired
+statistical analysis</h3>
+<p>For each non-pragmatic profile, size, and endpoint, the raw
+difference is profile minus pragmatic within a unit. The 24 planned
+comparisons form one step-down Holm family at <span
+class="math inline">\(\alpha=.05\)</span> <span class="citation"
+data-cites="holm1979sequential">(<a href="#ref-holm1979sequential"
+role="doc-biblioref">Holm 1979</a>)</span>. Familywise control relies on
+valid component p values under the stated paired-unit sampling
+assumptions; it does not require independence among the 24 tests. The
+word sequential in Holm’s procedure concerns ordered hypothesis
+rejections, not adaptive data collection. Exact two-sided paired sign
+tests test whether positive and negative differences are equally likely
+conditional on being non-tied; they do not test equality of means. The
+paired sign statistic uses directions rather than magnitudes <span
+class="citation" data-cites="dixon1946sign">(<a
+href="#ref-dixon1946sign" role="doc-biblioref">Dixon and Mood
+1946</a>)</span>. We condition on non-tied differences, as in the <a
+href="https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/signtest.htm">NIST
+technical reference</a>; Dixon and Mood’s historical treatment instead
+split ties between the signs. Integer ties are exact; normalized-entropy
+differences within <span class="math inline">\(10^{-10}\)</span> are
+sign-test ties. All-tie rows receive <span
+class="math inline">\(p=1\)</span> by convention. The <a
+href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.binomtest.html">binomial
+test implementation</a> and <a
+href="https://www.statsmodels.org/stable/generated/statsmodels.stats.multitest.multipletests.html">Holm
+procedure</a> are identified explicitly. Favorable/tied/unfavorable
+counts always sum to 128 and refer to endpoint differences, not
+competitive wins.</p>
+<p>Separately, 10,000 paired-unit bootstrap resamples give descriptive
+95% percentile intervals for mean raw differences <span class="citation"
+data-cites="efron1979bootstrap efron1987better">(<a
+href="#ref-efron1979bootstrap" role="doc-biblioref">Efron 1979</a>, <a
+href="#ref-efron1987better" role="doc-biblioref">1987</a>)</span>. Each
+draw resamples a whole catalog/truth unit with its paired outcomes,
+rather than resampling the two profiles independently. Empirical
+bootstrap quantiles are an approximate interval method; we do not use
+bias-corrected and accelerated intervals or claim their higher-order
+properties. Ties and tiny raw entropy differences remain in those
+calculations. These approximate intervals are not simultaneous, do not
+guarantee finite-sample coverage, and are not inversions of the sign
+tests; excluding zero is not the Holm decision. Fixed per-comparison
+bootstrap seeds and the <a
+href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html">percentile
+method</a> are recorded. Curves summarize all 128 units at each shot
+through 30, without inferential bands or curve-wise tests. Completed
+cases retain 17 hits and their actual terminal label entropy, which can
+remain positive for duplicate layouts. The complete protocol and all 24
+comparisons accompany the manuscript.</p>
+<hr />
+<h1 data-number="5"
+id="strategy-performance-across-three-search-objectives"><span
+class="header-section-number">5</span> Strategy performance across three
+search objectives</h1>
+<p>The prospectively specified follow-up completed all 1,280 searches
+(256 paired catalog/truth units, five profiles) in 47,975 shots, with no
+exclusions. Every summary below uses all 128 units within its
+catalog-size stratum. The original descriptive study is retained
+separately below.</p>
+<div class="table-scroll" role="region" tabindex="0" aria-label="Scrollable table: Table 1: Follow-up endpoints from 128 fresh paired units per stratum. Completion is shots to hit all 17 occupied cell…"><table id="tbl:followup" data-responsive-table="true">
+<caption>Table 1: Follow-up endpoints from 128 fresh paired units per
+stratum. Completion is shots to hit all 17 occupied cells; early hits
+are cumulative after five shots; label entropy is divided by ln(M).
+Lower is preferable for completion and uncertainty, higher for hits.
+Profiles share catalog and truth within each unit; sizes define
+different sampling distributions.</caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: right;">M</th>
+<th style="text-align: left;">Profile</th>
+<th style="text-align: right;">Mean completion shots</th>
+<th style="text-align: right;">Mean hits at 5</th>
+<th style="text-align: right;">Mean label entropy at 5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">Random</td>
+<td style="text-align: right;">95.492</td>
+<td style="text-align: right;">0.914</td>
+<td style="text-align: right;">0.5965</td>
+</tr>
+<tr>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">Pragmatic</td>
+<td style="text-align: right;">21.555</td>
+<td style="text-align: right;">1.945</td>
+<td style="text-align: right;">0.4407</td>
+</tr>
+<tr>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">Epistemic</td>
+<td style="text-align: right;">21.953</td>
+<td style="text-align: right;">1.688</td>
+<td style="text-align: right;">0.4348</td>
+</tr>
+<tr>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">Combined β=1</td>
+<td style="text-align: right;">21.555</td>
+<td style="text-align: right;">1.945</td>
+<td style="text-align: right;">0.4403</td>
+</tr>
+<tr>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">Weighted β=4</td>
+<td style="text-align: right;">21.734</td>
+<td style="text-align: right;">1.883</td>
+<td style="text-align: right;">0.4407</td>
+</tr>
+<tr>
+<td style="text-align: right;">4,096</td>
+<td style="text-align: left;">Random</td>
+<td style="text-align: right;">95.352</td>
+<td style="text-align: right;">0.797</td>
+<td style="text-align: right;">0.7455</td>
+</tr>
+<tr>
+<td style="text-align: right;">4,096</td>
+<td style="text-align: left;">Pragmatic</td>
+<td style="text-align: right;">24.078</td>
+<td style="text-align: right;">1.773</td>
+<td style="text-align: right;">0.6547</td>
+</tr>
+<tr>
+<td style="text-align: right;">4,096</td>
+<td style="text-align: left;">Epistemic</td>
+<td style="text-align: right;">24.797</td>
+<td style="text-align: right;">1.664</td>
+<td style="text-align: right;">0.6460</td>
+</tr>
+<tr>
+<td style="text-align: right;">4,096</td>
+<td style="text-align: left;">Combined β=1</td>
+<td style="text-align: right;">24.078</td>
+<td style="text-align: right;">1.773</td>
+<td style="text-align: right;">0.6547</td>
+</tr>
+<tr>
+<td style="text-align: right;">4,096</td>
+<td style="text-align: left;">Weighted β=4</td>
+<td style="text-align: right;">24.211</td>
+<td style="text-align: right;">1.711</td>
+<td style="text-align: right;">0.6475</td>
+</tr>
+</tbody>
+</table></div>
+<p>Pragmatic and combined profiles have equal completion counts in all
+256 pairs. Epistemic completion is less favorable than pragmatic in 55
+versus 22 non-tied cases at M = 256 and 59 versus 18 at M = 4096 (51
+ties each); Holm-adjusted sign-test p values are 0.00325 and 0.0000580.
+Their paired mean excesses are 0.398 and 0.719 shots. Random requires
+more completion shots in every pair. These are conditional sign-balance
+rejections for this generator, not tests of equal means or unrestricted
+optimal play.</p>
+<p>The information-weighted profile illustrates the distinction between
+identifying labels and completing a fleet. At M = 4096 its five-shot
+normalized entropy is lower than pragmatic in 25 cases, tied in 99, and
+higher in four (adjusted p = 0.00176); the mean difference is −0.00713.
+Its completion comparison is not rejected (adjusted p = 0.149). At M =
+256 it instead has less favorable completion sign balance (adjusted p =
+0.0232). No profile dominates every endpoint and stratum. Default EFE
+completion equality and non-rejection must not be described as proof of
+general equivalence.</p>
+<div class="pdf-only">
+
+</div>
+<figure id="fig:search">
+<a class="figure-full-size-link" href="figures/strategy-completion.png" target="_blank" rel="noopener" aria-label="Open full-size Figure 3, Completion under five declared strategies in fresh finite-catalog cases."><img src="figures/strategy-completion.png" style="width:95.0%"
+alt="Figure 3: Completion under five declared strategies in fresh finite-catalog cases. Each dot is one of 128 catalog/truth units per size, with the same units paired across profiles; display-only jitter separates cases. Black vertical marks are means and open diamonds are medians. The shared axis includes every random completion through shot 100; lower is better. Right hand annotations compare completion with pragmatic selection using exact two-sided tests of non-tied sign balance, adjusted together with the secondary endpoints in one 24-test Holm family. Stars indicate imbalance, not necessarily improvement: * p ≤ .05, ** p ≤ .01, *** p ≤ .001. All ties means 128 equal counts and adjusted p = 1; ns means not rejected, not equivalent. Controls are c = 2, zero noise, uniform habits; combined β = 1 and weighted β = 4. Favorable/tied/unfavorable completion counts are random 0/0/128 at both sizes; epistemic 22/51/55 and 18/51/59; combined 0/128/0 at both sizes; weighted 9/90/29 and 9/95/24, in increasing size order. Every rejected comparison has more unfavorable than favorable outcomes. Truth is sampled inside each biased generated catalog, not held out. Full adjusted p values appear in the planned-comparison tables." /><span class="figure-full-size-label" aria-hidden="true">Open full-size figure</span></a>
+<figcaption>Figure 3: Completion under five declared
+strategies in fresh finite-catalog cases. Each dot is one of 128
+catalog/truth units per size, with the same units paired across
+profiles; display-only jitter separates cases. Black vertical marks are
+means and open diamonds are medians. The shared axis includes every
+random completion through shot 100; lower is better. Right hand
+annotations compare completion with pragmatic selection using exact
+two-sided tests of non-tied sign balance, adjusted together with the
+secondary endpoints in one 24-test Holm family. Stars indicate
+imbalance, not necessarily improvement: * p ≤ .05, ** p ≤ .01, *** p ≤
+.001. All ties means 128 equal counts and adjusted p = 1; ns means not
+rejected, not equivalent. Controls are c = 2, zero noise, uniform
+habits; combined β = 1 and weighted β = 4. Favorable/tied/unfavorable
+completion counts are random 0/0/128 at both sizes; epistemic 22/51/55
+and 18/51/59; combined 0/128/0 at both sizes; weighted 9/90/29 and
+9/95/24, in increasing size order. Every rejected comparison has more
+unfavorable than favorable outcomes. Truth is sampled inside each biased
+generated catalog, not held out. Full adjusted p values appear in the
+planned-comparison tables.</figcaption>
+</figure>
+<div class="pdf-only">
+
+</div>
+<figure id="fig:effects">
+<a class="figure-full-size-link" href="figures/strategy-effects.png" target="_blank" rel="noopener" aria-label="Open full-size Figure 4, Paired effects distinguish task completion, immediate reward, and belief discrimination."><img src="figures/strategy-effects.png" style="width:95.0%"
+alt="Figure 4: Paired effects distinguish task completion, immediate reward, and belief discrimination. Each point is the mean profile-minus-pragmatic difference across 128 paired units; whiskers are descriptive 95% percentile intervals from 10,000 case-bootstrap resamples. The three informed profiles use different shapes and colors. Negative differences favor a profile for completion and normalized label entropy; positive differences favor it for five-shot hits. Panel scales vary explicitly by endpoint and stratum. Right-hand F/T/U counts give favorable/tied/unfavorable out of 128; stars and ns refer to the separate 24-test Holm sign-balance procedure, not to interval exclusion of zero. Integer ties are exact and entropy ties use 10⁻¹⁰. Mean intervals retain raw differences and are neither simultaneous nor equivalence bounds. Random is shown on the full completion and trajectory plots and in all numerical tables; it is excluded from this magnified informed-profile view. All profiles use c = 2, zero noise and uniform habits; combined β = 1 and weighted β = 4. Truth is sampled inside each biased generated catalog, not held out." /><span class="figure-full-size-label" aria-hidden="true">Open full-size figure</span></a>
+<figcaption>Figure 4: Paired effects distinguish task
+completion, immediate reward, and belief discrimination. Each point is
+the mean profile-minus-pragmatic difference across 128 paired units;
+whiskers are descriptive 95% percentile intervals from 10,000
+case-bootstrap resamples. The three informed profiles use different
+shapes and colors. Negative differences favor a profile for completion
+and normalized label entropy; positive differences favor it for
+five-shot hits. Panel scales vary explicitly by endpoint and stratum.
+Right-hand F/T/U counts give favorable/tied/unfavorable out of 128;
+stars and ns refer to the separate 24-test Holm sign-balance procedure,
+not to interval exclusion of zero. Integer ties are exact and entropy
+ties use 10⁻¹⁰. Mean intervals retain raw differences and are neither
+simultaneous nor equivalence bounds. Random is shown on the full
+completion and trajectory plots and in all numerical tables; it is
+excluded from this magnified informed-profile view. All profiles use c =
+2, zero noise and uniform habits; combined β = 1 and weighted β = 4.
+Truth is sampled inside each biased generated catalog, not held
+out.</figcaption>
+</figure>
+<div class="pdf-only">
+
+</div>
+<figure id="fig:trajectories">
+<a class="figure-full-size-link" href="figures/strategy-trajectories.png" target="_blank" rel="noopener" aria-label="Open full-size Figure 5, The strategies pursue different goals during search."><img src="figures/strategy-trajectories.png" style="width:95.0%"
+alt="Figure 5: The strategies pursue different goals during search. Upper panels show mean cumulative hits (0–17); lower panels show mean catalog-label entropy divided by ln(M), initially one. Each mean includes the same 128 fresh paired units at every shot in its size stratum. Line patterns and markers distinguish all five profiles, including coincident curves; the vertical dashed line marks the prospectively fixed five-shot endpoint. After completion, a case retains 17 hits and its actual terminal entropy, including uncertainty between duplicate labels. Curves through shot 30 are descriptive means without confidence bands or curve-wise tests; random completion beyond this window remains fully represented in the completion plot. Lower entropy means better label discrimination, not necessarily fewer completion shots. Sizes change support and truth pools and are not an isolated scaling comparison. All profiles use c = 2, zero noise and uniform habits; combined β = 1 and weighted β = 4. Truth is sampled inside each biased generated catalog, not held out." /><span class="figure-full-size-label" aria-hidden="true">Open full-size figure</span></a>
+<figcaption>Figure 5: The strategies pursue different
+goals during search. Upper panels show mean cumulative hits (0–17);
+lower panels show mean catalog-label entropy divided by ln(M), initially
+one. Each mean includes the same 128 fresh paired units at every shot in
+its size stratum. Line patterns and markers distinguish all five
+profiles, including coincident curves; the vertical dashed line marks
+the prospectively fixed five-shot endpoint. After completion, a case
+retains 17 hits and its actual terminal entropy, including uncertainty
+between duplicate labels. Curves through shot 30 are descriptive means
+without confidence bands or curve-wise tests; random completion beyond
+this window remains fully represented in the completion plot. Lower
+entropy means better label discrimination, not necessarily fewer
+completion shots. Sizes change support and truth pools and are not an
+isolated scaling comparison. All profiles use c = 2, zero noise and
+uniform habits; combined β = 1 and weighted β = 4. Truth is sampled
+inside each biased generated catalog, not held out.</figcaption>
+</figure>
+<h2 data-number="5.1"
+id="all-planned-comparisons-and-their-uncertainty"><span
+class="header-section-number">5.1</span> All planned comparisons and
+their uncertainty</h2>
+<p>All differences are profile minus pragmatic.
+Favorable/tied/unfavorable counts have denominator 128, not the number
+of non-tied cases. Significance tests condition on non-ties; intervals
+estimate mean raw differences descriptively. Decimal rounding is for
+display only; decisions use full-precision adjusted p values. The <a
+href="../research/STRATEGY_STUDY.md">complete protocol, seeds, traces,
+and analysis</a> retain exact values.</p>
+<h3 data-number="5.1.1" id="completion-shots"><span
+class="header-section-number">5.1.1</span> Completion shots</h3>
+<div class="table-scroll" role="region" tabindex="0" aria-label="Scrollable table: Table 2: Completion shots, all eight planned profile-by-size comparisons. Lower favors a profile. Parentheses give th…"><table id="tbl:shots" style="width:99%;" data-responsive-table="true">
+<caption>Table 2: Completion shots, all eight planned profile-by-size
+comparisons. Lower favors a profile. Parentheses give the lower and
+upper descriptive 95% percentile limits from 10,000 paired-case
+resamples; these intervals are not simultaneous. F/T/U means
+favorable/tied/unfavorable out of 128. Holm p values belong to the
+single 24-comparison family across all three endpoints.</caption>
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 22%" />
+<col style="width: 35%" />
+<col style="width: 17%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: right;">M</th>
+<th style="text-align: left;">Profile</th>
+<th style="text-align: right;">Mean Δ (95% interval)</th>
+<th style="text-align: left;">F / T / U</th>
+<th style="text-align: right;">Holm p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">Random</td>
+<td style="text-align: right;">+73.938 (+73.039, +74.773)</td>
+<td style="text-align: left;">0/0/128</td>
+<td style="text-align: right;">1.41e-37</td>
+</tr>
+<tr>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">Epistemic</td>
+<td style="text-align: right;">+0.398 (+0.203, +0.602)</td>
+<td style="text-align: left;">22/51/55</td>
+<td style="text-align: right;">0.00325</td>
+</tr>
+<tr>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">Combined β=1</td>
+<td style="text-align: right;">+0.000 (+0.000, +0.000)</td>
+<td style="text-align: left;">0/128/0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">Weighted β=4</td>
+<td style="text-align: right;">+0.180 (+0.086, +0.281)</td>
+<td style="text-align: left;">9/90/29</td>
+<td style="text-align: right;">0.0232</td>
+</tr>
+<tr>
+<td style="text-align: right;">4,096</td>
+<td style="text-align: left;">Random</td>
+<td style="text-align: right;">+71.273 (+70.352, +72.148)</td>
+<td style="text-align: left;">0/0/128</td>
+<td style="text-align: right;">1.41e-37</td>
+</tr>
+<tr>
+<td style="text-align: right;">4,096</td>
+<td style="text-align: left;">Epistemic</td>
+<td style="text-align: right;">+0.719 (+0.477, +0.969)</td>
+<td style="text-align: left;">18/51/59</td>
+<td style="text-align: right;">5.8e-05</td>
+</tr>
+<tr>
+<td style="text-align: right;">4,096</td>
+<td style="text-align: left;">Combined β=1</td>
+<td style="text-align: right;">+0.000 (+0.000, +0.000)</td>
+<td style="text-align: left;">0/128/0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: right;">4,096</td>
+<td style="text-align: left;">Weighted β=4</td>
+<td style="text-align: right;">+0.133 (+0.000, +0.258)</td>
+<td style="text-align: left;">9/95/24</td>
+<td style="text-align: right;">0.149</td>
+</tr>
+</tbody>
+</table></div>
+<h3 data-number="5.1.2" id="hits-after-five-shots"><span
+class="header-section-number">5.1.2</span> Hits after five shots</h3>
+<div class="table-scroll" role="region" tabindex="0" aria-label="Scrollable table: Table 3: Hits after five shots, all eight planned profile-by-size comparisons. Higher favors a profile. Parentheses g…"><table id="tbl:hits5" style="width:99%;" data-responsive-table="true">
+<caption>Table 3: Hits after five shots, all eight planned
+profile-by-size comparisons. Higher favors a profile. Parentheses give
+the lower and upper descriptive 95% percentile limits from 10,000
+paired-case resamples; these intervals are not simultaneous. F/T/U means
+favorable/tied/unfavorable out of 128. Holm p values belong to the
+single 24-comparison family across all three endpoints.</caption>
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 22%" />
+<col style="width: 35%" />
+<col style="width: 17%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: right;">M</th>
+<th style="text-align: left;">Profile</th>
+<th style="text-align: right;">Mean Δ (95% interval)</th>
+<th style="text-align: left;">F / T / U</th>
+<th style="text-align: right;">Holm p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">Random</td>
+<td style="text-align: right;">-1.031 (-1.297, -0.766)</td>
+<td style="text-align: left;">21/30/77</td>
+<td style="text-align: right;">2.4e-07</td>
+</tr>
+<tr>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">Epistemic</td>
+<td style="text-align: right;">-0.258 (-0.383, -0.141)</td>
+<td style="text-align: left;">12/76/40</td>
+<td style="text-align: right;">0.00204</td>
+</tr>
+<tr>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">Combined β=1</td>
+<td style="text-align: right;">+0.000 (+0.000, +0.000)</td>
+<td style="text-align: left;">0/128/0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">Weighted β=4</td>
+<td style="text-align: right;">-0.062 (-0.148, +0.016)</td>
+<td style="text-align: left;">9/103/16</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: right;">4,096</td>
+<td style="text-align: left;">Random</td>
+<td style="text-align: right;">-0.977 (-1.273, -0.695)</td>
+<td style="text-align: left;">31/19/78</td>
+<td style="text-align: right;">0.000139</td>
+</tr>
+<tr>
+<td style="text-align: right;">4,096</td>
+<td style="text-align: left;">Epistemic</td>
+<td style="text-align: right;">-0.109 (-0.211, -0.008)</td>
+<td style="text-align: left;">11/95/22</td>
+<td style="text-align: right;">0.721</td>
+</tr>
+<tr>
+<td style="text-align: right;">4,096</td>
+<td style="text-align: left;">Combined β=1</td>
+<td style="text-align: right;">+0.000 (+0.000, +0.000)</td>
+<td style="text-align: left;">0/128/0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: right;">4,096</td>
+<td style="text-align: left;">Weighted β=4</td>
+<td style="text-align: right;">-0.062 (-0.117, -0.016)</td>
+<td style="text-align: left;">2/116/10</td>
+<td style="text-align: right;">0.386</td>
+</tr>
+</tbody>
+</table></div>
+<h3 data-number="5.1.3"
+id="normalized-label-entropy-after-five-shots"><span
+class="header-section-number">5.1.3</span> Normalized label entropy
+after five shots</h3>
+<div class="table-scroll" role="region" tabindex="0" aria-label="Scrollable table: Table 4: Normalized label entropy after five shots, all eight planned profile-by-size comparisons. Lower favors a pro…"><table id="tbl:entropy5" style="width:99%;" data-responsive-table="true">
+<caption>Table 4: Normalized label entropy after five shots, all eight
+planned profile-by-size comparisons. Lower favors a profile. Parentheses
+give the lower and upper descriptive 95% percentile limits from 10,000
+paired-case resamples; these intervals are not simultaneous. F/T/U means
+favorable/tied/unfavorable out of 128. Holm p values belong to the
+single 24-comparison family across all three endpoints.</caption>
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 22%" />
+<col style="width: 35%" />
+<col style="width: 17%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: right;">M</th>
+<th style="text-align: left;">Profile</th>
+<th style="text-align: right;">Mean Δ (95% interval)</th>
+<th style="text-align: left;">F / T / U</th>
+<th style="text-align: right;">Holm p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">Random</td>
+<td style="text-align: right;">+0.1557 (+0.1096, +0.2001)</td>
+<td style="text-align: left;">33/0/95</td>
+<td style="text-align: right;">8e-07</td>
+</tr>
+<tr>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">Epistemic</td>
+<td style="text-align: right;">-0.0059 (-0.0196, +0.0084)</td>
+<td style="text-align: left;">51/51/26</td>
+<td style="text-align: right;">0.0763</td>
+</tr>
+<tr>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">Combined β=1</td>
+<td style="text-align: right;">-0.0004 (-0.0012, +0.0000)</td>
+<td style="text-align: left;">1/127/0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">Weighted β=4</td>
+<td style="text-align: right;">-0.0001 (-0.0111, +0.0114)</td>
+<td style="text-align: left;">27/83/18</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: right;">4,096</td>
+<td style="text-align: left;">Random</td>
+<td style="text-align: right;">+0.0908 (+0.0558, +0.1244)</td>
+<td style="text-align: left;">34/0/94</td>
+<td style="text-align: right;">2.17e-06</td>
+</tr>
+<tr>
+<td style="text-align: right;">4,096</td>
+<td style="text-align: left;">Epistemic</td>
+<td style="text-align: right;">-0.0086 (-0.0142, -0.0030)</td>
+<td style="text-align: left;">45/61/22</td>
+<td style="text-align: right;">0.0809</td>
+</tr>
+<tr>
+<td style="text-align: right;">4,096</td>
+<td style="text-align: left;">Combined β=1</td>
+<td style="text-align: right;">+0.0000 (+0.0000, +0.0000)</td>
+<td style="text-align: left;">0/128/0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: right;">4,096</td>
+<td style="text-align: left;">Weighted β=4</td>
+<td style="text-align: right;">-0.0071 (-0.0108, -0.0038)</td>
+<td style="text-align: left;">25/99/4</td>
+<td style="text-align: right;">0.00176</td>
+</tr>
+</tbody>
+</table></div>
+<h2 data-number="5.2" id="the-original-exploratory-comparison"><span
+class="header-section-number">5.2</span> The original exploratory
+comparison</h2>
+<p>The original 16 fixed cases per size used four profiles and exact
+floating-point tie ordering. Their 128 searches, source bindings,
+protocol, and unaltered figure formats remain in the source
+distribution. The table below is preserved; no retrospective p values or
+inferential intervals are assigned to those exploratory cases.</p>
+<div class="table-scroll" role="region" tabindex="0" aria-label="Scrollable table: Table 5: Original descriptive demonstration, n = 16 paired units per size and 128 searches total. Mean Δ is profile m…"><table id="tbl:search" data-responsive-table="true">
+<caption>Table 5: Original descriptive demonstration, n = 16 paired
+units per size and 128 searches total. Mean Δ is profile minus greedy
+hit in completion shots, with negative values indicating fewer shots.
+EFE and hit completion counts tie in all 32 pairs, with ordered traces
+identical in 27. These exploratory results use the historical selector
+and are separate from the fresh follow-up.</caption>
+<thead>
+<tr>
+<th style="text-align: right;">Catalog</th>
+<th style="text-align: left;">Policy</th>
+<th style="text-align: right;">Mean shots</th>
+<th style="text-align: right;">Median</th>
+<th style="text-align: left;">Range</th>
+<th style="text-align: right;">Mean Δ vs hit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">Uniform random</td>
+<td style="text-align: right;">94.94</td>
+<td style="text-align: right;">98.5</td>
+<td style="text-align: left;">74–100</td>
+<td style="text-align: right;">+73.44</td>
+</tr>
+<tr>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">Greedy hit</td>
+<td style="text-align: right;">21.50</td>
+<td style="text-align: right;">21.5</td>
+<td style="text-align: left;">18–25</td>
+<td style="text-align: right;">+0.00</td>
+</tr>
+<tr>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">Greedy information</td>
+<td style="text-align: right;">21.56</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: left;">18–26</td>
+<td style="text-align: right;">+0.06</td>
+</tr>
+<tr>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">One-step EFE</td>
+<td style="text-align: right;">21.50</td>
+<td style="text-align: right;">21.5</td>
+<td style="text-align: left;">18–25</td>
+<td style="text-align: right;">+0.00</td>
+</tr>
+<tr>
+<td style="text-align: right;">4,096</td>
+<td style="text-align: left;">Uniform random</td>
+<td style="text-align: right;">94.62</td>
+<td style="text-align: right;">96</td>
+<td style="text-align: left;">83–100</td>
+<td style="text-align: right;">+70.31</td>
+</tr>
+<tr>
+<td style="text-align: right;">4,096</td>
+<td style="text-align: left;">Greedy hit</td>
+<td style="text-align: right;">24.31</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: left;">20–30</td>
+<td style="text-align: right;">+0.00</td>
+</tr>
+<tr>
+<td style="text-align: right;">4,096</td>
+<td style="text-align: left;">Greedy information</td>
+<td style="text-align: right;">25.12</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: left;">22–32</td>
+<td style="text-align: right;">+0.81</td>
+</tr>
+<tr>
+<td style="text-align: right;">4,096</td>
+<td style="text-align: left;">One-step EFE</td>
+<td style="text-align: right;">24.31</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: left;">20–30</td>
+<td style="text-align: right;">+0.00</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h1 data-number="6" id="what-the-strategy-comparisons-establish"><span
+class="header-section-number">6</span> What the strategy comparisons
+establish</h1>
+<p>The follow-up separates endpoint goals instead of forcing a single
+strategy ranking. Pragmatic and combined completion counts tie in all
+256 fresh pairs, while pure epistemic selection has less favorable
+completion sign balance in both size strata. At 4096 labels, the
+information-weighted profile more often reduces five-shot label entropy
+than pragmatic selection, but its completion comparison is not rejected.
+Learning which labels remain and taking predictable hits are different
+objectives. The figures retain their separate metrics and complete
+comparisons. Neither non-rejection nor all-tie observations establish
+general equivalence, and sign tests do not test equal means.</p>
+<p>The original descriptive comparison remains separate: EFE and
+greedy-hit completion counts tied in all 32 pairs and ordered shot
+traces in 27. Greedy information required 0.0625 and 0.8125 more shots
+on average in its two strata. Those exploratory results informed the
+deliberate β = 4 contrast and five-shot endpoints. The privately frozen
+follow-up is not publicly preregistered. Neither study implies that
+information seeking is generally harmful or pragmatic search is
+optimal.</p>
+<h2 data-number="6.1"
+id="why-the-objectives-can-select-different-shots"><span
+class="header-section-number">6.1</span> Why the objectives can select
+different shots</h2>
+<p>Under the zero-noise benchmark likelihood, information gain is binary
+entropy of the occupancy forecast. With uniform habits, minimizing the
+weighted score is equivalent to maximizing <span
+class="math inline">\(2p+\beta h(p)\)</span> at the declared preference
+<span class="math inline">\(c=2\)</span>. Pure pragmatic choice instead
+maximizes <span class="math inline">\(p\)</span>, and pure epistemic
+choice maximizes <span class="math inline">\(h(p)\)</span>. Their
+continuous preferred probabilities are one and one half. For positive
+<span class="math inline">\(\beta\)</span>, the stationary point of the
+weighted value is <span
+class="math inline">\(p^*=(1+e^{-2/\beta})^{-1}\)</span>: about 0.8808
+for combined <span class="math inline">\(\beta=1\)</span> and 0.6225 for
+weighted <span class="math inline">\(\beta=4\)</span>. The derivative
+changes from positive to negative there. These values describe the
+objectives rather than fitting the observed search results. A particular
+finite board need not offer an action with that forecast.</p>
+<figure id="fig:objectives">
+<a class="figure-full-size-link" href="figures/strategy-objectives.png" target="_blank" rel="noopener" aria-label="Open full-size Figure 6, Why the declared strategies can prefer different shots."><img src="figures/strategy-objectives.png" style="width:95.0%"
+alt="Figure 6: Why the declared strategies can prefer different shots. Left, the continuous curves maximize hit value 2p, information h(p), combined value 2p+h(p), or weighted value 2p+4h(p) at preference c=2, zero assumed noise, and uniform habits. An additive constant in negative expected free energy is omitted because it does not affect the maximizing action; all plotted values use natural logarithms and are in nats. Right, marker positions give the corresponding continuous optimum of the hit probability, with numeric values rounded to three decimals. Hit denotes pragmatic, Info epistemic, G₁ combined, and G₄ weighted selection. A legal cell is selected from the forecasts actually available on the current board, which need not include these optima. Random selection has no preferred forecast and is not a value-maximizing curve here. This is an analytic explanation, not another experiment, uncertainty interval, or significance test." /><span class="figure-full-size-label" aria-hidden="true">Open full-size figure</span></a>
+<figcaption>Figure 6: Why the declared strategies can
+prefer different shots. Left, the continuous curves maximize hit value
+<span class="math inline">\(2p\)</span>, information <span
+class="math inline">\(h(p)\)</span>, combined value <span
+class="math inline">\(2p+h(p)\)</span>, or weighted value <span
+class="math inline">\(2p+4h(p)\)</span> at preference <span
+class="math inline">\(c=2\)</span>, zero assumed noise, and uniform
+habits. An additive constant in negative expected free energy is omitted
+because it does not affect the maximizing action; all plotted values use
+natural logarithms and are in nats. Right, marker positions give the
+corresponding continuous optimum of the hit probability, with numeric
+values rounded to three decimals. Hit denotes pragmatic, Info epistemic,
+G₁ combined, and G₄ weighted selection. A legal cell is selected from
+the forecasts actually available on the current board, which need not
+include these optima. Random selection has no preferred forecast and is
+not a value-maximizing curve here. This is an analytic explanation, not
+another experiment, uncertainty interval, or significance
+test.</figcaption>
+</figure>
+<p>Equality of completion counts on the benchmark is an observed
+property of these cases, not a theorem that the scores rank actions
+identically. The two-fleet example demonstrates a disagreement at other
+controls. A small latent catalog can collapse after a few observations,
+after which posterior-based policies can target remaining known occupied
+cells. Random selection intentionally ignores that information. Its
+large completion counts should not be presented as a demanding
+comparison with state-of-the-art planners.</p>
+<h2 data-number="6.2" id="inference-support-and-external-validity"><span
+class="header-section-number">6.2</span> Inference support and external
+validity</h2>
+<p>The most important limitation is the inference space. The true label
+is sampled from the very catalog provided to the assistant. This
+in-distribution construction protects zero-noise inference from
+inconsistent observations, but makes no claim of robustness to an unseen
+fleet. The placement procedure is biased, and duplicate labels preserve
+multiplicity. Larger or differently sampled catalogs, out-of-support
+truths, alternative legal rules, and model uncertainty would require
+separate experiments. The present support is neither an exhaustive
+physical fleet space nor a learned approximation with quantified
+external error.</p>
+<h2 data-number="6.3"
+id="planning-horizon-and-feedback-assumptions"><span
+class="header-section-number">6.3</span> Planning horizon and feedback
+assumptions</h2>
+<p>Planning is also restricted. Re-evaluating a one-shot score after
+each observation does not evaluate future contingent shot sequences.
+Pure information gain concerns discrimination among hypotheses;
+completing a fleet search concerns a different task utility <span
+class="citation" data-cites="garnett2012search">(<a
+href="#ref-garnett2012search" role="doc-biblioref">Garnett et al.
+2012</a>)</span>. A multi-step reward-based planner can exploit
+information instrumentally <span class="citation"
+data-cites="kaelbling1998pomdp silver2010pomcp">(<a
+href="#ref-kaelbling1998pomdp" role="doc-biblioref">Kaelbling et al.
+1998</a>; <a href="#ref-silver2010pomcp" role="doc-biblioref">Silver and
+Veness 2010</a>)</span>. Appropriate future comparisons would share
+rules, priors, information access, budgets, and objectives, and would
+separate computation time from decision quality. They should include
+held-out fleet generation rather than assume that catalog-conditional
+accuracy transfers to unrestricted play.</p>
+<p>Positive assumed noise is a transparent sensitivity control, not an
+estimated physical mechanism. Since actual feedback is truthful, Brier
+losses and surprise at positive noise diagnose the declared subjective
+model under mismatch. They do not establish calibration of a real
+sensor. Similarly, the spatial policy prior is manually specified, not
+learned, and the catalog posterior contains no neural dynamics or
+Dirichlet parameter updates. The active-inference interpretation is a
+finite mathematical specialization, without a claim of biological
+realism.</p>
+<h2 data-number="6.4"
+id="educational-use-and-specification-limits"><span
+class="header-section-number">6.4</span> Educational use and
+specification limits</h2>
+<p>The interface offers plausible routes for teaching model inspection:
+a learner can distinguish occupancy from forecast, compare branch
+outcomes, verify an entropy identity, and change one setting without
+firing. No learner study, usability study, or clinical experiment has
+been performed. Existing tutorials and implementations already make
+active inference accessible <span class="citation"
+data-cites="smith2022tutorial heins2022pymdp">(<a
+href="#ref-smith2022tutorial" role="doc-biblioref">Smith et al.
+2022</a>; <a href="#ref-heins2022pymdp" role="doc-biblioref">Heins et
+al. 2022</a>)</span>; the dashboard’s educational value remains a
+hypothesis. Likewise, an executable GNN adapter establishes traceable
+model semantics for this backend, not validation of all upstream GNN
+transformations or proof that a specification is scientifically
+adequate.</p>
+<h1 data-number="7" id="reproducing-the-software-and-manuscript"><span
+class="header-section-number">7</span> Reproducing the software and
+manuscript</h1>
+<p>The source distribution retains both protocols, explicit fresh-case
+seeds, complete search traces, all planned comparisons, source and
+runtime bindings, analytic samples, figure-generation code, manuscript,
+and 34 references: 32 scholarly papers, a pinned software source, and a
+manufacturer manual. The original 21-entry dossier records selected
+substantive passages from 19 scholarly works, qualified manuscript
+reading alongside publisher-abstract evidence for one work, and the
+software source. The <a
+href="../research/SCHOLARSHIP_BATTLESHIP_20261025.md">Battleship
+supplement</a> adds selected substantive passages from seven scholarly
+papers and the manufacturer instructions. Several papers reuse tasks or
+question corpora; these are not seven independent replications. The <a
+href="../research/STRATEGY_SCHOLARSHIP_20261025.md">statistical and
+search supplement</a> adds five primary works on paired signs, step-down
+multiplicity, bootstrap inference, and post-hit Battleship decision
+trees. Its selected Holm and Efron 1987 readings use OCR transcriptions
+checked against publication metadata; clean publisher full text was
+unavailable for those readings. Together the dossiers record reading
+locations, DOI checks, task differences, and bibliographic ambiguities,
+without claiming systematic review or full-paper proof audits. The
+unread Lindley candidate and unresolved corrigendum remain excluded from
+stronger claims. The GNN concept DOI does not uniquely identify its
+pinned source bytes.</p>
+<p>The build imports PDF, HTML, and DOCX renderers from the local
+<code>docxology/template</code> repository. It records the imported
+template-source hashes and output digests, while keeping authored
+manuscript sources separate from generated products. The template
+remains an independently versioned dependency. Seeds, versions, and
+checksums help reconstruct a computation, but do not substitute for
+data, environment details, meaningful tests, or rendered inspection
+<span class="citation"
+data-cites="sandve2013reproducible wilson2014practices">(<a
+href="#ref-sandve2013reproducible" role="doc-biblioref">Sandve et al.
+2013</a>; <a href="#ref-wilson2014practices" role="doc-biblioref">Wilson
+et al. 2014</a>)</span>. Machine-readable provenance follows relevant
+Findable, Accessible, Interoperable, and Reusable (FAIR) principles
+without asserting formal certification <span class="citation"
+data-cites="wilkinson2016fair">(<a href="#ref-wilkinson2016fair"
+role="doc-biblioref"><span class="nocase">Wilkinson et al.</span>
+2016</a>)</span>.</p>
+<p>Verification is layered. Numerical tests exercise Bayesian updates,
+expected and realized information, score identities, counterfactual
+branches, and tiny positive likelihoods. Contract checks use the actual
+upstream parser and reject unsupported semantics. Research tests check
+analytic action changes, deterministic ties, seeded reconstruction,
+legal unique shots, and explicit failures. Invalid-evidence and
+exhausted-search inputs are required to fail. Manuscript validation
+separately checks source freshness, complete case coverage, numerical
+table agreement, resolved references, figure presence, and rendered
+pages. The acceptance documentation records which checks were freshly
+run and which historical dashboard receipts remain
+source-continuous.</p>
+<p>Reproducibility supports examination; it does not establish the truth
+or generality of an interpretation <span class="citation"
+data-cites="peng2011reproducible">(<a href="#ref-peng2011reproducible"
+role="doc-biblioref">Peng 2011</a>)</span>. Numerical correctness,
+browser operation, document rendering, empirical efficacy, and
+publication approval remain separate claims. This manuscript reports
+software and a bounded computational demonstration. Version 0.4.0 makes
+the source, manuscript, and reproducibility materials publicly
+available; publication does not add an empirical efficacy claim.</p>
+<h2 data-number="7.1" id="github-release-and-zenodo-archive"><span
+class="header-section-number">7.1</span> GitHub release and Zenodo
+archive</h2>
+<p>The Active Inference Institute publishes source and reproducibility
+materials at <a
+href="https://github.com/ActInfInstitute/active_inference_battleship">ActInfInstitute/active_inference_battleship</a>,
+with the exact version identified by the <a
+href="https://github.com/ActInfInstitute/active_inference_battleship/releases/tag/v0.4.0">v0.4.0
+release</a>. The manuscript is archived on <a
+href="https://doi.org/10.5281/zenodo.23670188">Zenodo, DOI
+10.5281/zenodo.23670188</a>. The same DOI appears on the PDF cover, in
+the abstract, and in the repository citation metadata. GitHub links to
+the Zenodo record; the record links back to the versioned repository
+release.</p>
+<p>The archive distributes the PDF together with Word and HTML editions,
+a browser dashboard, a built core package, and source/research
+companions. The record DOI identifies this manuscript and its deposited
+companions; no separate software DOI or package-registry publication is
+claimed. The Git tag identifies the source version, while release
+checksums identify each downloadable artifact. Historical verification
+reports retain their original scope and dates; publication does not
+convert bounded numerical or browser checks into scientific efficacy
+evidence.</p>
+<p>Authored prose uses American English. Stable GNN, replay, and API
+identifiers retain their original spelling for compatibility, as do
+published reference titles and frozen historical review records.</p>
+<h1 data-number="8" id="conclusions-and-next-experiments"><span
+class="header-section-number">8</span> Conclusions and next
+experiments</h1>
+<p>A finite Battleship model can make active-sensing assumptions
+unusually concrete: hypotheses occupy cells, observations alter explicit
+weights, and an action’s preference and information terms can be
+inspected side by side. The GNN-based implementation turns that
+connection into composable software and reproducible records. Its most
+useful result is the ability to explain precisely what an assistant
+knows, what its objective values, and where those explanations stop. The
+analytic disagreement, observed completion ties, and distinct
+early-uncertainty results illustrate why inspectable objectives and
+paired endpoint comparisons are more informative than a blanket claim
+that an information-seeking strategy wins.</p>
+<p>Next experiments should use held-out fleet generators and compare
+contingent planning under matched observations and computation budgets.
+A separate learner study is needed before making claims about
+educational benefit.</p>
+<hr />
+<h1 class="unnumbered" id="references">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent"
+role="list">
+<div id="ref-crombez2020battleship" class="csl-entry" role="listitem">
+Crombez, Loïc, Guilherme D. da Fonseca, and Yan Gerard. 2020.
+<span>“Efficient Algorithms for <span>Battleship</span>.”</span>
+<em>10th International Conference on Fun with Algorithms
+(<span>FUN</span> 2021)</em>, Leibniz international proceedings in
+informatics, vol. 157: 11:1–15. <a
+href="https://doi.org/10.4230/LIPIcs.FUN.2021.11">https://doi.org/10.4230/LIPIcs.FUN.2021.11</a>.
+</div>
+<div id="ref-dacosta2020synthesis" class="csl-entry" role="listitem">
+Da Costa, Lancelot, Thomas Parr, Noor Sajid, Sebastijan Veselic,
+Victorita Neacsu, and Karl Friston. 2020. <span>“Active Inference on
+Discrete State-Spaces: A Synthesis.”</span> <em>Journal of Mathematical
+Psychology</em> 99: 102447. <a
+href="https://doi.org/10.1016/j.jmp.2020.102447">https://doi.org/10.1016/j.jmp.2020.102447</a>.
+</div>
+<div id="ref-dixon1946sign" class="csl-entry" role="listitem">
+Dixon, W. J., and A. M. Mood. 1946. <span>“The Statistical Sign
+Test.”</span> <em>Journal of the American Statistical Association</em>
+41 (236): 557–66. <a
+href="https://doi.org/10.1080/01621459.1946.10501898">https://doi.org/10.1080/01621459.1946.10501898</a>.
+</div>
+<div id="ref-efron1979bootstrap" class="csl-entry" role="listitem">
+Efron, Bradley. 1979. <span>“Bootstrap Methods: Another Look at the
+Jackknife.”</span> <em>The Annals of Statistics</em> 7 (1): 1–26. <a
+href="https://doi.org/10.1214/aos/1176344552">https://doi.org/10.1214/aos/1176344552</a>.
+</div>
+<div id="ref-efron1987better" class="csl-entry" role="listitem">
+Efron, Bradley. 1987. <span>“Better Bootstrap Confidence
+Intervals.”</span> <em>Journal of the American Statistical
+Association</em> 82 (397): 171–85. <a
+href="https://doi.org/10.1080/01621459.1987.10478410">https://doi.org/10.1080/01621459.1987.10478410</a>.
+</div>
+<div id="ref-friedman2026gnnsoftware" class="csl-entry" role="listitem">
+Friedman, Daniel Ari. 2026. <em><span>Generalized_Notation_Notation
+(GNN)</span></em>. <a
+href="https://doi.org/10.5281/zenodo.7803313">https://doi.org/10.5281/zenodo.7803313</a>.
+</div>
+<div id="ref-friston2017process" class="csl-entry" role="listitem">
+Friston, Karl, Thomas FitzGerald, Francesco Rigoli, Philipp
+Schwartenbeck, and Giovanni Pezzulo. 2017. <span>“Active Inference: A
+Process Theory.”</span> <em>Neural Computation</em> 29 (1): 1–49. <a
+href="https://doi.org/10.1162/NECO_a_00912">https://doi.org/10.1162/NECO_a_00912</a>.
+</div>
+<div id="ref-friston2015epistemic" class="csl-entry" role="listitem">
+Friston, Karl, Francesco Rigoli, Dimitri Ognibene, Christoph Mathys,
+Thomas Fitzgerald, and Giovanni Pezzulo. 2015. <span>“Active Inference
+and Epistemic Value.”</span> <em>Cognitive Neuroscience</em> 6 (4):
+187–214. <a
+href="https://doi.org/10.1080/17588928.2015.1020053">https://doi.org/10.1080/17588928.2015.1020053</a>.
+</div>
+<div id="ref-garnett2012search" class="csl-entry" role="listitem">
+Garnett, Roman, Yamuna Krishnamurthy, Xuehan Xiong, Jeff Schneider, and
+Richard Mann. 2012. <span>“Bayesian Optimal Active Search and
+Surveying.”</span> <em>Proceedings of the 29th International Conference
+on Machine Learning</em>, 843–50. <a
+href="https://arxiv.org/abs/1206.6406v1">https://arxiv.org/abs/1206.6406v1</a>.
+</div>
+<div id="ref-grand2024lips" class="csl-entry" role="listitem">
+Grand, Gabriel, Valerio Pepe, Jacob Andreas, and Joshua B. Tenenbaum.
+2024. <span>“Loose <span>LIPS</span> Sink Ships: Asking Questions in
+<span>Battleship</span> with Language-Informed Program Sampling.”</span>
+<em>Proceedings of the Annual Meeting of the Cognitive Science
+Society</em> 46: 2074–81. <a
+href="https://escholarship.org/uc/item/6gx0t2wj">https://escholarship.org/uc/item/6gx0t2wj</a>.
+</div>
+<div id="ref-grand2026shoot" class="csl-entry" role="listitem">
+Grand, Gabriel, Valerio Pepe, Joshua B. Tenenbaum, and Jacob Andreas.
+2026. <span>“Shoot First, Ask Questions Later? Building Rational Agents
+That Explore and Act Like People.”</span> <em>International Conference
+on Learning Representations</em>. <a
+href="https://arxiv.org/abs/2510.20886v2">https://arxiv.org/abs/2510.20886v2</a>.
+</div>
+<div id="ref-gureckis2009active" class="csl-entry" role="listitem">
+Gureckis, Todd M., and Doug Markant. 2009. <span>“Active Learning
+Strategies in a Spatial Concept Learning Game.”</span> <em>Proceedings
+of the 31st Annual Conference of the Cognitive Science Society</em>,
+3145–50. <a
+href="https://www.gureckislab.org/publications/GureckisMarkantCogSci2009.pdf">https://www.gureckislab.org/publications/GureckisMarkantCogSci2009.pdf</a>.
+</div>
+<div id="ref-hasbro2016battleship" class="csl-entry" role="listitem">
+Hasbro. 2016. <em><span>Battleship</span></em>. Hasbro. <a
+href="https://instructions.hasbro.com/api/download/A3264_en-au_battleship.pdf">https://instructions.hasbro.com/api/download/A3264_en-au_battleship.pdf</a>.
+</div>
+<div id="ref-heins2022pymdp" class="csl-entry" role="listitem">
+Heins, Conor, Beren Millidge, Daphne Demekas, et al. 2022. <span>“<span
+class="nocase">pymdp</span>: A Python Library for Active Inference in
+Discrete State Spaces.”</span> <em>Journal of Open Source Software</em>
+7 (73): 4098. <a
+href="https://doi.org/10.21105/joss.04098">https://doi.org/10.21105/joss.04098</a>.
+</div>
+<div id="ref-holm1979sequential" class="csl-entry" role="listitem">
+Holm, Sture. 1979. <span>“A Simple Sequentially Rejective Multiple Test
+Procedure.”</span> <em>Scandinavian Journal of Statistics</em> 6 (2):
+65–70. <a
+href="https://doi.org/10.2307/4615733">https://doi.org/10.2307/4615733</a>.
+</div>
+<div id="ref-houlsby2011bald" class="csl-entry" role="listitem">
+Houlsby, Neil, Ferenc Huszár, Zoubin Ghahramani, and Máté Lengyel. 2011.
+<em>Bayesian Active Learning for Classification and Preference
+Learning</em>. <a
+href="https://doi.org/10.48550/arXiv.1112.5745">https://doi.org/10.48550/arXiv.1112.5745</a>.
+</div>
+<div id="ref-kaelbling1998pomdp" class="csl-entry" role="listitem">
+Kaelbling, Leslie Pack, Michael L. Littman, and Anthony R. Cassandra.
+1998. <span>“Planning and Acting in Partially Observable Stochastic
+Domains.”</span> <em>Artificial Intelligence</em> 101 (1–2): 99–134. <a
+href="https://doi.org/10.1016/S0004-3702(98)00023-X">https://doi.org/10.1016/S0004-3702(98)00023-X</a>.
+</div>
+<div id="ref-mackay1992selection" class="csl-entry" role="listitem">
+MacKay, David J. C. 1992. <span>“Information-Based Objective Functions
+for Active Data Selection.”</span> <em>Neural Computation</em> 4 (4):
+590–604. <a
+href="https://doi.org/10.1162/neco.1992.4.4.590">https://doi.org/10.1162/neco.1992.4.4.590</a>.
+</div>
+<div id="ref-markant2012does" class="csl-entry" role="listitem">
+Markant, Doug, and Todd M. Gureckis. 2012. <span>“Does the Utility of
+Information Influence Sampling Behavior?”</span> <em>Proceedings of the
+34th Annual Conference of the Cognitive Science Society</em>. <a
+href="https://gureckislab.org/publications/MarkantGureckis.CogSci2012.battleship.pdf">https://gureckislab.org/publications/MarkantGureckis.CogSci2012.battleship.pdf</a>.
+</div>
+<div id="ref-markant2014preference" class="csl-entry" role="listitem">
+Markant, Doug, and Todd M. Gureckis. 2014. <span>“A Preference for the
+Unpredictable over the Informative During Self-Directed
+Learning.”</span> <em>Proceedings of the 36th Annual Conference of the
+Cognitive Science Society</em>. <a
+href="https://www.gureckislab.org/publications/MarkantGureckis.CogSci2014.unpredictable.pdf">https://www.gureckislab.org/publications/MarkantGureckis.CogSci2014.unpredictable.pdf</a>.
+</div>
+<div id="ref-millidge2021whence" class="csl-entry" role="listitem">
+Millidge, Beren, Alexander Tschantz, and Christopher L. Buckley. 2021.
+<span>“Whence the Expected Free Energy?”</span> <em>Neural
+Computation</em> 33 (2): 447–82. <a
+href="https://doi.org/10.1162/neco_a_01354">https://doi.org/10.1162/neco_a_01354</a>.
+</div>
+<div id="ref-parr2019generalised" class="csl-entry" role="listitem">
+Parr, Thomas, and Karl J. Friston. 2019. <span>“Generalised Free Energy
+and Active Inference.”</span> <em>Biological Cybernetics</em> 113 (5–6):
+495–513. <a
+href="https://doi.org/10.1007/s00422-019-00805-w">https://doi.org/10.1007/s00422-019-00805-w</a>.
+</div>
+<div id="ref-peng2011reproducible" class="csl-entry" role="listitem">
+Peng, Roger D. 2011. <span>“Reproducible Research in Computational
+Science.”</span> <em>Science</em> 334 (6060): 1226–27. <a
+href="https://doi.org/10.1126/science.1213847">https://doi.org/10.1126/science.1213847</a>.
+</div>
+<div id="ref-rothe2017program" class="csl-entry" role="listitem">
+Rothe, Anselm, Brenden M. Lake, and Todd M. Gureckis. 2017.
+<span>“Question Asking as Program Generation.”</span> <em>Advances in
+Neural Information Processing Systems</em> 30. <a
+href="https://proceedings.neurips.cc/paper_files/paper/2017/file/24681928425f5a9133504de568f5f6df-Paper.pdf">https://proceedings.neurips.cc/paper_files/paper/2017/file/24681928425f5a9133504de568f5f6df-Paper.pdf</a>.
+</div>
+<div id="ref-rothe2018questions" class="csl-entry" role="listitem">
+Rothe, Anselm, Brenden M. Lake, and Todd M. Gureckis. 2018. <span>“Do
+People Ask Good Questions?”</span> <em>Computational Brain &amp;
+Behavior</em> 1: 69–89. <a
+href="https://doi.org/10.1007/s42113-018-0005-5">https://doi.org/10.1007/s42113-018-0005-5</a>.
+</div>
+<div id="ref-rothe2019goals" class="csl-entry" role="listitem">
+Rothe, Anselm, Brenden M. Lake, and Todd M. Gureckis. 2019.
+<span>“Asking Goal-Oriented Questions and Learning from Answers.”</span>
+<em>Proceedings of the 41st Annual Conference of the Cognitive Science
+Society</em>, 981–86. <a
+href="https://www.gureckislab.org/publications/Rothe-Lake-Gureckis-2019-Cogsci.pdf">https://www.gureckislab.org/publications/Rothe-Lake-Gureckis-2019-Cogsci.pdf</a>.
+</div>
+<div id="ref-sandve2013reproducible" class="csl-entry" role="listitem">
+Sandve, Geir Kjetil, Anton Nekrutenko, James Taylor, and Eivind Hovig.
+2013. <span>“Ten Simple Rules for Reproducible Computational
+Research.”</span> <em>PLOS Computational Biology</em> 9 (10): e1003285.
+<a
+href="https://doi.org/10.1371/journal.pcbi.1003285">https://doi.org/10.1371/journal.pcbi.1003285</a>.
+</div>
+<div id="ref-sevenster2004battleships" class="csl-entry"
+role="listitem">
+Sevenster, Merlijn. 2004. <span>“Battleships as a Decision
+Problem.”</span> <em>ICGA Journal</em> 27 (3): 142–49. <a
+href="https://doi.org/10.3233/ICG-2004-27303">https://doi.org/10.3233/ICG-2004-27303</a>.
+</div>
+<div id="ref-shannon1948communication" class="csl-entry"
+role="listitem">
+Shannon, Claude E. 1948. <span>“A Mathematical Theory of
+Communication.”</span> <em>Bell System Technical Journal</em> 27 (3):
+379–423. <a
+href="https://doi.org/10.1002/j.1538-7305.1948.tb01338.x">https://doi.org/10.1002/j.1538-7305.1948.tb01338.x</a>.
+</div>
+<div id="ref-silver2010pomcp" class="csl-entry" role="listitem">
+Silver, David, and Joel Veness. 2010. <span>“Monte-Carlo Planning in
+Large <span>POMDPs</span>.”</span> <em>Advances in Neural Information
+Processing Systems</em> 23: 2164–72. <a
+href="https://papers.nips.cc/paper/2010/hash/edfbe1afcf9246bb0d40eb4d8027d90f-Abstract.html">https://papers.nips.cc/paper/2010/hash/edfbe1afcf9246bb0d40eb4d8027d90f-Abstract.html</a>.
+</div>
+<div id="ref-smekal2023gnn" class="csl-entry" role="listitem">
+Smékal, Jakub, and Daniel Ari Friedman. 2023. <em>Generalized Notation
+Notation for Active Inference Models</em>. Active Inference Journal;
+manuscript archived at Zenodo. <a
+href="https://doi.org/10.5281/zenodo.7803328">https://doi.org/10.5281/zenodo.7803328</a>.
+</div>
+<div id="ref-smith2022tutorial" class="csl-entry" role="listitem">
+Smith, Ryan, Karl J. Friston, and Christopher J. Whyte. 2022. <span>“A
+Step-by-Step Tutorial on Active Inference and Its Application to
+Empirical Data.”</span> <em>Journal of Mathematical Psychology</em> 107:
+102632. <a
+href="https://doi.org/10.1016/j.jmp.2021.102632">https://doi.org/10.1016/j.jmp.2021.102632</a>.
+</div>
+<div id="ref-wilkinson2016fair" class="csl-entry" role="listitem">
+<span class="nocase">Wilkinson, Mark D., Michel Dumontier, IJsbrand Jan
+Aalbersberg, et al.</span> 2016. <span>“The <span>FAIR</span> Guiding
+Principles for Scientific Data Management and Stewardship.”</span>
+<em>Scientific Data</em> 3: 160018. <a
+href="https://doi.org/10.1038/sdata.2016.18">https://doi.org/10.1038/sdata.2016.18</a>.
+</div>
+<div id="ref-wilson2014practices" class="csl-entry" role="listitem">
+Wilson, Greg, D. A. Aruliah, C. Titus Brown, et al. 2014. <span>“Best
+Practices for Scientific Computing.”</span> <em>PLOS Biology</em> 12
+(1): e1001745. <a
+href="https://doi.org/10.1371/journal.pbio.1001745">https://doi.org/10.1371/journal.pbio.1001745</a>.
+</div>
+</div>
+<hr />
+<script>
+/* Integrate the pinned MathJax 4 reader controls and native preference values. */
+(() => {
+  // Keep the illustrated opening before the contents in the actual reading order.
+  const contents = document.getElementById('TOC');
+  const finalPlate = document.getElementById('visual-decisions');
+  if (contents && finalPlate) finalPlate.after(contents);
+  /* Initial mathematical-rendering dependency: begin */
+  const notice = document.querySelector('.paper-math-loading');
+  const status = document.getElementById('paper-math-status');
+  const retry = document.getElementById('paper-math-retry');
+  const dependency = document.querySelector('script[src*="mathjax@4.0.0/tex-chtml.js"]');
+  const publishMathState = (phase, cause = null) => {
+    window.battleshipMathReaderState = {phase, cause};
+    notice.dataset.state = phase;
+    notice.setAttribute('aria-busy', String(phase === 'loading'));
+    status.setAttribute('role', phase === 'error' ? 'alert' : 'status');
+    status.textContent = phase === 'ready' ? 'Mathematical notation is ready.'
+      : phase === 'loading' ? 'Loading mathematical notation.'
+      : cause === 'timeout' ? 'Mathematical notation timed out after 30 seconds. Retry or open an edition below.'
+      : 'Mathematical notation could not load. Check your connection, then retry or open an edition below.';
+    retry.disabled = phase !== 'error';
+  };
+  retry.addEventListener('click', () => window.location.reload());
+  publishMathState('loading');
+  let deadline;
+  let stopObservingDependency = () => {};
+  let failed = false;
+  const documentReady = document.readyState === 'loading'
+    ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, {once: true}))
+    : Promise.resolve();
+  const dependencyReady = new Promise((resolve, reject) => {
+    const fail = () => reject(new Error('Mathematical notation dependency did not load'));
+    const check = () => {
+      if (typeof window.MathJax?.startup?.promise?.then !== 'function') fail();
+      else resolve();
+    };
+    if (!dependency) { fail(); return; }
+    dependency.addEventListener('error', fail, {once: true});
+    dependency.addEventListener('load', check, {once: true});
+    // A failed defer script can report its error before this body script exists.
+    // DOMContentLoaded settles only after that defer request has finished.
+    documentReady.then(check);
+    stopObservingDependency = () => {
+      dependency.removeEventListener('error', fail);
+      dependency.removeEventListener('load', check);
+    };
+  });
+  const timedOut = new Promise((resolve, reject) => {
+    deadline = setTimeout(() => reject(new Error('timeout')), 30000);
+  });
+  /* Initial mathematical-rendering dependency: end */
+  /* ClearSpeak request lifetime: begin */
+  const initializeMathMenu = Promise.all([documentReady, dependencyReady]).then(async () => {
+    await window.MathJax.startup.promise;
+    if (failed) return; // A late request cannot install controls after timeout.
+    /* Native ClearSpeak adapter: begin */
+    const registry = window.MathJax.startup.document.menu.menu.constructor.DynamicSubmenus;
+    const entry = registry?.get('Clearspeak');
+    if (!(registry instanceof Map) || !Array.isArray(entry) || typeof entry[0] !== 'function') {
+      throw new Error('Unsupported MathJax ClearSpeak menu registry');
+    }
+    const [build, setting] = entry;
+    const requests = new WeakMap();
+    registry.set('Clearspeak', [(menu, parent, complete) => {
+      const item = menu.mathItem;
+      if (!item) throw new Error('ClearSpeak requires an active mathematical expression');
+      const token = {};
+      requests.set(menu, token);
+      // Native unpost clears menu.mathItem while the real speech worker is pending.
+      const snapshot = Object.create(menu, {mathItem: {value: item, writable: true}});
+      return build(snapshot, parent, submenu => {
+        // A dismissed or superseded request must not replace the current submenu.
+        if (requests.get(menu) === token && menu.mathItem === item) {
+          /* Dynamic submenu replacement: begin */
+          const previous = parent.submenu;
+          const wasPosted = previous?.isPosted();
+          if (previous && previous !== submenu) previous.unpost();
+          complete(submenu);
+          if (wasPosted && parent.html.isConnected && parent.menu.focused === parent && !parent.disabled) submenu.post();
+          /* Dynamic submenu replacement: end */
+        }
+      });
+    }, setting]);
+    /* Native ClearSpeak adapter: end */
+  });
+  window.battleshipMathMenuReady = Promise.race([initializeMathMenu, timedOut]).then(() => {
+    clearTimeout(deadline);
+    stopObservingDependency();
+    publishMathState('ready');
+  }, error => {
+    failed = true;
+    clearTimeout(deadline);
+    stopObservingDependency();
+    publishMathState('error', error.message === 'timeout' ? 'timeout' : String(error));
+    throw error;
+  });
+  // Keep readiness failure observable to callers, with visible recovery feedback,
+  // without producing an additional unhandled promise rejection.
+  window.battleshipMathMenuReady.catch(() => {});
+  /* ClearSpeak request lifetime: end */
+  let nextTooltip = 0;
+  /* Preference Escape scope: begin */
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    const visible = element => element.getClientRects().length > 0;
+    if ([...document.querySelectorAll('.CtxtMenu_ContextMenu')].some(visible)) return;
+    const dialog = [...document.querySelectorAll('.CtxtMenu_Info[role="dialog"]')].filter(visible).at(-1);
+    if (!dialog?.classList.contains('CtxtMenu_Selection')) return;
+    const close = dialog.querySelector('.CtxtMenu_InfoClose');
+    if (!close) throw new Error('Native preference Close is unavailable');
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    close.dispatchEvent(new MouseEvent('mousedown', {bubbles: true, cancelable: true, button: 0}));
+  }, true);
+  /* Preference Escape scope: end */
+  const boundMenus = () => {
+    // Change visible native preference copy, never the option values or handlers.
+    document.querySelectorAll('.CtxtMenu_Selection').forEach(dialog => {
+      const walker = document.createTreeWalker(dialog, NodeFilter.SHOW_TEXT);
+      let node;
+      while ((node = walker.nextNode())) {
+        const original = node.textContent;
+        if (!/[a-z][A-Z]/.test(original)) continue;
+        const words = original.replace(/([a-z])([A-Z])/g, '$1 $2')
+          .replace(/\bFrac\b/g, 'fraction').replace(/\bImplied Times\b/g, 'implied multiplication');
+        const readable = words.replace(/\b([A-Z])([a-z]+)\b/g,
+          (word, first, rest, offset) => offset === words.search(/\S/) ? word : first.toLowerCase() + rest);
+        if (readable !== original) node.textContent = readable;
+      }
+    });
+    document.querySelectorAll('.CtxtMenu_MenuSlider').forEach(slider => {
+      const input = slider.querySelector('input[type="range"]');
+      const label = slider.firstElementChild;
+      if (!input || !label?.id) return;
+      const context = [...(slider.previousElementSibling?.childNodes || [])]
+        .filter(node => node.nodeType === Node.TEXT_NODE).map(node => node.textContent).join('').trim();
+      const text = `${context || 'Highlight'} opacity`;
+      if (label.textContent !== text) label.textContent = text;
+      if (slider.getAttribute('role') !== 'group') slider.setAttribute('role', 'group');
+      if (slider.getAttribute('aria-labelledby') !== label.id) slider.setAttribute('aria-labelledby', label.id);
+      if (input.getAttribute('aria-labelledby') !== label.id) input.setAttribute('aria-labelledby', label.id);
+    });
+    document.querySelectorAll('.CtxtMenu_Info[role="dialog"]').forEach(dialog => {
+      if (!dialog.hasAttribute('aria-label') && !dialog.hasAttribute('aria-labelledby')) {
+        const title = dialog.querySelector('.CtxtMenu_InfoTitle')?.textContent.trim();
+        dialog.setAttribute('aria-label', title || 'Mathematical expression information');
+      }
+      const close = dialog.querySelector('.CtxtMenu_InfoClose');
+      const title = dialog.querySelector('.CtxtMenu_InfoTitle');
+      if (dialog.classList.contains('CtxtMenu_Selection') && close && title && close.parentElement !== title) {
+        title.append(close); // Keep the native close control inside the sticky header.
+      }
+      if (close && !close.querySelector('.paper-math-tooltip')) {
+        const tooltip = document.createElement('span');
+        tooltip.className = 'paper-math-tooltip';
+        tooltip.id = `paper-math-close-tip-${++nextTooltip}`;
+        tooltip.setAttribute('role', 'tooltip');
+        tooltip.textContent = 'Close';
+        close.append(tooltip);
+        close.setAttribute('aria-describedby', [close.getAttribute('aria-describedby'), tooltip.id].filter(Boolean).join(' '));
+      }
+    });
+    if (innerWidth <= 600) return; // The compact CSS cascade owns these positions.
+    document.querySelectorAll('.CtxtMenu_ContextMenu[role="menu"]').forEach((menu, index, menus) => {
+      const rect = menu.getBoundingClientRect();
+      const parentMenu = menus[index - 1];
+      const parent = parentMenu?.getBoundingClientRect();
+      const trigger = parentMenu?.querySelector('.CtxtMenu_MenuActive[aria-haspopup="true"]');
+      const adjacent = parent && (parent.right - 1 + rect.width <= innerWidth - 12
+        ? parent.right - 1 : parent.left - rect.width + 1);
+      const left = Math.max(12, Math.min(adjacent ?? rect.left, innerWidth - rect.width - 12));
+      const anchorTop = trigger?.getBoundingClientRect().top ?? rect.top;
+      const top = Math.max(12, Math.min(anchorTop, innerHeight - rect.height - 12));
+      for (const [name, value] of [['position', 'fixed'], ['left', `${left}px`], ['top', `${top}px`]]) {
+        if (menu.style.getPropertyValue(name) !== value) menu.style.setProperty(name, value);
+      }
+    });
+  };
+  new MutationObserver(boundMenus).observe(document.body, {
+    childList: true, subtree: true, attributes: true, attributeFilter: ['style']
+  });
+  addEventListener('resize', boundMenus);
+  document.addEventListener('scroll', boundMenus, true);
+})();
+</script>
+</main>
+</body>
+</html>

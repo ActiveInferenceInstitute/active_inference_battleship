@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "status": "prospectively specified private follow-up; not public preregistration",
+  "task": "Single-fleet search until 17 public hits; not competitive win rate",
+  "boardSize": 10,
+  "shipLengths": [
+    5,
+    4,
+    3,
+    3,
+    2
+  ],
+  "catalogueSizes": [
+    256,
+    4096
+  ],
+  "casesPerSize": 128,
+  "profiles": [
+    "random",
+    "pragmatic",
+    "epistemic",
+    "combined",
+    "weighted"
+  ],
+  "controls": {
+    "hitPreference": 2,
+    "epistemicWeight": 1,
+    "policyPrecision": 4,
+    "sensorNoise": 0,
+    "habitStrength": 0
+  },
+  "weightedBeta": 4,
+  "tieBand": 1e-12,
+  "selection": "global maximum-score absolute band, then global maximum-hit absolute band, then lowest cell; random seeded uniform ascending available index",
+  "unit": "independently seeded catalog and in-catalog selected label; paired profiles within unit; strata distinct distributions",
+  "endpoints": {
+    "primary": "shots at 17th hit",
+    "secondary": [
+      "hits after 5 shots",
+      "label entropy after 5 shots divided by ln(N)"
+    ]
+  },
+  "comparisons": "4 profiles versus pragmatic x 2 sizes x 3 endpoints = 24, one Holm family alpha .05",
+  "signTest": "exact two-sided non-tied conditional sign balance p=.5; integer ties exact; normalized entropy tolerance 1e-10; all ties p=1; not a mean test",
+  "bootstrap": "10000 paired-case percentile resamples, raw mean differences including ties; SHA256 aib-bootstrap|20261025|N|profile|endpoint first 8 bytes; NumPy default_rng; descriptive 95% nonsimultaneous intervals",
+  "curves": "all 128 means, shots 0..30; carry 17 hits and actual terminal entropy after completion; no tests or bands on curves",
+  "visuals": [
+    "completion all cases with conditional sign annotations",
+    "informed mean effects and sign-count annotations; random in full table",
+    "all-case hit/label-entropy trajectories"
+  ],
+  "failures": "abort without exclusions or seed replacement; no optional stopping; bug amendments require consistent rerun",
+  "samplingLimits": "biased finite-catalog generator, uniform labels including duplicate layouts, pseudorandom stream independence assumed; no held-out truths, efficacy or optimality claims",
+  "historicalStudy": "original 16 cases per size retained unmodified; no retrospective significance"
+}
