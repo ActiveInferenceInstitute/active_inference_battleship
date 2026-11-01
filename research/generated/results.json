@@ -10,7 +10,7 @@
     "src/core/math.ts": "dd3ff700a2cbfee520804a2dfbdfdb9745d721975c5d6cc3e78cc015c2de0153",
     "src/core/random.ts": "7bfc4bb6914850430944a30435de6e34412459c006fec5d2e84f4f1abbd1212e",
     "models/battleship.gnn.md": "a425a3f6b0bdc8cb28a165f92c27c6ea329d3e48d2ea3f16136a93fbb447c91c",
-    "src/generated/model.json": "f4148ef9ae3b330cd6dcacbf5997c13fd2a3b912b3e56113531c7139084323c5"
+    "src/generated/model.json": "9fec971552ddf9d4f11b70d45b23c1723eb0d5cfb182025b578b35942298ea4e"
   },
   "runtime": {
     "bun": "1.4.4"

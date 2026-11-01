@@ -38,7 +38,7 @@ Source identity observed:
 | src/core/analysis.ts | 377e2f65e0c4c804a6e77c32023396c4e740f87429c715a341a7ca689716125a |
 | src/generated/model.json | f4148ef9ae3b330cd6dcacbf5997c13fd2a3b912b3e56113531c7139084323c5 |
 
-Generated metadata records upstream GNN commit 073f21d5b25c403d1ef0c965dd945bb2287d4de4 and parser-closure SHA-256 1dea8f4f8fad2351fed768177d48512ef91a177d38e51ff1e95fb942f2c1ffdf. This research did not rerun the parser or independently recompute its full closure digest.
+Generated metadata records upstream GNN commit 8f293d9ba810e6eda5c09842d9c7ed9ffa5f92c1 (v5.0.3) and parser-closure SHA-256 a73ec44210949930005583c893652c7f9292a3f8ebcebbebc1f79ced3caf795c. The table above preserves the 2026-10-23 read-only observation. This research did not rerun the parser or independently recompute its full closure digest.
 
 ## Claim-to-source ledger
 
@@ -271,9 +271,9 @@ Jakub Smékal; Daniel Ari Friedman (2023). **Generalized Notation Notation for A
 
 ### R21 — friedman2026gnnsoftware
 
-Daniel Ari Friedman (2026). **Generalized_Notation_Notation (GNN)**, software 4.3.0, source revision 073f21d5b25c403d1ef0c965dd945bb2287d4de4. Concept DOI: [10.5281/zenodo.7803313](https://doi.org/10.5281/zenodo.7803313).
+Daniel Ari Friedman (2026). **Generalized_Notation_Notation (GNN)**, software 5.0.3, source revision 8f293d9ba810e6eda5c09842d9c7ed9ffa5f92c1. Concept DOI: [10.5281/zenodo.7803313](https://doi.org/10.5281/zenodo.7803313).
 
-- **Read:** public [pinned CITATION.cff](https://github.com/ActiveInferenceInstitute/Generalized_Notation_Notation/blob/073f21d5b25c403d1ef0c965dd945bb2287d4de4/CITATION.cff), authors/title/version/date/DOI; [pinned README](https://github.com/ActiveInferenceInstitute/Generalized_Notation_Notation/blob/073f21d5b25c403d1ef0c965dd945bb2287d4de4/README.md), Overview and Core Design Principles. [DataCite](https://api.datacite.org/dois/10.5281/zenodo.7803313) independently returns the software title, creator and concept-version relations.
+- **Read:** public [pinned CITATION.cff](https://github.com/ActiveInferenceInstitute/Generalized_Notation_Notation/blob/8f293d9ba810e6eda5c09842d9c7ed9ffa5f92c1/CITATION.cff), authors/title/version/date/DOI; [pinned README](https://github.com/ActiveInferenceInstitute/Generalized_Notation_Notation/blob/8f293d9ba810e6eda5c09842d9c7ed9ffa5f92c1/README.md), Overview and Core Design Principles. [DataCite](https://api.datacite.org/dois/10.5281/zenodo.7803313) independently returns the software title, creator and concept-version relations.
 - **Supports:** actual upstream notation/software provenance, distinct from graph neural networks.
 - **Limit:** a concept DOI does not identify these exact parser bytes. Retain the commit and local parser-closure digest. Importing this parser does not certify every upstream backend or make this browser adapter a universal GNN interpreter.
 

@@ -5,9 +5,9 @@
 | Stage | Actual input and output | What it establishes |
 | --- | --- | --- |
 | Declare | `models/battleship.gnn.md` | Variables, dimensions, graph dependencies, equations, discrete one-shot time, and default parameters |
-| Parse | `scripts/parse_gnn.py` imports upstream `MarkdownGNNParser` | Structured declarations from the real GNN parser, not a local imitation |
+| Parse | `scripts/parse_gnn.py` imports the pinned upstream `MarkdownGNNParser` | Structured declarations from the real GNN parser, not a local imitation |
 | Validate | `scripts/contract.ts` checks the parser payload | Supported identity, unique variables, dimensions, edges, parameters, equations, and time semantics; incompatible declarations fail |
-| Compile | `scripts/import-model.ts` emits `src/generated/model.json` | Checked defaults and digests of the specification and 48 upstream parser source files |
+| Compile | `scripts/import-model.ts` emits `src/generated/model.json` | Checked defaults and digests of the specification and 48 upstream parser source files at the pinned commit |
 | Execute | `src/core/inference.ts` and `src/core/analysis.ts` | Implemented categorical Bayes, one-shot action scores, policy probabilities, and hypothetical updates |
 | Inspect | Shared React boards, charts, tables, controls, and replay export | Views of those runtime quantities, with their units and scope |
 
@@ -29,6 +29,8 @@ bun run model:check
 bun run model:import
 bun run check
 ```
+
+`models/gnn.pin.json` is the upstream pin: repository, release tag, and commit. `model:import` resolves that commit in the `GNN_ROOT` checkout, materializes the commit's `src/gnn` tree into the external cache, runs the parser from those exact bytes, and binds their per-file digests. The checkout's own HEAD is not the pin; bumping the pin means editing the pin file and re-importing.
 
 `model:check` compares current local source bytes with the compiled artifact. It is not proof of the entire upstream pipeline, all transitive dependencies, or scientific adequacy. In **Model & guide**, download the verbatim specification and compiled JSON, inspect their provenance, and use replay export separately to resume a game. [Model equations](MODEL.md) define the quantities; [API](API.md) identifies composable entry points.
 
