@@ -71,7 +71,7 @@ bun run model:import
 bun run check
 ```
 
-The importer resolves the canonical GNN checkout beneath the detected vault root, so isolated staging copies work at different directory depths. Override `GNN_ROOT` and `GNN_PYTHON` when needed. Both Python's `sys.prefix` and `sys.base_prefix` must resolve on GitVault. The current integration uses the upstream environment's Python 3.11, without changing that environment or the upstream repository. Do not replace its Python or install into it just to run this project.
+The upstream revision this project binds is `models/gnn.pin.json` (repository, release tag and commit); the import and the freshness check read that pin, not the checkout's working HEAD. The importer resolves the canonical GNN checkout beneath the detected vault root, so isolated staging copies work at different directory depths. Override `GNN_ROOT` and `GNN_PYTHON` when needed. Both Python's `sys.prefix` and `sys.base_prefix` must resolve on GitVault. The current integration uses the upstream environment's own interpreter, without changing that environment or the upstream repository. Do not replace its Python or install into it just to run this project.
 
 For a production build:
 

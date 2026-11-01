@@ -21,12 +21,12 @@
   },
   "source": {
     "specificationSha256": "a425a3f6b0bdc8cb28a165f92c27c6ea329d3e48d2ea3f16136a93fbb447c91c",
-    "upstreamCommit": "073f21d5b25c403d1ef0c965dd945bb2287d4de4",
-    "parserClosureSha256": "1dea8f4f8fad2351fed768177d48512ef91a177d38e51ff1e95fb942f2c1ffdf",
+    "upstreamCommit": "8f293d9ba810e6eda5c09842d9c7ed9ffa5f92c1",
+    "parserClosureSha256": "a73ec44210949930005583c893652c7f9292a3f8ebcebbebc1f79ced3caf795c",
     "parserFiles": [
       {
         "path": "src/gnn/__init__.py",
-        "sha256": "6b4aab545048617cc18fa8a082c7a74c125e1ccd268b7347384755aa4c5f9f7c"
+        "sha256": "4303d2cec14db42ad1a3f9ca557aaf48f42efc6b1566bcf099d2bf878c2b26ff"
       },
       {
         "path": "src/gnn/parsers/__init__.py",
