@@ -109,6 +109,8 @@ Bayesian inference is exact **conditional on this finite catalog**. The catalog 
 
 The implementation has a one-shot planning horizon, a static transition model, a fixed observation likelihood, and no parameter learning. At epistemic weight 1, the objective is the standard risk/ambiguity or preference/information decomposition used here. Other epistemic weights give a deliberately generalized objective. [The mathematical specification](docs/MODEL.md) defines every quantity and limitation.
 
+GNN maintains a [downstream adoption guide](https://github.com/ActiveInferenceInstitute/Generalized_Notation_Notation/blob/main/docs/gnn/integration/downstream_adoption.md) for repositories that consume the notation.
+
 The assumed sensor noise is subjective model uncertainty. The actual game reports deterministic hits and misses. Changing this slider replays the entire observation history under the new likelihood. Diagnostic history plots show this current-settings reconstruction; exported events preserve the settings that were used for actual action selection.
 
 ## Controls and diagnostics
