@@ -1,0 +1,67 @@
+name: GNN pin conformance
+
+# `bun run model:check` re-derives the compiled model from the pinned upstream
+# parser and compares it with the committed src/generated/model.json: it re-reads
+# models/gnn.pin.json, resolves the pinned commit and tag in the upstream
+# checkout, archives the pinned src/gnn, runs the upstream parser from it, and
+# fails when the pin, the specification, or the parser closure moves without the
+# compiled artifact. This workflow runs that check against the pinned revision
+# only; the application test suite is not part of it.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  model-check:
+    name: gnn conformance (pinned v5.0.3)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version: "1.4.4"
+
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+
+      - run: bun install --frozen-lockfile
+
+      # scripts/paths.ts resolves the vault by walking up from the project for a
+      # directory holding `vault.toml` and `Username`; parse_gnn.py then refuses a
+      # Python whose sys.prefix or sys.base_prefix is outside that same root. The
+      # checkout sits two levels below the runner work directory, so CI marks that
+      # directory as the vault and fetches the pinned checkout to the canonical
+      # path the importer resolves by default.
+      - name: Assemble the vault-shaped root
+        run: |
+          VAULT=$(cd "$GITHUB_WORKSPACE/../.." && pwd)
+          touch "$VAULT/vault.toml"
+          mkdir -p "$VAULT/Username/ActiveInferenceInstitute/Public"
+          echo "VAULT_ROOT=$VAULT" >> "$GITHUB_ENV"
+
+      - name: Provision the pinned upstream checkout
+        run: |
+          GNN="$VAULT_ROOT/Username/ActiveInferenceInstitute/Public/Generalized_Notation_Notation"
+          REPOSITORY=$(bun -e "console.log((await Bun.file('models/gnn.pin.json').json()).repository)")
+          TAG=$(bun -e "console.log((await Bun.file('models/gnn.pin.json').json()).tag)")
+          REVISION=$(bun -e "console.log((await Bun.file('models/gnn.pin.json').json()).commit)")
+          git init --quiet "$GNN"
+          git -C "$GNN" remote add origin "https://github.com/$REPOSITORY.git"
+          # A pin that no longer resolves upstream fails here rather than passing.
+          git -C "$GNN" fetch --depth 1 origin "$REVISION" "refs/tags/$TAG:refs/tags/$TAG"
+          git -C "$GNN" checkout --quiet --detach "$REVISION"
+          # The venv interpreter and its base installation must both resolve inside
+          # the vault, so install a managed Python into the vault and build the
+          # venv from it instead of accepting whatever interpreter is on PATH.
+          export UV_PYTHON_INSTALL_DIR="$VAULT_ROOT/Local/runtimes/uv-python"
+          uv python install 3.12
+          uv venv --python 3.12 --python-preference only-managed --no-project "$GNN/.venv"
+          uv pip install --python "$GNN/.venv/bin/python" numpy defusedxml psutil
+
+      - name: Check the compiled model against the pinned parser
+        run: bun run model:check
