@@ -17,7 +17,7 @@ permissions:
 
 jobs:
   model-check:
-    name: gnn conformance (pinned v5.0.3)
+    name: gnn conformance (pinned)
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -65,3 +65,10 @@ jobs:
 
       - name: Check the compiled model against the pinned parser
         run: bun run model:check
+
+      - name: Report the resolved GNN version
+        run: |
+          PIN=models/gnn.pin.json
+          VERSION=$(python3 -c "import json;print(json.load(open('$PIN'))['tag'].removeprefix('v'))")
+          test -n "$VERSION"
+          echo "gnn-version=${VERSION}" >> "$GITHUB_STEP_SUMMARY"
