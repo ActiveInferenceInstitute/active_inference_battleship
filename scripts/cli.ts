@@ -116,7 +116,7 @@ try {
         session = applyEvent(session, { type: "shot", cell: suggestedCell(session) });
       if (session.game.phase === "playing")
         throw new Error("Headless game exceeded the finite board turn limit");
-      output = exportSession(session, model) + "\n";
+      output = `${exportSession(session, model)}\n`;
     }
     if (command.output === undefined) process.stdout.write(output);
     else await writeNew(command.output, output);

@@ -393,7 +393,7 @@ try {
   log.failure = String(e);
   throw e;
 } finally {
-  await writeFile(join(out, "results.json"), JSON.stringify(log, null, 2) + "\n");
+  await writeFile(join(out, "results.json"), `${JSON.stringify(log, null, 2)}\n`);
   await context.close();
   console.log(
     JSON.stringify({

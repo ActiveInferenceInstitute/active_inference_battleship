@@ -56,7 +56,7 @@ if (!(await Bun.file(inventoryPath).exists())) {
       cwd: projectRoot,
       env: externalEnvironment(),
       stdout: Bun.file(inventoryPath),
-      stderr: Bun.file(inventoryPath + ".stderr"),
+      stderr: Bun.file(`${inventoryPath}.stderr`),
     },
   );
   if ((await list.exited) !== 0) throw new Error(`Browser inventory failed: ${inventoryPath}`);
@@ -167,7 +167,7 @@ for (const item of inventory) {
     "--project",
     item.project,
     "--grep",
-    escapeRegex(item.title) + "$",
+    `${escapeRegex(item.title)}$`,
     "--reporter=json",
     "--output",
     `test-results/cases/${name}`,
@@ -186,7 +186,7 @@ for (const item of inventory) {
   const reportSha256 = hash(bytes);
   await writeFile(
     receiptPath,
-    JSON.stringify({ inputDigest, reportSha256, case: item, argv }, null, 2) + "\n",
+    `${JSON.stringify({ inputDigest, reportSha256, case: item, argv }, null, 2)}\n`,
   );
   accept({
     origin: "isolated-case",
@@ -200,7 +200,7 @@ await requireUnchanged();
 if (covered.size !== inventory.length) throw new Error("Incomplete browser case coverage");
 await writeFile(
   join(destination, "results.json"),
-  JSON.stringify(
+  `${JSON.stringify(
     {
       protocol: 2,
       inputDigest,
@@ -214,6 +214,6 @@ await writeFile(
     },
     null,
     2,
-  ) + "\n",
+  )}\n`,
 );
 console.log(`Complete browser coverage: ${covered.size} unique configured cases passed`);

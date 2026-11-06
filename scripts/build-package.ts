@@ -77,7 +77,7 @@ for await (const name of new Bun.Glob("**/*").scan({ cwd: output, onlyFiles: tru
   artifacts[name] = await hash(join(output, name));
 await writeFile(
   join(output, "manifest.json"),
-  JSON.stringify(
+  `${JSON.stringify(
     {
       schemaVersion: 1,
       sources,
@@ -88,7 +88,7 @@ await writeFile(
     },
     null,
     2,
-  ) + "\n",
+  )}\n`,
 );
 console.log(
   `Built ESM package: ${Object.keys(artifacts).length} artifacts (${project.releaseStatus})`,
