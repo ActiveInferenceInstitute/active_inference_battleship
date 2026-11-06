@@ -132,7 +132,7 @@ try {
   };
   await writeFile(
     join(projectRoot, "research/generated/dashboard-capture.json"),
-    JSON.stringify(receipt, null, 2) + "\n",
+    `${JSON.stringify(receipt, null, 2)}\n`,
   );
   console.log(
     JSON.stringify({

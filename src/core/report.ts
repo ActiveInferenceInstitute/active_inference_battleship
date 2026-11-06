@@ -126,15 +126,13 @@ export function analyzeReplay(
 export function encodeAnalysis(report: ReplayAnalysis): string {
   if (report.kind !== "active-inference-battleship/analysis" || report.schemaVersion !== 1)
     throw new TypeError("Expected a version-one Battleship analysis report");
-  return (
-    JSON.stringify(
-      report,
-      (key: string, value: unknown) => {
-        if (typeof value === "number" && !Number.isFinite(value))
-          throw new RangeError(`Non-finite analysis value: ${key}`);
-        return value;
-      },
-      2,
-    ) + "\n"
-  );
+  return `${JSON.stringify(
+    report,
+    (key: string, value: unknown) => {
+      if (typeof value === "number" && !Number.isFinite(value))
+        throw new RangeError(`Non-finite analysis value: ${key}`);
+      return value;
+    },
+    2,
+  )}\n`;
 }
