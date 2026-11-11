@@ -1,0 +1,11 @@
+{
+  "schema": "aii-readiness/v1",
+  "repo": "ActiveInferenceInstitute/active_inference_battleship",
+  "tier": "typescript-bun",
+  "standard_version": "1.0.0",
+  "baseline": {
+    "commit": "207a7731393f67f9bf2f1ef1ecb0362dee583b6d",
+    "measured_at": "2026-11-10"
+  },
+  "waivers": []
+}

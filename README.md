@@ -187,3 +187,11 @@ References motivate the formalism; game-specific equations, tests, and scope are
 
 
 The paired-study manuscript separates completion, early hits, and label discrimination. Larger publication figures retain every case and all planned comparisons; an analytic objective diagram explains why the selectors can favor different hit probabilities. The [manuscript guide](docs/MANUSCRIPT.md) documents actual placed-font checks and the [statistical and search scholarship](research/STRATEGY_SCHOLARSHIP_20261025.md) records new primary sources and reading limits. No presentation amendment changes the 256 paired units, 1,280 searches, or 24-test family.
+
+## InstituteOS sidecar
+
+This repository carries a committed [`.aii/`](.aii/README.md) sidecar with curated
+InstituteOS metadata (`aii-sidecar/v1`): category, maturity, ecosystem relations,
+key artifacts, provenance, and portable tasks. It is read by
+[InstituteOS](https://github.com/ActiveInferenceInstitute/InstituteOS) tooling and
+does not affect the project's build or runtime.
