@@ -11,19 +11,13 @@ updates:
 
     cooldown:
       default-days: 7
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    groups:
-      npm-dependencies:
-        patterns:
-          - "*"
-    cooldown:
-      default-days: 7
   - package-ecosystem: "bun"
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      bun-dependencies:
+        patterns:
+          - "*"
     cooldown:
       default-days: 7

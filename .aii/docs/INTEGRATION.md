@@ -53,9 +53,9 @@
 
 | Task | Command | Working directory | Description |
 | --- | --- | --- | --- |
-| `test` | `npm run test` | `.` | npm test. |
-| `build` | `npm run build` | `.` | npm build. |
-| `lint` | `npm run lint` | `.` | npm lint. |
+| `test` | `bun run test` | `.` | Run the application test suite. |
+| `build` | `bun run build` | `.` | Build the production application. |
+| `lint` | `bun run lint` | `.` | Run the lint gate. |
 | `check` | `bun run check` | `.` | Run the repository check gate. |
 | `typecheck` | `bun run typecheck` | `.` | Run the typecheck script. |
 

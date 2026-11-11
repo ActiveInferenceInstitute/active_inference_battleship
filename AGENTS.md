@@ -16,10 +16,10 @@ Playable browser Battleship with an inspectable active-inference dashboard, comp
 
 | Task | Command | Working directory |
 | --- | --- | --- |
-| `build` | `npm run build` | `.` |
+| `build` | `bun run build` | `.` |
 | `check` | `bun run check` | `.` |
-| `lint` | `npm run lint` | `.` |
-| `test` | `npm run test` | `.` |
+| `lint` | `bun run lint` | `.` |
+| `test` | `bun run test` | `.` |
 | `typecheck` | `bun run typecheck` | `.` |
 
 ## InstituteOS sidecar

@@ -1,7 +1,7 @@
 # AII sidecar — InstituteOS metadata. Schema: aii_platform.aii_sidecar
 meta:
   sidecar_version: 1.2.1
-  updated: '2026-11-10'
+  updated: '2026-11-11'
 repo:
   name: active_inference_battleship
   slug: active-inference-battleship
@@ -59,7 +59,7 @@ artifacts:
 provenance:
   license: MIT
   citation:
-    doi: 10.5281/zenodo.23676081](https://doi.org/10.5281/zenodo.23676081
+    doi: 10.5281/zenodo.23676081
     text: Active Inference Institute — active_inference_battleship.
 instituteos:
   tags:
@@ -83,14 +83,14 @@ capabilities:
 - citation
 tasks:
   test:
-    cmd: npm run test
-    description: npm test.
+    cmd: bun run test
+    description: Run the application test suite.
   build:
-    cmd: npm run build
-    description: npm build.
+    cmd: bun run build
+    description: Build the production application.
   lint:
-    cmd: npm run lint
-    description: npm lint.
+    cmd: bun run lint
+    description: Run the lint gate.
   check:
     cmd: bun run check
     description: Run the repository check gate.
