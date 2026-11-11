@@ -47,6 +47,7 @@
 | `tests` | `test` | Test suite. |
 | `docs` | `doc` | Documentation tree. |
 | `manuscript` | `publication` | Manuscript sources and artifacts. |
+| `research` | `doc` | Scholarship dossiers, frozen protocol, and the reproducible strategy study. |
 | `CHANGELOG.md` | `doc` | Changelog. |
 
 ## Portable tasks

@@ -53,6 +53,9 @@ artifacts:
 - path: manuscript
   kind: publication
   description: Manuscript sources and artifacts.
+- path: research
+  kind: doc
+  description: Scholarship dossiers, frozen protocol, and the reproducible strategy study.
 - path: CHANGELOG.md
   kind: doc
   description: Changelog.

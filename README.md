@@ -4,6 +4,25 @@ A playable browser Battleship game and an inspectable active inference dashboard
 
 **Public release v0.5.0.** [Source and release downloads](https://github.com/ActiveInferenceInstitute/active_inference_battleship/releases/tag/v0.5.0) · [Manuscript DOI: 10.5281/zenodo.23676081](https://doi.org/10.5281/zenodo.23676081). The Zenodo record archives the manuscript and reproducibility companions. Software is MIT licensed; the manuscript and original figures are CC BY 4.0. No npm registry publication or separate software DOI is claimed. [Release and citation details](docs/RELEASE_PLAN.md).
 
+## Documentation
+
+Full documentation lives in [`docs/`](docs/README.md) — start at the
+[documentation index](docs/README.md). Folder guides sit beside each source tree:
+[src](src/README.md), [scripts](scripts/README.md), [tests](tests/README.md),
+[e2e](e2e/README.md), [manuscript](manuscript/README.md), and [research](research/README.md).
+
+## Table of contents
+
+- [Start with the public release](#start-with-the-public-release)
+- [Run locally](#run-locally)
+- [Play](#play)
+- [Model and scientific scope](#model-and-scientific-scope)
+- [Controls and diagnostics](#controls-and-diagnostics)
+- [Architecture and composition](#architecture-and-composition)
+- [Verification](#verification)
+- [References](#references)
+- [InstituteOS sidecar](#instituteos-sidecar)
+
 ## Start with the public release
 
 [Watch the narrated 20-minute video](https://github.com/ActiveInferenceInstitute/active_inference_battleship/releases/download/v0.5.0/Active_Inference_Battleship_20min.mp4) · [Lecture slides](https://github.com/ActiveInferenceInstitute/active_inference_battleship/releases/download/v0.5.0/Active_Inference_Battleship_slides.pdf) · [Changes in version 0.5.0](CHANGELOG.md).

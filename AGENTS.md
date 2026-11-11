@@ -22,6 +22,14 @@ Playable browser Battleship with an inspectable active-inference dashboard, comp
 | `test` | `bun run test` | `.` |
 | `typecheck` | `bun run typecheck` | `.` |
 
+## Documentation
+
+The documentation index is [`docs/README.md`](docs/README.md). Folder guides live in
+[`src/`](src/README.md), [`scripts/`](scripts/README.md), [`tests/`](tests/README.md),
+[`e2e/`](e2e/README.md), [`manuscript/`](manuscript/README.md), and
+[`research/`](research/README.md). Open work is tracked in [`TODO.md`](TODO.md);
+per-change history is in [`CHANGELOG.md`](CHANGELOG.md).
+
 ## InstituteOS sidecar
 
 This repository carries a committed [`.aii/`](.aii/README.md) sidecar with curated
