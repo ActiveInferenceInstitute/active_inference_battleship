@@ -118,6 +118,8 @@ The future project URL uses `ActInfInstitute`; the pinned upstream GNN URLs use 
 
 Verified replacement BibTeX for R20, **not yet applied** to the main bibliography:
 
+**Correction — 2026-11-12:** The “not yet applied” status above is historical. The `smekal2023gnn` entry in [`manuscript/references.bib`](../manuscript/references.bib) now matches the verified replacement below, including its author order, DOI, deposit note, and access date.
+
 ```bibtex
 @misc{smekal2023gnn,
   author = {Sm{\'e}kal, Jakub and Friedman, Daniel Ari},
