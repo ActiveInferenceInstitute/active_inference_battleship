@@ -35,7 +35,7 @@ The web reader initially returned `Internal Error` for UCL Smith, Caltech MacKay
 
 **GNN here means Generalized Notation Notation. It does not mean graph neural network.** A diagram of dependencies does not make this a trained graph neural network. The project performs categorical inference over fleet labels using handwritten TypeScript functions; it does not train neural weights.
 
-The read-only upstream checkout is `../../../Username/ActiveInferenceInstitute/Public/Generalized_Notation_Notation` relative to this worktree. Its observed branch reference is `073f21d5b25c403d1ef0c965dd945bb2287d4de4`; `pyproject.toml` and `CITATION.cff` state software version **4.3.0**. The GNN model's `GNN v1` marker is a language/source marker, not software package version 1. Current upstream syntax documentation identifies language v1.1; do not conflate those identifiers.
+The read-only upstream checkout is `../../../Username/ActiveInferenceInstitute/Public/Generalized_Notation_Notation` relative to this worktree. Its branch reference observed at acceptance time was `073f21d5b25c403d1ef0c965dd945bb2287d4de4` (the baseline, not the current binding; the current pin is GNN `v5.1.0` at `75c834bd8519dc7b5adc4d24f16bf393cfd1ecdf` in [`models/gnn.pin.json`](../models/gnn.pin.json)); `pyproject.toml` and `CITATION.cff` state software version **4.3.0**. The GNN model's `GNN v1` marker is a language/source marker, not software package version 1. Current upstream syntax documentation identifies language v1.1; do not conflate those identifiers.
 
 | Layer | Owning source and reading location | Accurate statement for documentation | Boundary |
 | --- | --- | --- | --- |
@@ -51,6 +51,8 @@ The read-only upstream checkout is `../../../Username/ActiveInferenceInstitute/P
 ### Fresh source-identity observations
 
 The generated artifact records the specification hash below, the supplied upstream commit, and **48 parser-file entries**. A read-only calculation rehashed every listed current upstream file, compared each entry, and reproduced the digest of their ordered JSON list:
+
+These observations are the acceptance-time (v0.1, GNN 4.3.0-era) baseline, not the current binding; the current upstream pin (GNN `v5.1.0`, `75c834bd8519dc7b5adc4d24f16bf393cfd1ecdf`) is recorded in [`models/gnn.pin.json`](../models/gnn.pin.json).
 
 ```text
 specification SHA-256:

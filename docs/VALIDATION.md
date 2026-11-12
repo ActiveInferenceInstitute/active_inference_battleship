@@ -8,7 +8,9 @@ This receipt describes the local finite-catalogue application and the evidence p
 
 The bridge imports `gnn.parsers.markdown_parser.MarkdownGNNParser` from the existing local upstream checkout using its external Python 3.11 environment. Its checked contract supports static fleets, dynamic discrete observation steps, and a one-shot planning horizon.
 
-| Binding | Value |
+These bindings are the **acceptance-time (v0.1, GNN 4.3.0-era) baseline**, not the current binding. The current upstream pin (GNN `v5.1.0`, `75c834bd8519dc7b5adc4d24f16bf393cfd1ecdf`) is recorded in [`models/gnn.pin.json`](../models/gnn.pin.json).
+
+| Binding (acceptance-time baseline) | Value |
 | --- | --- |
 | GNN specification SHA-256 | `a425a3f6b0bdc8cb28a165f92c27c6ea329d3e48d2ea3f16136a93fbb447c91c` |
 | Upstream Git revision | `073f21d5b25c403d1ef0c965dd945bb2287d4de4` |
