@@ -30,7 +30,7 @@ bun run model:import
 bun run check
 ```
 
-`models/gnn.pin.json` is the upstream pin: repository, release tag, and commit. `model:import` resolves that commit in the `GNN_ROOT` checkout, materializes the commit's `src/gnn` tree into the external cache, runs the parser from those exact bytes, and binds their per-file digests. The checkout's own HEAD is not the pin; bumping the pin means editing the pin file and re-importing.
+`models/gnn.pin.json` is the upstream pin: `schema: gnn-importer-pin/v1`, record date, repository, release tag, and commit. The importer rejects a pin without that schema, and the model suite asserts the pinned tag and commit against the compiled artifact. `model:import` resolves that commit in the `GNN_ROOT` checkout, materializes the commit's `src/gnn` tree into the external cache, runs the parser from those exact bytes, and binds their per-file digests. The checkout's own HEAD is not the pin; bumping the pin means editing the pin file and re-importing.
 
 `model:check` compares current local source bytes with the compiled artifact. It is not proof of the entire upstream pipeline, all transitive dependencies, or scientific adequacy. In **Model & guide**, download the verbatim specification and compiled JSON, inspect their provenance, and use replay export separately to resume a game. [Model equations](MODEL.md) define the quantities; [API](API.md) identifies composable entry points.
 

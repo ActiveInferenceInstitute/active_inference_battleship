@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Declare the canonical `gnn-importer-pin/v1` schema and a record date in `models/gnn.pin.json`. The importer now requires that schema instead of accepting an unlabeled pin, so the GNN reader's `pin-schema-legacy` warning is resolved.
+- Assert the pinned tag and commit against the compiled artifact in the model suite, so a pin that drifts from `src/generated/model.json` fails a local gate rather than only the hosted GNN conformance job.
+
 ## 0.5.0 — Organization and visual explanation edition
 
 - Transfer the existing repository, history, and releases to the `ActiveInferenceInstitute` organization.
