@@ -18,15 +18,15 @@ fresh browser process per case.
 
 ## What is here
 
-| File | Purpose |
-| --- | --- |
-| `game.spec.ts` | Core gameplay, replay, and autoplay flows. |
-| `lab.spec.ts` | Decision-lab interactions and exports. |
-| `institute.spec.ts` | Institute update surfaces. |
-| `organization-release.spec.ts` | Organization/version presentation. |
-| `pointer.spec.ts` | Pointer-state and accessibility checks. |
-| `readability.spec.ts` | Computed-size and contrast checks. |
-| `capture.ts` | Shared screenshot/capture helpers. |
+| File                           | Purpose                                    |
+| ------------------------------ | ------------------------------------------ |
+| `game.spec.ts`                 | Core gameplay, replay, and autoplay flows. |
+| `lab.spec.ts`                  | Decision-lab interactions and exports.     |
+| `institute.spec.ts`            | Institute update surfaces.                 |
+| `organization-release.spec.ts` | Organization/version presentation.         |
+| `pointer.spec.ts`              | Pointer-state and accessibility checks.    |
+| `readability.spec.ts`          | Computed-size and contrast checks.         |
+| `capture.ts`                   | Shared screenshot/capture helpers.         |
 
 These tests require Chrome; they are separate from the Bun unit suite in
 [`../tests/`](../tests/README.md). See [`../docs/VERIFICATION.md`](../docs/VERIFICATION.md).

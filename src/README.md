@@ -7,18 +7,18 @@ source-bound GNN model is committed at `generated/model.json`.
 
 ## Layout
 
-| Path | Responsibility |
-| --- | --- |
-| `core/fleet.ts`, `core/game.ts` | Legal fleet construction/catalog sampling and immutable game rules. |
-| `core/inference.ts`, `core/math.ts` | Exact categorical Bayes, diagnostics, and one-step policy. |
-| `core/analysis.ts` | Counterfactual updates and policy sensitivity. |
-| `core/random.ts` | Explicit reproducible random streams. |
-| `core/session.ts`, `core/report.ts` | Event application/policy wiring and analysis reports. |
-| `model/schema.ts`, `model/default.ts`, `generated/model.json` | Model contract and compiled model. |
-| `research/paired-search.ts`, `research/search.ts` | Headless paired-search study logic. |
-| `ui/*` | Dashboard views, diagnostics, decision lab, board, controls, theme. |
-| `worker/*` | Web Worker client and session worker. |
-| `App.tsx`, `main.tsx`, `index.ts`, `cli/arguments.ts` | App shell and headless CLI surface. |
+| Path                                                          | Responsibility                                                      |
+| ------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `core/fleet.ts`, `core/game.ts`                               | Legal fleet construction/catalog sampling and immutable game rules. |
+| `core/inference.ts`, `core/math.ts`                           | Exact categorical Bayes, diagnostics, and one-step policy.          |
+| `core/analysis.ts`                                            | Counterfactual updates and policy sensitivity.                      |
+| `core/random.ts`                                              | Explicit reproducible random streams.                               |
+| `core/session.ts`, `core/report.ts`                           | Event application/policy wiring and analysis reports.               |
+| `model/schema.ts`, `model/default.ts`, `generated/model.json` | Model contract and compiled model.                                  |
+| `research/paired-search.ts`, `research/search.ts`             | Headless paired-search study logic.                                 |
+| `ui/*`                                                        | Dashboard views, diagnostics, decision lab, board, controls, theme. |
+| `worker/*`                                                    | Web Worker client and session worker.                               |
+| `App.tsx`, `main.tsx`, `index.ts`, `cli/arguments.ts`         | App shell and headless CLI surface.                                 |
 
 ## Conventions
 
