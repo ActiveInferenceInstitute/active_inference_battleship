@@ -23,4 +23,4 @@ Table: Complete descriptive results; differences are paired within each seed and
 
 :::
 
-![Every fixed-case shot count, with horizontal marks at group means. The same 16 seeds appear in each strategy group; horizontal jitter only separates points and has no inferential meaning.](figures/search-comparison.png){#fig:search width=95%}
+![Every fixed-case shot count, with horizontal marks at group means. The same 16 seeds appear in each strategy group; horizontal jitter only separates points and has no inferential meaning.](../../manuscript/figures/search-comparison.png){#fig:search width=95%}

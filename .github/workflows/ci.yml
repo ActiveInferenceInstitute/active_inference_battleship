@@ -1,12 +1,8 @@
-name: GNN pin conformance
+name: Repository gate
 
-# `bun run model:check` re-derives the compiled model from the pinned upstream
-# parser and compares it with the committed src/generated/model.json: it re-reads
-# models/gnn.pin.json, resolves the pinned commit and tag in the upstream
-# checkout, archives the pinned src/gnn, runs the upstream parser from it, and
-# fails when the pin, the specification, or the parser closure moves without the
-# compiled artifact. This workflow runs that check against the pinned revision
-# only; the application test suite is not part of it.
+# One job, one frozen Bun installation, and one gate plan. scripts/run.ts owns
+# every command and deduplicates shared prerequisites (notably pinned GNN).
+# Hosted Actions may be billing-blocked; only actual local receipts certify a run.
 on:
   push:
     branches: [main]
@@ -27,6 +23,10 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "26"
+
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
         with:
           bun-version: "1.4.4"
@@ -35,7 +35,6 @@ jobs:
         with:
           version: "0.13.7"
 
-      - run: bun install --frozen-lockfile
 
       # scripts/paths.ts resolves the vault by walking up from the project for a
       # directory holding `vault.toml` and `Username`; parse_gnn.py then refuses a
@@ -49,6 +48,12 @@ jobs:
           touch "$VAULT/vault.toml"
           mkdir -p "$VAULT/Username/ActiveInferenceInstitute/Public"
           echo "VAULT_ROOT=$VAULT" >> "$GITHUB_ENV"
+          echo "TMPDIR=$VAULT/Local/cache/active-inference-battleship/tmp" >> "$GITHUB_ENV"
+          echo "BUN_INSTALL_CACHE_DIR=$VAULT/Local/cache/active-inference-battleship/bun" >> "$GITHUB_ENV"
+          mkdir -p "$VAULT/Local/cache/active-inference-battleship/tmp"
+
+      - name: Install the single locked JavaScript environment
+        run: bun install --frozen-lockfile
 
       - name: Provision the pinned upstream checkout
         run: |
@@ -69,8 +74,8 @@ jobs:
           uv venv --python 3.12 --python-preference only-managed --no-project "$GNN/.venv"
           uv pip install --python "$GNN/.venv/bin/python" numpy defusedxml psutil
 
-      - name: Check the compiled model against the pinned parser
-        run: bun run model:check
+      - name: Run the same complete gate as local development
+        run: bun run gate all
 
       - name: Report the resolved GNN version
         run: |

@@ -16,15 +16,28 @@ Playable browser Battleship with an inspectable active-inference dashboard, comp
 
 | Task | Command | Working directory |
 | --- | --- | --- |
+| `gate` / `check` | `bun run gate` / `bun run check` — fast development checks | `.` |
+| `all` | `bun run gate all` — full release check | `.` |
 | `build` | `bun run build` | `.` |
-| `check` | `bun run check` | `.` |
-| `lint` | `bun run lint` | `.` |
-| `test` | `bun run test` | `.` |
-| `typecheck` | `bun run typecheck` | `.` |
+| `gnn` | `bun run gate gnn` / `bun run model:check` | `.` |
+| `lint` | `bun run gate lint` | `.` |
+| `test:fast` | `bun run gate test:fast` | `.` |
+| `test:full` / `test` | `bun run gate test:full` / `bun run test` | `.` |
+| `types` / `typecheck` | `bun run gate types` / `bun run typecheck` | `.` |
+| `docs` | `bun run gate docs` | `.` |
+
+`scripts/run.ts` is the sole gate registry. Default `fast` composes lint, types,
+docs, and every `tests/*.test.ts` except `model.test.ts` and `package.test.ts`;
+there is no parser/package integration, build, or coverage claim. `all` composes
+lint, types, docs, full package/tests with coverage, and production build,
+deduplicating the shared GNN leaf. Browser/manuscript acceptance remains separate.
+Use the [run guide](docs/RUN_GUIDE.md) for environments and
+[generated timings](docs/_generated/gate-timings.md) for measured evidence.
 
 ## Documentation
 
-The documentation index is [`docs/README.md`](docs/README.md). Folder guides live in
+The documentation hub is [`docs/README.md`](docs/README.md), with a
+[flat index](docs/documentation-index.md). Folder guides live in
 [`src/`](src/README.md), [`scripts/`](scripts/README.md), [`tests/`](tests/README.md),
 [`e2e/`](e2e/README.md), [`manuscript/`](manuscript/README.md), and
 [`research/`](research/README.md). Open work is tracked in [`TODO.md`](TODO.md);

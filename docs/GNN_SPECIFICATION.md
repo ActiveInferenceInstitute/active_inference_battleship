@@ -7,7 +7,7 @@
 | Declare | `models/battleship.gnn.md` | Variables, dimensions, graph dependencies, equations, discrete one-shot time, and default parameters |
 | Parse | `scripts/parse_gnn.py` imports the pinned upstream `MarkdownGNNParser` | Structured declarations from the real GNN parser, not a local imitation |
 | Validate | `scripts/contract.ts` checks the parser payload | Supported identity, unique variables, dimensions, edges, parameters, equations, and time semantics; incompatible declarations fail |
-| Compile | `scripts/import-model.ts` emits `src/generated/model.json` | Checked defaults and digests of the specification and 48 upstream parser source files at the pinned commit |
+| Compile | `scripts/import-model.ts` emits `src/generated/model.json` | Checked defaults and digests of the specification and upstream parser source closure at the pinned commit |
 | Execute | `src/core/inference.ts` and `src/core/analysis.ts` | Implemented categorical Bayes, one-shot action scores, policy probabilities, and hypothetical updates |
 | Inspect | Shared React boards, charts, tables, controls, and replay export | Views of those runtime quantities, with their units and scope |
 
@@ -24,15 +24,32 @@ The environment draws its selected truth from the catalog. Assistants receive th
 ## Change and verify
 
 ```sh
-bun run model:check
+bun run gate gnn
 # After an intentional, supported source change:
 bun run model:import
-bun run check
+bun run gate all
 ```
 
-`models/gnn.pin.json` is the upstream pin: `schema: gnn-importer-pin/v1`, record date, repository, release tag, and commit. The importer rejects a pin without that schema, and the model suite asserts the pinned tag and commit against the compiled artifact. `model:import` resolves that commit in the `GNN_ROOT` checkout, materializes the commit's `src/gnn` tree into the external cache, runs the parser from those exact bytes, and binds their per-file digests. The checkout's own HEAD is not the pin; bumping the pin means editing the pin file and re-importing.
+[`models/gnn.pin.json`](../models/gnn.pin.json) is the canonical upstream pin:
+schema `gnn-importer-pin/v1`, recorded `2026-11-12`, repository
+`ActiveInferenceInstitute/Generalized_Notation_Notation`, tag `v5.0.3`, commit
+`8f293d9ba810e6eda5c09842d9c7ed9ffa5f92c1`. The importer rejects a pin without
+that schema, and the full model suite asserts the pinned tag and commit against
+the compiled artifact. `model:import` resolves that commit in the `GNN_ROOT`
+checkout, materializes the commit's `src/gnn` tree into the external cache, runs
+the parser from those exact bytes, and binds their per-file digests. The checkout's
+own HEAD is not the pin; bumping the pin means editing the pin file and re-importing.
 
 `model:check` compares current local source bytes with the compiled artifact. It is not proof of the entire upstream pipeline, all transitive dependencies, or scientific adequacy. In **Model & guide**, download the verbatim specification and compiled JSON, inspect their provenance, and use replay export separately to resume a game. [Model equations](MODEL.md) define the quantities; [API](API.md) identifies composable entry points.
+
+`bun run gate gnn` and `bun run model:check` select the same freshness check.
+The default `bun run gate` (`fast`, also `bun run check`) deliberately omits the
+real Python parser and package subprocess suites; it does not renew parser
+verification. `bun run gate all` includes the full suites and production build,
+deduplicating their shared GNN check. The hosted workflow runs that full gate in
+job `model-check`, displayed as `gnn conformance (pinned)`. See the
+[CI pointer](../.github/GNN.md), [run guide](RUN_GUIDE.md), and
+[generated timings](_generated/gate-timings.md).
 
 ## Language and compatibility
 

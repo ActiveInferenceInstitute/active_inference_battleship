@@ -28,7 +28,7 @@ The regenerated matrix has 763 PNGs: 34 physical pages, 242 ordinary reader fram
 
 ## Custody and scope
 
-The R2 [source](../.cache/cover-review-r2/source-manifest.json), [capture](../.cache/cover-review-r2/capture-manifest.json), and [input](../.cache/cover-review-r2/input-manifest.json) manifests bind 194 sources, 763 images, and 1,164 inputs. The [repair response](../.cache/cover-evidence-r2/R2_REPAIR_RESPONSES.md) retains exact failures, corrections, and verification boundaries. This acceptance note was added afterward and is not retrospectively part of the reviewed source inventory.
+The R2 source (local artifact: `../.cache/cover-review-r2/source-manifest.json`), capture (local artifact: `../.cache/cover-review-r2/capture-manifest.json`), and input (local artifact: `../.cache/cover-review-r2/input-manifest.json`) manifests bind 194 sources, 763 images, and 1,164 inputs. The repair response (local artifact: `../.cache/cover-evidence-r2/R2_REPAIR_RESPONSES.md`) retains exact failures, corrections, and verification boundaries. This acceptance note was added afterward and is not retrospectively part of the reviewed source inventory.
 
 | Manifest | SHA-256 |
 |---|---|

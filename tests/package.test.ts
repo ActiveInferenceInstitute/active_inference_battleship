@@ -132,14 +132,15 @@ beforeAll(async () => {
       devDependencies: { "@types/node": nodeTypes.version },
     }),
   );
-  await success(["bun", "install", "--production", "--ignore-scripts"], consumer);
+  // Reuse the locked setup's cache; consumer acceptance must not resolve over the network.
+  await success(["bun", "install", "--offline", "--production", "--ignore-scripts"], consumer);
   const installed = join(consumer, "node_modules/active-inference-battleship");
   const metadata = JSON.parse(await readFile(join(installed, "package.json"), "utf8"));
   expect(metadata.private).toBe(true);
   expect(Object.keys(metadata.dependencies)).toEqual(["zod"]);
   expect(await readdir(join(consumer, "node_modules"))).not.toContain("react");
   // Production installation above proves runtime dependency scope; Node types are consumer tooling.
-  await success(["bun", "install", "--ignore-scripts"], consumer);
+  await success(["bun", "install", "--offline", "--ignore-scripts"], consumer);
   const model = loadDefaultModel();
   let session = applyEvent(createSession(model, 1943, 16), { type: "begin" });
   session = applyEvent(session, { type: "shot", cell: 0 });

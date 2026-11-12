@@ -4,7 +4,7 @@ Historical v0.1 review. The current Decision lab extension is tracked in [v0.2 v
 
 Combined round 3 verdict: **PASS** within the frozen Chrome source and capture scope. Independent functional/design-system pass A returned PASS with high confidence; independent rendered pass B returned PASS with confidence 0.94. No blocking product or evidence findings remain. All 67 checklist items are accounted for: 54 PASS, 13 N/A, zero FAIL.
 
-Both reviewers are independent read-only leaves. The source under review is bound by the [38-file source manifest](../.cache/source-manifest.json). The [capture manifest](../.cache/capture-manifest.json) binds 332 PNGs: 331 application frames and one Chrome Settings frame establishing the native zoom method. The production application is served on loopback port 5186.
+Both reviewers are independent read-only leaves. The source under review is bound by the 38-file source manifest (local artifact: `../.cache/source-manifest.json`). The capture manifest (local artifact: `../.cache/capture-manifest.json`) binds 332 PNGs: 331 application frames and one Chrome Settings frame establishing the native zoom method. The production application is served on loopback port 5186.
 
 ## Evidence keys
 
@@ -12,11 +12,11 @@ Both reviewers are independent read-only leaves. The source under review is boun
 | --- | --- |
 | Matrix | `test-results/game-renders-every-view-in-6793a-or-accessibility-violations-{desktop,mobile,wide}/surfaces/`; all three views, both themes, complete pages/overlapping segments and scroll ends |
 | Pointer | `test-results/game-keeps-secondary-label-64df1-rols-legible-in-both-themes-desktop/`; 12 cases, 36 rest/hover/pressed frames and `pointer-states.json` |
-| Fault | [Startup, error, timeout, focus, motion and replay frames](../.cache/browser-states/2026-10-22T21-10-05.161Z/results.json) |
+| Fault | Startup, error, timeout, focus, motion and replay frames (local artifact: `../.cache/browser-states/2026-10-22T21-10-05.161Z/results.json`) |
 | Operation | `test-results/game-shows-import-progress-8911a-from-every-information-view-{desktop,mobile}/`; pending imports and cancellation |
-| Zoom | [Native Chrome 200% setting, geometry, and 64 application viewport frames](../.cache/native-zoom/2026-10-22T21-10-05.650Z/results.json) |
-| Browser execution | [17 expected passes, zero skipped/unexpected/flaky](../test-results/results.json) |
-| Worker API | [Real abort, cloning failure, rejection, recovery and cleanup results](../.cache/worker-api-results.json) |
+| Zoom | Native Chrome 200% setting, geometry, and 64 application viewport frames (local artifact: `../.cache/native-zoom/2026-10-22T21-10-05.650Z/results.json`) |
+| Browser execution | 17 expected passes, zero skipped/unexpected/flaky (local artifact: `../test-results/results.json`) |
+| Worker API | Real abort, cloning failure, rejection, recovery and cleanup results (local artifact: `../.cache/worker-api-results.json`) |
 
 Exact image paths, dimensions, timestamps, and SHA-256 values are in the capture manifest. It includes the additional playing, opponent-diagnostic, expanded-source, victory/defeat, offline, and disabled-control states. Extra states were captured at their recorded configurations; this does not imply every extra state was captured in every configuration.
 
