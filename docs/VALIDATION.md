@@ -11,10 +11,10 @@ The bridge imports `gnn.parsers.markdown_parser.MarkdownGNNParser` from the exis
 | Binding | Value |
 | --- | --- |
 | GNN specification SHA-256 | `a425a3f6b0bdc8cb28a165f92c27c6ea329d3e48d2ea3f16136a93fbb447c91c` |
-| Upstream Git revision | `073f21d5b25c403d1ef0c965dd945bb2287d4de4` |
-| Parser-directory source digest | `1dea8f4f8fad2351fed768177d48512ef91a177d38e51ff1e95fb942f2c1ffdf` |
+| Baseline (v0.1) upstream Git revision | `073f21d5b25c403d1ef0c965dd945bb2287d4de4` |
+| Baseline parser-directory source digest | `1dea8f4f8fad2351fed768177d48512ef91a177d38e51ff1e95fb942f2c1ffdf` |
 
-The generated model lists every file in the parser digest. That source binding is intentionally narrower than a transitive dependency closure. The upstream checkout and Python environment were preserved.
+The revision and digest above are the v0.1 baseline binding, not the repository's current dependency. The project now pins GNN software v5.0.3 at `8f293d9ba810e6eda5c09842d9c7ed9ffa5f92c1` (`models/gnn.pin.json`), whose 48-file parser closure is `a73ec44210949930005583c893652c7f9292a3f8ebcebbebc1f79ced3caf795c`. The generated model lists every file in the parser digest. That source binding is intentionally narrower than a transitive dependency closure. The upstream checkout and Python environment were preserved.
 
 ## Numerical, rules, replay, and source checks
 

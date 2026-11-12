@@ -35,7 +35,7 @@ The web reader initially returned `Internal Error` for UCL Smith, Caltech MacKay
 
 **GNN here means Generalized Notation Notation. It does not mean graph neural network.** A diagram of dependencies does not make this a trained graph neural network. The project performs categorical inference over fleet labels using handwritten TypeScript functions; it does not train neural weights.
 
-The read-only upstream checkout is `../../../Username/ActiveInferenceInstitute/Public/Generalized_Notation_Notation` relative to this worktree. Its observed branch reference is `073f21d5b25c403d1ef0c965dd945bb2287d4de4`; `pyproject.toml` and `CITATION.cff` state software version **4.3.0**. The GNN model's `GNN v1` marker is a language/source marker, not software package version 1. Current upstream syntax documentation identifies language v1.1; do not conflate those identifiers.
+The read-only upstream checkout is `../../../Username/ActiveInferenceInstitute/Public/Generalized_Notation_Notation` relative to this worktree. On this note's observation date (2026-10-23) its branch reference was `073f21d5b25c403d1ef0c965dd945bb2287d4de4`, and `pyproject.toml` and `CITATION.cff` then stated software version **4.3.0**. This is a dated reading record, not the repository's current binding: the project now pins GNN software v5.0.3 at `8f293d9ba810e6eda5c09842d9c7ed9ffa5f92c1` (`models/gnn.pin.json`). The GNN model's `GNN v1` marker is a language/source marker, not software package version 1. Current upstream syntax documentation identifies language v1.1; do not conflate those identifiers.
 
 | Layer | Owning source and reading location | Accurate statement for documentation | Boundary |
 | --- | --- | --- | --- |
