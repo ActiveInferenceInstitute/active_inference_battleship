@@ -17,14 +17,14 @@ load; it is not rendered-UI, Python-bridge, or upstream-pipeline coverage.
 
 ## What is here
 
-| Path | Purpose |
-| --- | --- |
-| `game.test.ts`, `session.test.ts` | Rules, replay import/export, and strict validation. |
-| `inference.test.ts`, `analysis.test.ts`, `report.test.ts` | Bayes updates, diagnostics, and report shape. |
-| `model.test.ts`, `package.test.ts`, `package-tools.test.ts` | Model contract and package/CLI behaviour. |
-| `paired-search.test.ts`, `research.test.ts` | Strategy-study logic. |
-| `browser-receipts.test.ts` | Browser receipt contract. |
-| `fixtures/` | Small deterministic fixtures. |
+| Path                                                        | Purpose                                             |
+| ----------------------------------------------------------- | --------------------------------------------------- |
+| `game.test.ts`, `session.test.ts`                           | Rules, replay import/export, and strict validation. |
+| `inference.test.ts`, `analysis.test.ts`, `report.test.ts`   | Bayes updates, diagnostics, and report shape.       |
+| `model.test.ts`, `package.test.ts`, `package-tools.test.ts` | Model contract and package/CLI behaviour.           |
+| `paired-search.test.ts`, `research.test.ts`                 | Strategy-study logic.                               |
+| `browser-receipts.test.ts`                                  | Browser receipt contract.                           |
+| `fixtures/`                                                 | Small deterministic fixtures.                       |
 
 Do not weaken strict schemas or replay validation to pass a test. See
 [`../docs/VERIFICATION.md`](../docs/VERIFICATION.md) for what each gate proves.
