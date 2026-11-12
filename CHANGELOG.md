@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Prepare the GNN–FEP checker call in `scripts/parse_gnn.py`, with strict pointer validation and stderr-only checker output. Migration is blocked: the pinned GNN revision lacks `gnn.importers`; duplicate-reader removal and manuscript-variable adoption are not yet complete.
 - Declare the canonical `gnn-importer-pin/v1` schema and a record date in `models/gnn.pin.json`. The importer now requires that schema instead of accepting an unlabeled pin, so the GNN reader's `pin-schema-legacy` warning is resolved.
 - Assert the pinned tag and commit against the compiled artifact in the model suite, so a pin that drifts from `src/generated/model.json` fails a local gate rather than only the hosted GNN conformance job.
 - Centralize gate selection in `scripts/run.ts`: default `fast` and legacy `check` cover lint, types, docs, and fast tests without builds, parser/package integration, or coverage. `all` retains full tests with coverage and the production build, deduplicating the pinned GNN check.

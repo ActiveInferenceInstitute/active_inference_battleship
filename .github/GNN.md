@@ -15,14 +15,22 @@ The canonical [`models/gnn.pin.json`](../models/gnn.pin.json) has schema
 The full gate deduplicates the GNN leaf shared by package and production builds.
 That leaf is `bun run model:check` (`bun run gate gnn`), implemented by
 `scripts/import-model.ts --check`. It resolves the pinned tag and commit in the
-upstream checkout, archives that revision's `src/gnn`, and parses the single
-specification `models/battleship.gnn.md` with the upstream `MarkdownGNNParser`
-through `scripts/parse_gnn.py`. The result is checked against the executable
-contract in `scripts/contract.ts`: parameter values, variable dimensions, and the
-dependency graph must match exactly, and the pinned parser closure is hashed.
-It fails when the pin, specification, or parser closure moves without the
-committed `src/generated/model.json`. It does not scan the repository for other
-`*.gnn.md` files or certify the entire upstream pipeline.
+upstream checkout and archives that revision's `src/gnn`. Before parsing,
+`scripts/parse_gnn.py` shells out to `python -m gnn.importers check --repo .`
+with `--require-pointer --workflow .github/workflows/ci.yml --job model-check`,
+using only that archived revision on `PYTHONPATH`. Checker output goes to stderr
+so the parser's JSON channel stays intact. The checker owns pin, pointer and
+discovered specification validation; the executable Battleship contract in
+`scripts/contract.ts` still checks supported parameters, dimensions and graph,
+and the compiled model still binds the pinned parser closure.
+
+**Migration blocked:** the current pinned revision does not contain
+`src/gnn/importers.py`, so the GNN arm fails with `No module named gnn.importers`.
+The wrapper does not fall back to the upstream working tree. This change cannot
+land until a reader-bearing pinned environment is available under the
+[GNN–FEP contract](https://github.com/ActiveInferenceInstitute/Generalized_Notation_Notation/blob/main/docs/workflows/gnn-fep.md).
+Removal of the TypeScript/CI pin readers and migration of manuscript variables
+remain blocked by that same prerequisite; they are not claimed complete.
 
 Hosted CI creates a vault-shaped root and installs managed uv Python beneath it;
 both the interpreter's prefix and base prefix must resolve there. The pin is

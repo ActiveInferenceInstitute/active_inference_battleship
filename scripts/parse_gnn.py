@@ -7,6 +7,8 @@
 from __future__ import annotations
 
 import json
+import os
+import subprocess
 import sys
 from pathlib import Path
 
@@ -20,6 +22,19 @@ def main() -> None:
             raise RuntimeError(f"Python prefix is outside GitVault: {prefix}")
     if not root.is_relative_to(vault):
         raise RuntimeError("GNN source must resolve on GitVault")
+    # Keep checker output off the JSON parser channel consumed by Bun.
+    subprocess.run(
+        [
+            sys.executable, "-B", "-m", "gnn.importers", "check",
+            "--repo", str(Path(__file__).resolve().parents[1]),
+            "--require-pointer", "--workflow", ".github/workflows/ci.yml",
+            "--job", "model-check",
+        ],
+        env={**os.environ, "PYTHONPATH": str(root / "src")},
+        stdin=subprocess.DEVNULL,
+        stdout=sys.stderr,
+        check=True,
+    )
     sys.path.insert(0, str(root / "src"))
     from gnn.parsers.markdown_parser import MarkdownGNNParser
 
