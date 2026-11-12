@@ -70,18 +70,20 @@ for (const file of files.filter((path) => /^docs\/[^/]+\.md$/.test(path))) {
   if (name !== "README.md" && name !== "documentation-index.md" && !index.includes(`](${name})`))
     failures.push(`${file}: missing from docs/documentation-index.md`);
 }
-const sidecar = YAML.parse(await Bun.file(join(projectRoot, ".aii/config.yaml")).text()) as {
+// InstituteOS resolves docs[] from the sidecar directory, not the repository root.
+const sidecarRoot = join(projectRoot, ".aii");
+const sidecar = YAML.parse(await Bun.file(join(sidecarRoot, "config.yaml")).text()) as {
   docs: unknown;
 };
 if (!Array.isArray(sidecar.docs)) {
-  failures.push(".aii/config.yaml: docs must be a list of repository-relative paths");
+  failures.push(".aii/config.yaml: docs must be a list of sidecar-relative paths");
 } else {
   for (const target of sidecar.docs) {
     if (typeof target !== "string" || !target.trim()) {
       failures.push(".aii/config.yaml: docs entries must be nonempty paths");
       continue;
     }
-    const path = resolve(projectRoot, target);
+    const path = resolve(sidecarRoot, target);
     const offset = relative(projectRoot, path);
     if (isAbsolute(target) || offset === ".." || offset.startsWith("../") || !existsSync(path))
       failures.push(`.aii/config.yaml: invalid documentation path ${target}`);
