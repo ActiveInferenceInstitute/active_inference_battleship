@@ -15,22 +15,33 @@ Every display equation has a stable `eq:` label. The real template's `formalism.
 - `src/research/search.ts`: reusable public-score policy selector and search loop. Selected truth is restricted to an environment callback.
 - `src/index.ts` and `src/core/report.ts`: typed package interface and headless analysis reports. The CLI's two-actor `play` command generates resumable game replays; it is separate from the single-fleet research protocol. [Package workflow](PACKAGE.md).
 - `research/generated/results.json`: every search and shot, analytic sweep samples, runtime and source hashes. `summary.csv` and `results-table.md` are derived summaries.
-- `research/manuscript.py`: figure generation and thin integration with the real template rendering classes. `research/editions.py` independently checks scalar calculations and document structure.
+- `research/manuscript.py`: figure generation and thin integration with the real template rendering classes. `research/variables.py` hydrates declared pin variables without rewriting authored sources. `research/editions.py` independently checks scalar calculations and document structure.
 - `output/`: generated `pdf/`, complete `web/` edition, `docx/`, renderer provenance and validation receipts. This directory is ignored; sources and research data are retained separately. These conventional edition paths are required by the template's composition contract.
 
 ## Reproduction
 
-Use the external cache setup in the root README before the first package installation. All named project tasks thereafter bind their caches and temporary files to GitVault.
+Use the external cache setup in the root README before the first package installation. All named project tasks thereafter bind their caches and temporary files to GitVault. A prepared compatible rendering environment is required; the example below selects the dedicated vault-local interpreter, rather than creating or modifying an environment:
 
 ```sh
-bun run check
+task_vault_root="$(cd ../../../.. && pwd)"
+export TEMPLATE_ROOT="${task_vault_root}/Username/docxology/Public/template"
+export TEMPLATE_PYTHON="${task_vault_root}/Local/cache/active-inference-battleship/template-python/bin/python"
+bun run gate all
 bun run research:analyze
-bun run manuscript:figures
-bun run test:manuscript
 bun run manuscript:render
+```
+
+Retained, current figures can be rendered directly. `bun run manuscript:figures` is an intentional regeneration command, not a repair that rendering performs automatically. Review the regenerated figure/capture bindings before accepting them.
+
+Native DOCX projection, page captures, and edition verification are separate from rendering. Once a real LibreOffice executable is available (set `SOFFICE` when it is not at the wrapper's default path), run:
+
+```sh
 bun run manuscript:pages
+bun run test:manuscript
 bun run manuscript:verify
 ```
+
+The component suite includes real rendered-edition and LibreOffice checks; it is not a renderer-independent unit-only gate. A successful `manuscript:render` does not claim these later checks passed.
 
 To intentionally replace the retained live screenshots, first run the reviewed production preview on port 5186, then run `bun scripts/capture-dashboard-for-manuscript.ts` from the source checkout. It creates its own external Chrome profile, checks every served asset against the staged build, plays six explicit shots, and exports the actual replay and analysis. `research/generated/dashboard-capture.json` binds the capture script, browser/runtime, viewport, controls, observations, assets, and screenshot hashes. A missing browser, changed build, page error, missing region, or unexpected state fails explicitly. This capture command requires Google Chrome; it is not a browser mock or an offline capture workflow.
 
@@ -38,13 +49,21 @@ To intentionally replace the retained live screenshots, first run the reviewed p
 
 The research run may take several minutes. It aborts on failed searches instead of omitting cases. Regeneration checks the current source hashes; after changing research inputs, rerun research before figures or rendering. The zero-noise benchmark uses controls different from the browser's initial defaults. It measures single-fleet completion shots, not competitive wins. EFE is selected greedily by minimum score; gamma therefore does not change its ranking with uniform habits.
 
-The render task imports the local `docxology/Public/template` dependency, without modifying it. By default it uses that checkout's existing external `.venv/bin/python` through `uv run --no-project`; both its environment and base interpreter must reside on GitVault. Override `TEMPLATE_ROOT` to use another compatible checkout. Required tools are Pandoc, pandoc-crossref and XeLaTeX; the tested template is version 4.0.2. The existing environment supplies Matplotlib, NumPy, pypdf and lxml. Missing tools fail explicitly. Rendering records the actual loaded template Python source hashes, since a repository commit alone cannot describe a dirty checkout. No full-template acceptance claim is made.
+The render task is the authoritative `scripts/manuscript.ts` → `research.manuscript` path. It imports the local `docxology/Public/template` dependency without modifying it. By default it selects that checkout's `.venv/bin/python` through `uv run --no-project`; `TEMPLATE_PYTHON` selects a different existing compatible interpreter. Both its environment and base interpreter must reside on GitVault, so a vault-local virtual environment backed by a home-directory Python is rejected. `TEMPLATE_ROOT` selects the template source checkout independently of that interpreter. Required tools are Pandoc, pandoc-crossref and XeLaTeX; the Python environment supplies Matplotlib, NumPy, pypdf and lxml. The current local renderer is template 5.2.0; the earlier documented 4.0.2 is a historical tested version, not a current dependency pin. Missing tools fail explicitly. Each render records actual loaded template Python source hashes, since a repository commit alone cannot describe a dirty checkout. No full-template acceptance claim is made.
 
-PDF uses `PDFRenderer.render_combined`, HTML uses `WebRenderer.render_combined`, and DOCX uses the template's `render_docx` with its shared cross-reference, resource-path, formalism, and citation argument builder. The manuscript supplies its own source preamble and metadata; generated TeX is not manually patched. Preserve the full HTML directory with its assets. Mathematical typesetting uses the renderer's supported CDN mode and requires its external MathJax resource. The opt-in local mode currently confines asset output to the template checkout, so it is not used for this external project. No offline manuscript claim is made.
+PDF uses `PDFRenderer.render_combined`, HTML uses `WebRenderer.render_combined`, and DOCX uses the template's `render_docx` with its shared cross-reference, resource-path, formalism, and citation argument builder. Every writer consumes the hydrated section copies, while the original `manuscript/` directory remains the metadata and relative-resource base. An exact bibliography copy beside the hydrated Markdown preserves the template's source-level citation preflight; bibliography content is unchanged. The manuscript supplies its own source preamble and metadata; generated TeX is not manually patched. Preserve the full HTML directory with its assets. Mathematical typesetting uses the renderer's supported CDN mode and requires its external MathJax resource. The opt-in local mode currently confines asset output to the template checkout, so it is not used for this external project. No offline manuscript claim is made.
 
-`manuscript:pages` converts the actual DOCX with native LibreOffice, then captures every PDF and DOCX page with Poppler. It requires `pdftoppm` and a real `soffice` executable. Override `SOFFICE` if its external runtime is elsewhere. The verified runtime is LibreOffice 26.8.1.1, extracted on GitVault from the official 26.8.1 Apple Silicon download after its published SHA-256 matched. Conversion uses an external user profile and temporary directory, and fails if a fresh native PDF is not produced. Captures are evidence for human review, rather than an automatic visual approval.
+`manuscript:pages` converts the actual DOCX with native LibreOffice, then captures every PDF and DOCX page with Poppler. It requires `pdftoppm` and a real `soffice` executable. Override `SOFFICE` when its external runtime is elsewhere. Historical page evidence used LibreOffice 26.8.1.1, extracted on GitVault from the official 26.8.1 Apple Silicon download after its published SHA-256 matched. That runtime is not bundled or provisioned by these commands, and the wrapper's default executable is currently absent on the working machine. The PDF/HTML/DOCX render is therefore distinct from a fresh native-page or full edition-verification claim. Conversion uses an external user profile and temporary directory, and fails if a fresh native PDF is not produced. Captures are evidence for human review, rather than an automatic visual approval.
 
 The Word layout is source-controlled: `manuscript/docx.lua` gives the search table deliberate column widths and keeps equation lead-ins with their formulas. The results generator wraps its PDF-only page boundary in a named `pdf-only` block. The Word filter removes that entire block after the template has projected its raw LaTeX boundary into Office markup, so it cannot introduce a footer-only Word page. `research/docx_reference.py` builds the reference styles and page-number field before Pandoc renders the manuscript, preserving namespace declarations with lxml. The component test opens a real generated Word file in LibreOffice as well as checking its native equation, table and footer structures. `manuscript/web.css` supplies readable text, responsive data scroll, visible link focus and paired light/dark reading themes through the template's CSS embedding API. Fontconfig, TeX, Matplotlib and office profiles use external task caches.
+
+## Declared manuscript variables
+
+[`manuscript/variables.json`](../manuscript/variables.json) declares the source, expected source schema, and field bindings; it does not duplicate pin values. The source is [`models/gnn.pin.json`](../models/gnn.pin.json). `GNN_VERSION` reads its `tag` with the leading `v` removed, `GNN_COMMIT` reads `commit`, and `GNN_REPOSITORY` reads `repository`. The shared software/protocol section uses `{{GNN_VERSION}}`, `{{GNN_COMMIT}}`, and `{{GNN_REPOSITORY}}` in both the visible revision sentence and its source link.
+
+At render time, `research/variables.py` resolves those declarations, rejects missing/non-text fields and unknown or malformed tokens, and writes all numbered manuscript section copies to the template's canonical ignored `output/manuscript/`. PDF, HTML, and DOCX use these same hydrated inputs, with their existing edition-specific frontmatter handling. Rendering never rewrites the authored sections. The declaration and pin hashes are taken from the exact bytes used to resolve the variables; they, the hydration driver, the original sections, and the hydrated copies join the render input snapshot. The render receipt also records the resolved variables and each original-to-hydrated source mapping.
+
+Render preflight compares the complete `manuscript/figures/manifest.json` registry with actual generated-file hashes. Missing, changed, and unregistered assets fail; rendering never silently rewrites the manifest. This supplements, rather than replaces, the research, live-capture, illustration, source-numbering, template-import and before/after input custody gates. The manuscript component tests include real-file hydration, unknown-token, missing-field, pin-change and snapshot regressions.
 
 ## Checks and interpretation
 

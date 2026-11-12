@@ -10,7 +10,7 @@ from html.parser import HTMLParser
 from zipfile import ZipFile
 from xml.etree import ElementTree as ET
 
-from research.manuscript import ROOT, sha, verify_results, project_metadata
+from research.manuscript import ROOT, sha, verify_results, project_metadata, require_figure_manifest
 
 
 def validate_local_links(document: Path) -> int:
@@ -232,7 +232,9 @@ def validate_sources(root: Path = ROOT) -> dict:
     from research.strategy_validation import validate_strategy_outputs
     strategy = validate_strategy_outputs(root)
     sections = sorted((root/"manuscript").glob("[0-9][0-9]_*.md"))
-    content = "\n".join(p.read_text() for p in sections)
+    from research.variables import hydrate_text, load_variables
+    variables, _ = load_variables(root)
+    content = "\n".join(hydrate_text(p.read_text(), variables, p) for p in sections)
     from research.frontmatter import numbered_labels, verify_capture, verify_illustrations
     numbering = numbered_labels(root)
     verify_capture(root)
@@ -263,10 +265,7 @@ def validate_sources(root: Path = ROOT) -> dict:
         path = root/"manuscript"/image
         if not path.is_file() or path.stat().st_size==0:
             raise ValueError(f"Missing manuscript image: {image}")
-    manifest = json.loads((root/"manuscript/figures/manifest.json").read_text())
-    for relative,digest in manifest.items():
-        if sha(root/"manuscript/figures"/relative)!=digest:
-            raise ValueError(f"Changed figure: {relative}")
+    manifest = require_figure_manifest(root)
     table = (root/"research/generated/results-table.md").read_text().strip()
     if table not in (root/"manuscript/04_results.md").read_text():
         raise ValueError("Manuscript table differs from generated table")

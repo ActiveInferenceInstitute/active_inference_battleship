@@ -27,7 +27,7 @@ Acceptance covers the frozen Chrome reader, PDF, and LibreOffice projection. It 
 
 ## Exact review bindings
 
-The frozen [source](../.cache/frontmatter-review-r4/source-manifest.json), [capture](../.cache/frontmatter-review-r4/capture-manifest.json), and [input](../.cache/frontmatter-review-r4/input-manifest.json) inventories bind 187 sources, 722 images, and 1,309 inputs. The [producer response](../.cache/frontmatter-evidence-r4/R4_REPAIR_RESPONSES.md) distinguishes current checks, retained evidence, and prior failures.
+The frozen source (local artifact: `../.cache/frontmatter-review-r4/source-manifest.json`), capture (local artifact: `../.cache/frontmatter-review-r4/capture-manifest.json`), and input (local artifact: `../.cache/frontmatter-review-r4/input-manifest.json`) inventories bind 187 sources, 722 images, and 1,309 inputs. The producer response (local artifact: `../.cache/frontmatter-evidence-r4/R4_REPAIR_RESPONSES.md`) distinguishes current checks, retained evidence, and prior failures.
 
 | Manifest | SHA-256 |
 |---|---|

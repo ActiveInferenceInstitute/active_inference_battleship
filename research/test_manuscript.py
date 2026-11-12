@@ -15,6 +15,95 @@ from research.capture_pixels import validate_text_pixels
 from research.freeze import require_paint_coverage
 from research.docx_reference import write_reference
 from research.frontmatter import numbered_labels, verify_capture
+from research.variables import hydrate_sources, hydrate_text, load_variables
+
+
+class ManuscriptVariableTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(prefix="battleship-variables-")
+        self.root = Path(self.temp.name)
+        for relative in ("manuscript/variables.json", "models/gnn.pin.json", "research/variables.py",
+                         *[str(path.relative_to(ROOT)) for path in sorted((ROOT / "manuscript").glob("[0-9][0-9]_*.md"))]):
+            target = self.root / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(ROOT / relative, target)
+        self.source = self.root / "manuscript/03_software_and_protocol.md"
+        self.sources = sorted((self.root / "manuscript").glob("[0-9][0-9]_*.md"))
+
+    def tearDown(self):
+        self.temp.cleanup()
+
+    def test_declared_pin_hydrates_render_copies_without_editing_prose(self):
+        originals = {path: path.read_bytes() for path in self.sources}
+        pin = json.loads((self.root / "models/gnn.pin.json").read_text())
+        variables, snapshot = load_variables(self.root)
+        self.assertEqual(variables, {"GNN_VERSION": pin["tag"].removeprefix("v"),
+                                     "GNN_COMMIT": pin["commit"],
+                                     "GNN_REPOSITORY": pin["repository"]})
+        self.assertEqual(set(snapshot), {"manuscript/variables.json", "models/gnn.pin.json"})
+        require_input_snapshot(self.root, snapshot)
+        sources = hydrate_sources(self.sources, variables, self.root / "output/manuscript")
+        self.assertEqual([path.name for path in sources], [path.name for path in self.sources])
+        content = next(path for path in sources if path.name == self.source.name).read_text()
+        self.assertIn(f'GNN {variables["GNN_VERSION"]} source revision: `{pin["commit"]}`', content)
+        self.assertIn(f'https://github.com/{pin["repository"]}/tree/{pin["commit"]}', content)
+        for path, authored in zip(sources, self.sources, strict=True):
+            self.assertNotIn("{{", path.read_text())
+            self.assertEqual(path.read_text(), hydrate_text(authored.read_text(), variables, authored))
+            self.assertEqual(authored.read_bytes(), originals[authored])
+        with self.assertRaisesRegex(ValueError, "cannot overwrite authored"):
+            hydrate_sources([self.source], variables, self.source.parent)
+
+    def test_pin_changes_are_derived_and_invalidate_the_old_snapshot(self):
+        _, snapshot = load_variables(self.root)
+        path = self.root / "models/gnn.pin.json"
+        pin = json.loads(path.read_text())
+        pin.update(tag="v99.2.1", commit="1" * 40)
+        path.write_text(json.dumps(pin))
+        with self.assertRaisesRegex(RuntimeError, "input changed during rendering: models/gnn.pin.json"):
+            require_input_snapshot(self.root, snapshot)
+        variables, snapshot = load_variables(self.root)
+        self.assertEqual(variables["GNN_VERSION"], "99.2.1")
+        self.assertEqual(variables["GNN_COMMIT"], "1" * 40)
+        self.assertIn("1" * 40, hydrate_text(self.source.read_text(), variables, self.source))
+        declaration = self.root / "manuscript/variables.json"
+        declaration.write_text(declaration.read_text() + "\n")
+        with self.assertRaisesRegex(RuntimeError, "input changed during rendering: manuscript/variables.json"):
+            require_input_snapshot(self.root, snapshot)
+
+    def test_unbound_or_malformed_tokens_fail_before_writing_any_copy(self):
+        variables, _ = load_variables(self.root)
+        bad = self.source.parent / "99_unbound.md"
+        output = self.root / "output/manuscript"
+        for token in ("{{UNDECLARED}}", "{{gnn_commit}}", "{{GNN_COMMIT"):
+            with self.subTest(token=token):
+                bad.write_text("Unresolved: " + token)
+                with self.assertRaisesRegex(ValueError, "Unbound"):
+                    hydrate_sources([self.source, bad], variables, output)
+                self.assertFalse(output.exists())
+
+    def test_missing_fields_and_wrong_source_schema_are_rejected(self):
+        path = self.root / "models/gnn.pin.json"
+        pin = json.loads(path.read_text())
+        for change in ({"commit": None}, {"tag": "99.2.1"}, {"schema": "wrong-schema"}):
+            with self.subTest(change=change):
+                path.write_text(json.dumps({**pin, **change}))
+                with self.assertRaises(ValueError):
+                    load_variables(self.root)
+
+    def test_hydrated_prose_and_driver_remain_snapshot_bound(self):
+        variables, snapshot = load_variables(self.root)
+        hydrated = hydrate_sources([self.source], variables, self.root / "output/manuscript")[0]
+        driver = self.root / "research/variables.py"
+        snapshot.update({str(path.relative_to(self.root)): sha(path)
+                         for path in (self.source, hydrated, driver)})
+        require_input_snapshot(self.root, snapshot)
+        for path in (self.source, hydrated, driver):
+            original = path.read_bytes()
+            path.write_bytes(original + b"\nChanged rendering input\n")
+            with self.assertRaisesRegex(RuntimeError, "input changed during rendering"):
+                require_input_snapshot(self.root, snapshot)
+            path.write_bytes(original)
 
 
 class ResearchCustodyTests(unittest.TestCase):

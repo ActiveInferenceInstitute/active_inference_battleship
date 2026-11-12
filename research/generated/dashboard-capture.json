@@ -1,11 +1,11 @@
 {
   "format": "battleship-manuscript-dashboard-capture",
   "version": 1,
-  "captureScriptSha256": "f34c5570fd6bc64567315b93dd8b384cca01be230be3047c50bb439310bf5e3f",
-  "url": "http://127.0.0.1:5192",
-  "capturedAt": "2026-10-26T21:06:32.512Z",
-  "browser": "156.0.8078.48",
-  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+  "captureScriptSha256": "84b3cdd44bc017d114c8a2b338b4e2646788ea0940f71fdb73eb8aa2ad4c1f78",
+  "url": "http://127.0.0.1:5186",
+  "capturedAt": "2026-11-12T12:53:42.319Z",
+  "browser": "157.0.8103.51",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
   "viewport": {
     "width": 1440,
     "height": 1000,
@@ -48,13 +48,13 @@
     "habitStrength": 0
   },
   "servedAssets": {
-    "index.html": "6b1083421e754ef65db7569e96470ce6303d25434f26647a8de79c077f77a5ed",
+    "index.html": "d66389c0fdef6546f086bac2465b06d5ee4618e623d12e26ab4e4313c4d612bc",
     "robots.txt": "16ceb5ee3e0dc13aa9adf31a3ebbe45a1d965b8c2b9f72eaf84e5911e140ed95",
-    "assets/index-CdfZBM15.js": "06c5000ccc5747764fd1cf73b1009cf65a68b229670c693b3d5f2e2a622d2287",
-    "assets/index-BACMt9sm.css": "a7e7c59cb246706b8931aa3e9a82d6ccddc561f59aace6376ffe9b60e7af9424",
-    "assets/session.worker-DwBOGEP-.js.map": "81843bceadcfb1ae2e93cf2c234b2325e9a180272352b6636db06035ce2a2cc3",
-    "assets/index-CdfZBM15.js.map": "b0cfa756dcf26809b2383a3d939e1a5e8200d1d4513fb976af9e0f9782dabbdb",
-    "assets/session.worker-DwBOGEP-.js": "a8eed960c8f06935ee1864efb31f36e489e781fdcc3786f4595f8475ad869c1c"
+    "assets/session.worker-DwBOGEP-.js.map": "17119f808eaa893797b82d4c8ee844e67e8061089b03e1da3c49652d0d869736",
+    "assets/index-CZkU47f7.js.map": "7592109576d920a987e6a42f928b58e28e691322332a39fe145b5c781319149e",
+    "assets/session.worker-DwBOGEP-.js": "a8eed960c8f06935ee1864efb31f36e489e781fdcc3786f4595f8475ad869c1c",
+    "assets/index-CZkU47f7.js": "bf4c4b31e866fbba863e5a8ca19ebb5c4e50c7adfb34a9aacf946b0601bf1364",
+    "assets/index-2yf239f7.css": "9f154014f6ae7dee2ae83ddc3de65820d1ae664bbb1054ea307710e2dd193a41"
   },
   "captures": [
     {
@@ -80,14 +80,14 @@
     },
     {
       "path": "manuscript/figures/dashboard/masthead.png",
-      "sha256": "7508bc2ee302b967ef745d1dd5eb0a00486398c1187bf7e46a4125a63376de67",
+      "sha256": "8dad5151b16e08c810963a5057b736b47d9315942f8310c9e2397b2c3187defc",
       "region": "masthead",
       "width": 1353.625,
       "height": 92
     },
     {
       "path": "manuscript/figures/dashboard/decision-map.png",
-      "sha256": "79c30b0c52e07d6f1ba3586e5b8d4407bb956c1e19ef389cbaa7da69dc4560c3",
+      "sha256": "120b4efb6aca832ea8416ab34054b29ad1e7cea4757d0ebb781abf4ece196caa",
       "region": "panel lab-map-panel",
       "width": 1019.625,
       "height": 617.515625
@@ -101,7 +101,7 @@
     },
     {
       "path": "manuscript/figures/dashboard/action-tradeoff.png",
-      "sha256": "a2c454be17e224dbae32408cd8d15aee3f4eee237604ec919abff3ee45f9c87b",
+      "sha256": "c2c1627bc57ec8108546999022bfd4df644074088799054e7d6c73c9660ceafe",
       "region": "panel action-tradeoff",
       "width": 1019.625,
       "height": 770

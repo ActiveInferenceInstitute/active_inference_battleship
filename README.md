@@ -6,10 +6,12 @@ A playable browser Battleship game and an inspectable active inference dashboard
 
 ## Documentation
 
-Full documentation lives in [`docs/`](docs/README.md) — start at the
-[documentation index](docs/README.md). Folder guides sit beside each source tree:
-[src](src/README.md), [scripts](scripts/README.md), [tests](tests/README.md),
-[e2e](e2e/README.md), [manuscript](manuscript/README.md), and [research](research/README.md).
+Full documentation starts at the [documentation hub](docs/README.md), with a
+[flat index](docs/documentation-index.md), [run guide](docs/RUN_GUIDE.md), and
+[generated gate timings](docs/_generated/gate-timings.md). Folder guides sit beside
+each source tree: [src](src/README.md), [scripts](scripts/README.md),
+[tests](tests/README.md), [e2e](e2e/README.md),
+[manuscript](manuscript/README.md), and [research](research/README.md).
 
 ## Table of contents
 
@@ -62,7 +64,7 @@ Those commands assume the source checkout prerequisites below. A built local arc
 
 ## Run locally
 
-Source development requires Bun 1.4.4 or later (current verification: 1.4.4), uv, a mounted GitVault checkout, and the local `ActiveInferenceInstitute/Public/Generalized_Notation_Notation` repository with its working Python environment. Google Chrome is additionally required for the browser tests and performance audit. The application itself has no browser extension, login, cloud service, API key, or runtime Python requirement. The built core package also runs in Node; see its separate runtime qualifications in the [package guide](docs/PACKAGE.md).
+Source development uses Bun 1.4.4 or later, with caches bound to a mounted GitVault checkout. The fast gate does not need the Python parser. Full parser/package/build workflows additionally require uv and the local `ActiveInferenceInstitute/Public/Generalized_Notation_Notation` repository with its working Python environment. Google Chrome is additionally required for browser tests and the performance audit. The application itself has no browser extension, login, cloud service, API key, or runtime Python requirement. The built core package also runs in Node; see its separate runtime qualifications in the [package guide](docs/PACKAGE.md) and the [run guide](docs/RUN_GUIDE.md).
 
 From this project directory:
 
@@ -87,12 +89,12 @@ To rebuild after an intentional GNN specification change:
 
 ```sh
 bun run model:import
-bun run check
+bun run gate all
 ```
 
-The upstream revision this project binds is `models/gnn.pin.json` (canonical `gnn-importer-pin/v1` schema, record date, repository, release tag and commit); the import and the freshness check read that pin, not the checkout's working HEAD. The importer resolves the canonical GNN checkout beneath the detected vault root, so isolated staging copies work at different directory depths. Override `GNN_ROOT` and `GNN_PYTHON` when needed. Both Python's `sys.prefix` and `sys.base_prefix` must resolve on GitVault. The current integration uses the upstream environment's own interpreter, without changing that environment or the upstream repository. Do not replace its Python or install into it just to run this project.
+The canonical [`models/gnn.pin.json`](models/gnn.pin.json) uses schema `gnn-importer-pin/v1`, recorded `2026-11-12`, and pins `ActiveInferenceInstitute/Generalized_Notation_Notation` at `v5.0.3`, commit `8f293d9ba810e6eda5c09842d9c7ed9ffa5f92c1`. Import and freshness checks read that pin, not the checkout's working HEAD. The importer resolves the canonical GNN checkout beneath the detected vault root, so isolated staging copies work at different directory depths. Override `GNN_ROOT` and `GNN_PYTHON` when needed. Both Python's `sys.prefix` and `sys.base_prefix` must resolve on GitVault. Do not replace its Python or install into the upstream environment just to run this project.
 
-The `gnn conformance (pinned)` workflow runs `bun run model:check` on every push to `main` and every pull request. Hosted CI assembles the same vault-shaped root the scripts require: it marks the runner work directory as the vault, fetches the pinned revision into `Username/ActiveInferenceInstitute/Public/Generalized_Notation_Notation`, installs a managed uv Python inside the vault, and builds that checkout's `.venv`, so both Python prefixes resolve there. A pin that no longer resolves, a tag that moves off the pinned commit, or a specification change without a rebuilt compiled model fails the job.
+Hosted CI runs `bun run gate all` on pushes to `main` and pull requests in job `model-check`, displayed as `gnn conformance (pinned)`. It uses commit-pinned Bun and uv setup actions, with setup/install once, not an organization composite Python/uv action. CI assembles the same vault-shaped root, fetches the pinned upstream revision, and installs managed Python beneath the vault so both Python prefixes resolve there. A pin that no longer resolves, a tag that moves off the pinned commit, or a specification change without a rebuilt compiled model fails the job. See the [GNN CI pointer](.github/GNN.md).
 
 For a production build:
 
@@ -175,16 +177,22 @@ The core has no React, DOM, network, hidden mutable random state, or server depe
 ## Verification
 
 ```sh
-bun run check             # lint, numerical/game/replay/import tests, freshness, types, production build
+bun run gate              # default fast: lint, types, docs, fast tests; no builds/parser/coverage
+bun run check             # alias for fast, not the former full check chain
+bun run gate all          # full release check: lint, types, docs, all tests with coverage, build
+bun run gate gnn          # pinned Python parser and compiled-model freshness only
+bun run test              # full package build and all Bun tests with coverage
 bun run test:negative     # real broken-code controls in preserved external copies
 bun run test:e2e          # Chrome desktop/mobile gameplay, replay, full self-play, axe, screenshots
-bun run test:browser-matrix # 70 source-bound cases; each new case gets a fresh browser process
+bun run test:browser-matrix # source-bound cases; each new case gets a fresh browser process
 bun run audit:react       # actual src scan; no telemetry or remote dependency scan
 ```
 
-`test:e2e` serves the existing production `dist/` on port 5187; run `build` first. Reports, screenshots, and failed traces are retained under `test-results/`. Numerical coverage reports describe the **imported core, model schema, and contract helpers**, not UI coverage or the whole upstream repository. Browser tests exercise the real rendered UI separately. [Verification details](docs/VERIFICATION.md) define evidence and how to reproduce the gates.
+Fast tests select every `tests/*.test.ts` except `model.test.ts` and `package.test.ts`; the full test arm retains both real Python parser and installed-package subprocess suites. `all` deduplicates their shared GNN check with the production build. Neither fast nor all automatically runs browser tests, negative controls, Lighthouse, or manuscript rendering.
 
-[The historical v0.2 validation receipt](docs/DECISION_LAB_VALIDATION.md) records its source bindings and retained evidence. [The v0.1 baseline receipt](docs/VALIDATION.md) preserves earlier repaired findings. Neither automatically accepts later changes. The [Institute update](docs/INSTITUTE_UPDATE.md) explains the current additions and verification scope. Very tall mobile pages are captured as overlapping viewport segments to avoid Chromium full-page compositing limits.
+`test:e2e` serves the existing production `dist/` on port 5187; run `build` first. Reports, screenshots, and failed traces are retained at the local `test-results/` path. Full-test coverage describes the **imported core, model schema, and contract helpers**, not UI coverage or the whole upstream repository. Browser tests exercise the rendered UI separately. The [run guide](docs/RUN_GUIDE.md) and [verification protocol](docs/VERIFICATION.md) define the gates; current measurements live in the [generated timing document](docs/_generated/gate-timings.md).
+
+[The historical v0.2 validation receipt](docs/DECISION_LAB_VALIDATION.md) records its source bindings and retained evidence. [The v0.1 baseline receipt](docs/VALIDATION.md) preserves earlier repaired findings. The [historical Institute update](docs/INSTITUTE_UPDATE.md) explains that update's additions and verification scope. None automatically accepts later changes. Very tall mobile pages are captured as overlapping viewport segments to avoid Chromium full-page compositing limits.
 
 For the optional Lighthouse audit, start the production server on 5187, then run:
 

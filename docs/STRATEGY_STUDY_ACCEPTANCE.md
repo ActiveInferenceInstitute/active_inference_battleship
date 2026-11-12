@@ -6,9 +6,9 @@ The manuscript, research outputs and reader improvements are ready for local rev
 
 ## Deliverables
 
-- [PDF manuscript](../output/pdf/active_inference_battleship_combined.pdf): 24 pages.
-- [Word manuscript](../output/docx/active_inference_battleship.docx): 28 pages in the retained LibreOffice projection.
-- [HTML reader](../output/web/index.html), including exact PDF/Word alternatives under its `editions/` directory.
+- PDF manuscript (local artifact: `../output/pdf/active_inference_battleship_combined.pdf`): 24 pages.
+- Word manuscript (local artifact: `../output/docx/active_inference_battleship.docx`): 28 pages in the retained LibreOffice projection.
+- HTML reader (local artifact: `../output/web/index.html`), including exact PDF/Word alternatives under its `editions/` directory.
 - [Reproduction guide](MANUSCRIPT.md) and [study protocol, results and limits](../research/STRATEGY_STUDY.md).
 - 34 bibliography entries: 32 scholarly works, pinned GNN software and the manufacturer manual. Reading/access qualifications remain in the scholarship dossiers.
 
@@ -27,10 +27,10 @@ Only `docs/MANUSCRIPT.md` changed between R4 and the R5 frozen sources. The buil
 
 Preserved evidence:
 
-- [Original lane A report](../.cache/strategy-evidence-r5/lane-a-r4-report.md).
-- [Original lane B report](../.cache/strategy-evidence-r5/lane-b-r4-report.md).
-- [Review identities and original audit locations](../.cache/strategy-evidence-r5/review-receipts.json).
-- [Single-source correction and before/after hashes](../.cache/strategy-evidence-r5/documentation-delta.json).
+- Original lane A report (local artifact: `../.cache/strategy-evidence-r5/lane-a-r4-report.md`).
+- Original lane B report (local artifact: `../.cache/strategy-evidence-r5/lane-b-r4-report.md`).
+- Review identities and original audit locations (local artifact: `../.cache/strategy-evidence-r5/review-receipts.json`).
+- Single-source correction and before/after hashes (local artifact: `../.cache/strategy-evidence-r5/documentation-delta.json`).
 
 The complete original audit caches remain at the locations recorded in the review identities. The copied reports preserve their original bytes and relative proof references; they are not represented as portable copies of every supplemental audit artifact.
 

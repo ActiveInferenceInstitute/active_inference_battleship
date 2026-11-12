@@ -4,6 +4,11 @@ import { externalEnvironment, projectRoot, vaultRoot } from "./paths";
 
 const template =
   process.env["TEMPLATE_ROOT"] ?? join(vaultRoot(), "Username/docxology/Public/template");
+// The renderer refuses an interpreter whose base prefix is outside GitVault. A
+// template checkout built from a home-directory uv Python therefore needs an
+// explicit vault-local interpreter; the template source still comes from
+// TEMPLATE_ROOT through PYTHONPATH.
+const templatePython = process.env["TEMPLATE_PYTHON"] ?? join(template, ".venv/bin/python");
 const cache = join(vaultRoot(), "Local/cache/active-inference-battleship/manuscript");
 await mkdir(cache, { recursive: true });
 const soffice =
@@ -36,7 +41,7 @@ const args = [
   "run",
   "--no-project",
   "--python",
-  join(template, ".venv/bin/python"),
+  templatePython,
   "python",
   "-B",
   "-m",

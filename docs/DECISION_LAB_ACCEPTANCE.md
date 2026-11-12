@@ -15,9 +15,9 @@ Decision lab adds six diagnostic maps; numerical A/C/G/E/policy explanations; hy
 ## Verification and custody
 
 - `bun run check`: **60 passed**, 528 assertions; lint, strict TypeScript, actual upstream GNN parser/freshness and production build passed. The seven imported core modules have 100% line/function coverage; imported aggregate line coverage is 99.35%. These are not UI or upstream coverage claims.
-- [Production browser receipt](../test-results/results.json): **27 expected passes**, zero skipped, unexpected or flaky, 98.106 seconds. Both themes, all four views, phone/desktop/wide layouts, maps, controls, keyboard operation, sandbox/replay isolation, apply/discard, offline navigation, workers, cancellation, errors and terminal games are covered.
+- Production browser receipt (local artifact: `../test-results/results.json`): **27 expected passes**, zero skipped, unexpected or flaky, 98.106 seconds. Both themes, all four views, phone/desktop/wide layouts, maps, controls, keyboard operation, sandbox/replay isolation, apply/discard, offline navigation, workers, cancellation, errors and terminal games are covered.
 - Four real numerical/game mutants failed their assertions with exit 1. Retained receipt: GitVault `Local/cache/active-inference-battleship/tmp/negative-controls-4rh6oB/results.json`. The numerical source remains identical.
-- [Performance receipt](../.cache/performance/2026-10-22T22-59-11.541Z/summary.json): three mobile and three desktop runs scored 100 in all four Lighthouse categories. This measures default Play on loopback.
+- Performance receipt (local artifact: `../.cache/performance/2026-10-22T22-59-11.541Z/summary.json`): three mobile and three desktop runs scored 100 in all four Lighthouse categories. This measures default Play on loopback.
 - Each independent reviewer directly opened **all 521 manifest images**. Each freshly measured **144 history figures** across all three plots, 1/3/4/10 shots, both actors/themes, phone/desktop and real Chrome 200% page zoom. Minimum endpoint inset was **9.59375 CSS px**, maximum center error **0.03174 px**. Removing the gutter reproduced **6.234375 px overflow**, then restoring it passed. Native locator-capture failures were retained and excluded; raw Chrome captures supplied the visual proof.
 - A4 freshly passed 24 axe configurations, worker cancellation, replay preservation, offline and settings flows, and a real timeout/retry after **30,109 ms**. The root's retained current timeout was 30,171 ms. Browser `messageerror` injection remains outside the evidence.
 - Independent numerical extension A1 checked 780 branches across 130 real cases, both actors and extreme noise, with 49,585 comparisons; maximum absolute discrepancy was 2.5944e-10 against tolerance 2e-9. Later reviewers verified unchanged numerical/model/parser/test bytes and the bound upstream closure. This retains that bounded result; it does not claim the oracle was rerun in Round 4.
@@ -26,18 +26,18 @@ The frozen packet binds **59 source files**, **521 PNGs** (520 application plus 
 
 | Binding | SHA-256 |
 | --- | --- |
-| [Source manifest](../.cache/source-manifest.json) | `3afefde476e11fff4f80f1780a3a357d5f7dd3b2d6217ca4b14fd5aa6cdc412f` |
-| [Capture manifest](../.cache/capture-manifest.json) | `6fce1a671ed25d5ac83d1f637ce0b281498a8acea07a71ae07ed85c0c865dee1` |
-| [Full reviewed inputs](../.cache/review-input-r4.json) | `4d033d063a78c1d1abcd751ed61675c4b1e51abebc4c1a9acfd9530abc415f6d` |
+| Source manifest (local artifact: `../.cache/source-manifest.json`) | `3afefde476e11fff4f80f1780a3a357d5f7dd3b2d6217ca4b14fd5aa6cdc412f` |
+| Capture manifest (local artifact: `../.cache/capture-manifest.json`) | `6fce1a671ed25d5ac83d1f637ce0b281498a8acea07a71ae07ed85c0c865dee1` |
+| Full reviewed inputs (local artifact: `../.cache/review-input-r4.json`) | `4d033d063a78c1d1abcd751ed61675c4b1e51abebc4c1a9acfd9530abc415f6d` |
 | GNN specification | `a425a3f6b0bdc8cb28a165f92c27c6ea329d3e48d2ea3f16136a93fbb447c91c` |
 
 The full frozen source/evidence archive is GitVault `Local/artifacts/active-inference-battleship-lab-review-r4-20261022.tgz`. Earlier red and green packets are preserved as recorded in the validation receipt.
 
 ## Independent checklist
 
-Reviewer **A**: [terminal receipt](/Volumes/GitVault/Local/cache/active-inference-battleship/audit-a-r4-codex-20261022/review-result.json), [fresh browser checks](/Volumes/GitVault/Local/cache/active-inference-battleship/audit-a-r4-codex-20261022/browser-results.json), [final custody](/Volumes/GitVault/Local/cache/active-inference-battleship/audit-a-r4-codex-20261022/after.json). In A's proof column, **M** is a zero-based current capture-manifest index; **B** is a checks-array index in A's fresh browser receipt.
+Reviewer **A**: terminal receipt (local artifact: `/Volumes/GitVault/Local/cache/active-inference-battleship/audit-a-r4-codex-20261022/review-result.json`), fresh browser checks (local artifact: `/Volumes/GitVault/Local/cache/active-inference-battleship/audit-a-r4-codex-20261022/browser-results.json`), final custody (local artifact: `/Volumes/GitVault/Local/cache/active-inference-battleship/audit-a-r4-codex-20261022/after.json`). In A's proof column, **M** is a zero-based current capture-manifest index; **B** is a checks-array index in A's fresh browser receipt.
 
-Reviewer **B**: [complete review](/Volumes/GitVault/Local/cache/active-inference-battleship/audit-b-r4-20261022/final-review.md), [machine receipt](/Volumes/GitVault/Local/cache/active-inference-battleship/audit-b-r4-20261022/final-review.json), [final custody](/Volumes/GitVault/Local/cache/active-inference-battleship/audit-b-r4-20261022/after.json). In B's proof column, **#** is a one-based current capture-manifest index. Source locators follow each review's relative UI/style paths.
+Reviewer **B**: complete review (local artifact: `/Volumes/GitVault/Local/cache/active-inference-battleship/audit-b-r4-20261022/final-review.md`), machine receipt (local artifact: `/Volumes/GitVault/Local/cache/active-inference-battleship/audit-b-r4-20261022/final-review.json`), final custody (local artifact: `/Volumes/GitVault/Local/cache/active-inference-battleship/audit-b-r4-20261022/after.json`). In B's proof column, **#** is a one-based current capture-manifest index. Source locators follow each review's relative UI/style paths.
 
 | Item | Result | Located proof | Reviewer |
 | --- | --- | --- | --- |

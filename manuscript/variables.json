@@ -1,0 +1,10 @@
+{
+  "schema": "battleship-manuscript-variables/v1",
+  "source": "models/gnn.pin.json",
+  "sourceSchema": "gnn-importer-pin/v1",
+  "variables": {
+    "GNN_VERSION": { "field": "tag", "stripPrefix": "v" },
+    "GNN_COMMIT": { "field": "commit" },
+    "GNN_REPOSITORY": { "field": "repository" }
+  }
+}

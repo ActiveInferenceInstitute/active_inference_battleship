@@ -1,0 +1,21 @@
+{
+  "source": "6f13a64",
+  "date": "2026-11-12",
+  "host": "darwin arm64",
+  "bun": "1.4.4",
+  "environment": "GNN_PYTHON=GitVault/Local/cache/active-inference-battleship/gnn-python/bin/python; Python 3.14.10 with both prefixes on GitVault",
+  "samples": {
+    "lint": { "command": "bun run lint", "milliseconds": 540, "status": 0 },
+    "types": { "command": "bun run typecheck", "milliseconds": 1285, "status": 0 },
+    "test:full": { "command": "bun run test", "milliseconds": 19950, "status": 0 },
+    "gnn": { "command": "bun run model:check", "milliseconds": 2372, "status": 0 },
+    "build": { "command": "bun run build", "milliseconds": 4441, "status": 0 },
+    "all": { "command": "bun run check", "milliseconds": 33966, "status": 0 }
+  },
+  "notes": [
+    "One sequential run per command; wall times from the shell date nanosecond clock.",
+    "No pre-existing dedicated fast-test or docs/link arm: their before values are unavailable, not zero.",
+    "Earlier failed prerequisites are excluded from passing samples: upstream Python base prefix was outside GitVault. No upstream repository environment was changed.",
+    "Full Bun suite observed 98 tests, zero failures, 1207 expect calls; this is not UI or upstream coverage."
+  ]
+}
