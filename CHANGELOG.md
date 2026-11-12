@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- Prepare the GNN–FEP checker call in `scripts/parse_gnn.py`, with strict pointer validation and stderr-only checker output. Migration is blocked: the pinned GNN revision lacks `gnn.importers`; duplicate-reader removal and manuscript-variable adoption are not yet complete.
+- Adopt the shared GNN–FEP reader: advance `models/gnn.pin.json` from `v5.0.3` (`8f293d9b`) to `v5.1.0` (`75c834bd`), the first revision of the estate pin containing `src/gnn/importers.py`. `scripts/parse_gnn.py` now runs `python -m gnn.importers check --repo . --require-pointer --workflow .github/workflows/ci.yml --job model-check` from the materialized pinned revision, and the compiled model is reimported at that revision. Delete this repository's own pin reader (`scripts/pin.ts`) and its pin-shape test; `scripts/gnn-source.ts` keeps only the git objects a fetch needs. Manuscript variables come from `gnn.importers.importer_variables` instead of an inline pin read, and `.github/GNN.md` records the adopted state. The interim "migration blocked" record is superseded.
 - Validate InstituteOS sidecar `docs[]` declarations relative to `.aii/` in the offline docs gate, preserving the original valid paths. Add a dated correction recording that the verified GNN bibliography replacement is already applied.
 - Declare the canonical `gnn-importer-pin/v1` schema and a record date in `models/gnn.pin.json`. The importer now requires that schema instead of accepting an unlabeled pin, so the GNN reader's `pin-schema-legacy` warning is resolved.
 - Assert the pinned tag and commit against the compiled artifact in the model suite, so a pin that drifts from `src/generated/model.json` fails a local gate rather than only the hosted GNN conformance job.

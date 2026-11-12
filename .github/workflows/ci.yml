@@ -58,9 +58,9 @@ jobs:
       - name: Provision the pinned upstream checkout
         run: |
           GNN="$VAULT_ROOT/Username/ActiveInferenceInstitute/Public/Generalized_Notation_Notation"
-          REPOSITORY=$(bun -e "console.log((await Bun.file('models/gnn.pin.json').json()).repository)")
-          TAG=$(bun -e "console.log((await Bun.file('models/gnn.pin.json').json()).tag)")
-          REVISION=$(bun -e "console.log((await Bun.file('models/gnn.pin.json').json()).commit)")
+          # scripts/gnn-source.ts is the one accessor that names the pinned git
+          # objects; the reader validates the pin itself during the gate.
+          eval "$(bun scripts/gnn-source.ts)"
           git init --quiet "$GNN"
           git -C "$GNN" remote add origin "https://github.com/$REPOSITORY.git"
           # A pin that no longer resolves upstream fails here rather than passing.
@@ -77,9 +77,11 @@ jobs:
       - name: Run the same complete gate as local development
         run: bun run gate all
 
-      - name: Report the resolved GNN version
+      - name: Report the pinned GNN release from the reader
         run: |
-          PIN=models/gnn.pin.json
-          VERSION=$(python3 -c "import json;print(json.load(open('$PIN'))['tag'].removeprefix('v'))")
+          GNN="$VAULT_ROOT/Username/ActiveInferenceInstitute/Public/Generalized_Notation_Notation"
+          VERSION=$("$GNN/.venv/bin/python" -B scripts/parse_gnn.py --variables \
+            --source "$GNN" --repo . --vault "$VAULT_ROOT" |
+            python3 -c 'import json, sys; print(json.load(sys.stdin)["gnn_tag"].removeprefix("v"))')
           test -n "$VERSION"
           echo "gnn-version=${VERSION}" >> "$GITHUB_STEP_SUMMARY"

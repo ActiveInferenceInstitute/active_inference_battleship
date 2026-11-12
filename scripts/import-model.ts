@@ -1,42 +1,14 @@
 import { createHash } from "node:crypto";
-import { mkdir, mkdtemp, readdir, readFile, realpath, rm } from "node:fs/promises";
-import { isAbsolute, join, relative } from "node:path";
+import { mkdir, mkdtemp, readdir, readFile, rm } from "node:fs/promises";
+import { join } from "node:path";
 import { compiledModelSchema } from "../src/model/schema";
 import { validateContract } from "./contract";
+import { materializePinned } from "./gnn-source";
 import { externalEnvironment, gnnPython, projectRoot, vaultRoot } from "./paths";
-import { pinSchema } from "./pin";
 
 const sha = (bytes: string | Uint8Array) => createHash("sha256").update(bytes).digest("hex");
 const vault = vaultRoot();
-const upstream = await realpath(
-  process.env["GNN_ROOT"] ??
-    join(vault, "Username/ActiveInferenceInstitute/Public/Generalized_Notation_Notation"),
-);
-const containment = relative(vault, upstream);
-if (containment.startsWith("..") || isAbsolute(containment))
-  throw new Error("GNN_ROOT is outside GitVault");
 const specification = process.env["GNN_SPEC"] ?? join(projectRoot, "models/battleship.gnn.md");
-const python = gnnPython(upstream);
-const pinPath = process.env["GNN_PIN"] ?? join(projectRoot, "models/gnn.pin.json");
-const pin = pinSchema.parse(JSON.parse(await readFile(pinPath, "utf8")));
-
-async function git(...args: string[]): Promise<string> {
-  const child = Bun.spawn(["git", "-C", upstream, ...args], { stdout: "pipe", stderr: "pipe" });
-  const [output, errors, code] = await Promise.all([
-    new Response(child.stdout).text(),
-    new Response(child.stderr).text(),
-    child.exited,
-  ]);
-  if (code !== 0) throw new Error(`git ${args.join(" ")} failed (${code}): ${errors}`);
-  return output.trim();
-}
-
-const revision = await git("rev-parse", "--verify", `${pin.commit}^{commit}`);
-if (revision !== pin.commit)
-  throw new Error(`Pinned commit resolves to ${revision}, not ${pin.commit}`);
-const tagCommit = await git("rev-parse", "--verify", `${pin.tag}^{commit}`);
-if (tagCommit !== pin.commit)
-  throw new Error(`Pinned tag ${pin.tag} resolves to ${tagCommit}, not ${pin.commit}`);
 
 const environment = externalEnvironment();
 const temporary = environment["TMPDIR"] ?? "";
@@ -44,24 +16,11 @@ await mkdir(temporary, { recursive: true });
 const source = await mkdtemp(join(temporary, "gnn-pinned-"));
 try {
   // Run and hash the pinned revision itself, never the checkout's working tree.
-  const archive = Bun.spawn(["git", "-C", upstream, "archive", revision, "src/gnn"], {
-    stdout: "pipe",
-    stderr: "pipe",
-  });
-  const extract = Bun.spawn(["tar", "-xf", "-", "-C", source], {
-    stdin: archive.stdout,
-    stderr: "pipe",
-  });
-  const [archiveErrors, archiveCode, extractErrors, extractCode] = await Promise.all([
-    new Response(archive.stderr).text(),
-    archive.exited,
-    new Response(extract.stderr).text(),
-    extract.exited,
-  ]);
-  if (archiveCode !== 0 || extractCode !== 0)
-    throw new Error(
-      `Cannot materialize ${revision} (archive ${archiveCode}, extract ${extractCode}): ${archiveErrors}${extractErrors}`,
-    );
+  const { transport, revision } = await materializePinned(source);
+  const python = gnnPython(
+    process.env["GNN_ROOT"] ??
+      join(vault, "Username/ActiveInferenceInstitute/Public/Generalized_Notation_Notation"),
+  );
   const processResult = Bun.spawn(
     [
       "uv",
@@ -73,8 +32,13 @@ try {
       "python",
       "-B",
       join(projectRoot, "scripts/parse_gnn.py"),
+      "--source",
       source,
+      "--specification",
       specification,
+      "--repo",
+      projectRoot,
+      "--vault",
       vault,
     ],
     { env: environment, stdout: "pipe", stderr: "pipe" },
@@ -120,7 +84,7 @@ try {
     await mkdir(join(projectRoot, "src/generated"), { recursive: true });
     await Bun.write(destination, compiled);
     console.log(
-      `Imported ${model.modelName} from ${pin.tag} (${revision}) via the upstream MarkdownGNNParser`,
+      `Imported ${model.modelName} from ${transport.tag} (${revision}) via the upstream MarkdownGNNParser`,
     );
   }
 } finally {

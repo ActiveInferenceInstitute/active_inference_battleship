@@ -26,6 +26,19 @@ Current gate measurements belong in the
       Python GNN bridge, or the upstream parser pipeline. The default fast gate
       produces no coverage. Do not quote one coverage number as a whole-repository
       gate (`docs/VERIFICATION.md`).
+- [ ] The research and strategy custody records bind the compiled model's bytes, so
+      the GNN pin cutover to `v5.1.0` leaves `research/generated/results.json`,
+      `research/generated/strategy-study/pilot.json` and `preexecution.json` stale:
+      `bun run test:manuscript` reports `Stale research input:
+      src/generated/model.json`. The model parameters did not change (only
+      `source.upstreamCommit` and the parser-closure digests), but clearing this
+      requires the publication workflow to re-run `bun run research`,
+      `bun scripts/strategy-study.ts pilot`, `run` and `bun run research:analyze`,
+      producing a new frozen study receipt. No number is rewritten by hand.
+- [ ] `research.test_strategy_analysis` cannot import under the local template
+      interpreter because `scipy` is absent there, so the strategy statistics tests
+      are unrunnable in this environment; the manuscript variable and custody tests
+      do run.
 
 ## Environment prerequisites
 

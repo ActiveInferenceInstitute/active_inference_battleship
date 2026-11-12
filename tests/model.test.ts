@@ -1,9 +1,9 @@
 import { expect, test } from "bun:test";
-import { mkdtemp } from "node:fs/promises";
+import { mkdtemp, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { validateContract } from "../scripts/contract";
+import { materializePinned, pinTransport } from "../scripts/gnn-source";
 import { externalEnvironment, gnnPython, projectRoot, vaultRoot } from "../scripts/paths";
-import { pinSchema } from "../scripts/pin";
 import { modelDefaults } from "../src/model/schema";
 import { model } from "./fixtures";
 
@@ -22,8 +22,13 @@ async function parse(source: string) {
       "python",
       "-B",
       "scripts/parse_gnn.py",
+      "--source",
       upstream,
+      "--specification",
       source,
+      "--repo",
+      projectRoot,
+      "--vault",
       vaultRoot(),
     ],
     { cwd: projectRoot, env: externalEnvironment(), stdout: "pipe", stderr: "pipe" },
@@ -68,17 +73,27 @@ test("rejects unsupported semantics, dimensions, duplicate parameters, and graph
   ).toThrow("Duplicate");
   expect(() => validateContract({ ...raw, connections: [] })).toThrow("graph");
 });
-test("pins the canonical importer pin schema to the upstream revision the model binds", async () => {
-  const declared: unknown = JSON.parse(
-    await Bun.file(join(projectRoot, "models/gnn.pin.json")).text(),
-  );
-  const pin = pinSchema.parse(declared);
-  expect(pin.schema).toBe("gnn-importer-pin/v1");
-  expect(pin.recorded).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-  expect(pin.repository).toBe("ActiveInferenceInstitute/Generalized_Notation_Notation");
-  expect(pin.tag).toBe("v5.0.3");
-  expect(pin.commit).toBe("8f293d9ba810e6eda5c09842d9c7ed9ffa5f92c1");
-  expect(pin.commit).toBe(model.source.upstreamCommit);
-  const { schema: _schema, ...legacy } = pin;
-  expect(() => pinSchema.parse(legacy)).toThrow();
+test("binds the compiled artifact to the revision the pinned fetch names", async () => {
+  const transport = await pinTransport();
+  expect(transport.commit).toBe(model.source.upstreamCommit);
+});
+test("materializes the pinned reader from the pinned revision only", async () => {
+  const root = await mkdtemp(join(externalEnvironment()["TMPDIR"] ?? "", "gnn-pinned-"));
+  try {
+    const materialized = await materializePinned(root);
+    expect(materialized.revision).toBe(materialized.transport.commit);
+    expect(await Bun.file(join(materialized.source, "src/gnn/importers.py")).exists()).toBe(true);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+}, 30_000);
+test("refuses a pin that cannot name the fetch, leaving the verdict to the reader", async () => {
+  const root = await mkdtemp(join(externalEnvironment()["TMPDIR"] ?? "", "gnn-transport-"));
+  try {
+    const pin = join(root, "gnn.pin.json");
+    await Bun.write(pin, JSON.stringify({ schema: "gnn-importer-pin/v1", tag: "v5.1.0" }));
+    await expect(pinTransport(pin)).rejects.toThrow("must name repository, tag and commit");
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
 });
