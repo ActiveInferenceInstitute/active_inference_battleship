@@ -55,6 +55,25 @@ def require_input_snapshot(root: Path, expected: dict[str, str]) -> None:
             raise RuntimeError(f"Manuscript input changed during rendering: {relative}")
 
 
+def require_figure_manifest(root: Path = ROOT) -> dict[str, str]:
+    """Check the complete generated-asset registry without updating it."""
+    from research.frontmatter import figure_manifest
+    expected = json.loads((root/"manuscript/figures/manifest.json").read_text())
+    if not isinstance(expected, dict) or not expected:
+        raise ValueError("Empty or invalid figure manifest")
+    actual = figure_manifest(root)
+    missing = sorted(expected.keys() - actual.keys())
+    unregistered = sorted(actual.keys() - expected.keys())
+    if missing:
+        raise ValueError(f"Missing manifest figures: {missing}")
+    if unregistered:
+        raise ValueError(f"Unregistered figure assets: {unregistered}")
+    for relative, digest in expected.items():
+        if actual[relative] != digest:
+            raise ValueError(f"Changed figure: {relative}")
+    return expected
+
+
 def require_figure_geometry(figure, name: str, boxed_text=()) -> dict:
     from matplotlib.text import Text
     figure.canvas.draw()
@@ -263,11 +282,12 @@ def render() -> None:
     numbered_labels(ROOT)
     verify_capture(ROOT)
     verify_illustrations(ROOT)
+    require_figure_manifest(ROOT)
     if not sources:
         raise ValueError("No manuscript sections")
     render_inputs = [*sources, ROOT/"project.json", manuscript/"config.yaml", manuscript/"preamble.md",
                      manuscript/"references.bib", manuscript/"docx.lua", manuscript/"web.css",
-                     ROOT/"research/docx_reference.py", ROOT/"research/manuscript.py",
+                     ROOT/"research/docx_reference.py", ROOT/"research/manuscript.py", ROOT/"research/variables.py",
                      ROOT/"research/frontmatter.py", ROOT/"research/numbering.py", ROOT/"research/publication_style.py", ROOT/"research/graphical_abstract.py", manuscript/"frontmatter.tex",
                      ROOT/"scripts/capture-dashboard-for-manuscript.ts", ROOT/"research/strategy_analysis.py",
                      ROOT/"research/strategy_figures.py", ROOT/"research/strategy_results.py",
@@ -276,6 +296,9 @@ def render() -> None:
                      *[ROOT/"research/generated"/name for name in ("dashboard-capture.json", "dashboard-replay.json", "dashboard-analysis.json", "frontmatter.json")],
                      *[p for p in (manuscript/"figures").rglob("*") if p.is_file()]]
     input_before = {str(p.relative_to(ROOT)):sha(p) for p in [*render_inputs, *supplements]}
+    from research.variables import hydrate_sources, load_variables
+    variables, variable_inputs = load_variables(ROOT)
+    input_before.update(variable_inputs)
     metadata = project_metadata()
     from research.publication_style import validate_design_sources
     validate_design_sources(ROOT)
@@ -289,6 +312,15 @@ def render() -> None:
         raise ValueError("Empty or duplicate bibliography entries")
     output.mkdir(parents=True, exist_ok=True)
     (output/"bibliography.json").write_text(bibliography.stdout)
+    authored_sources = sources
+    sources = hydrate_sources(authored_sources, variables, output/"manuscript")
+    # The template's source-level citation gate discovers bibliography files
+    # beside its supplied Markdown. Preserve that gate with an exact local copy;
+    # edition metadata, resource paths, styles and assets still use manuscript/.
+    hydrated_bibliography = output/"manuscript/references.bib"
+    shutil.copy2(manuscript/"references.bib", hydrated_bibliography)
+    input_before.update({str(path.relative_to(ROOT)): sha(path)
+                         for path in [*sources, hydrated_bibliography]})
     # PDFRenderer's compile contract resolves ../figures beside its pdf directory.
     # Stage genuine generated assets there; do not rewrite the emitted TeX.
     shutil.copytree(manuscript/"figures", output/"figures", dirs_exist_ok=True)
@@ -350,6 +382,9 @@ def render() -> None:
                "templateImports": loaded,
                "formalismFilter": {"path":str(formalism_filter.relative_to(template)),"sha256":formalism_before},
                "renderTools":tool_versions,
+               "hydration": {"variables": variables,
+                             "sources": {str(path.relative_to(ROOT)): str(authored.relative_to(ROOT))
+                                         for path, authored in zip(sources, authored_sources, strict=True)}},
                "outputs": {str(p.relative_to(ROOT)):sha(p) for p in
                            [pdf,docx,output/"bibliography.json",output/"pdf/_combined_manuscript.aux",output/"pdf/_combined_manuscript.tex",
                             *[output/source.relative_to(ROOT) for source in supplements],
