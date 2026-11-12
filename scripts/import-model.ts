@@ -1,10 +1,10 @@
 import { createHash } from "node:crypto";
 import { mkdir, mkdtemp, readdir, readFile, realpath, rm } from "node:fs/promises";
 import { isAbsolute, join, relative } from "node:path";
-import { z } from "zod";
 import { compiledModelSchema } from "../src/model/schema";
 import { validateContract } from "./contract";
-import { externalEnvironment, projectRoot, vaultRoot } from "./paths";
+import { externalEnvironment, gnnPython, projectRoot, vaultRoot } from "./paths";
+import { pinSchema } from "./pin";
 
 const sha = (bytes: string | Uint8Array) => createHash("sha256").update(bytes).digest("hex");
 const vault = vaultRoot();
@@ -16,15 +16,9 @@ const containment = relative(vault, upstream);
 if (containment.startsWith("..") || isAbsolute(containment))
   throw new Error("GNN_ROOT is outside GitVault");
 const specification = process.env["GNN_SPEC"] ?? join(projectRoot, "models/battleship.gnn.md");
-const python = process.env["GNN_PYTHON"] ?? join(upstream, ".venv/bin/python");
+const python = gnnPython(upstream);
 const pinPath = process.env["GNN_PIN"] ?? join(projectRoot, "models/gnn.pin.json");
-const pin = z
-  .strictObject({
-    repository: z.literal("ActiveInferenceInstitute/Generalized_Notation_Notation"),
-    tag: z.string().min(1),
-    commit: z.string().regex(/^[a-f0-9]{40}$/),
-  })
-  .parse(JSON.parse(await readFile(pinPath, "utf8")));
+const pin = pinSchema.parse(JSON.parse(await readFile(pinPath, "utf8")));
 
 async function git(...args: string[]): Promise<string> {
   const child = Bun.spawn(["git", "-C", upstream, ...args], { stdout: "pipe", stderr: "pipe" });

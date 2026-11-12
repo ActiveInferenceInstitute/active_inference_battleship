@@ -13,6 +13,11 @@ export function vaultRoot(): string {
   throw new Error("Project must reside on the mounted GitVault volume");
 }
 
+/** Interpreter that runs the pinned parser; the importer and its contract tests resolve it identically. */
+export function gnnPython(upstream: string): string {
+  return process.env["GNN_PYTHON"] ?? join(upstream, ".venv/bin/python");
+}
+
 export function externalEnvironment(): Record<string, string> {
   const root = vaultRoot();
   return {
