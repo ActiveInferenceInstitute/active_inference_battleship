@@ -9,10 +9,6 @@ Current gate measurements belong in the
 
 ## Documentation gaps
 
-- [ ] `research/SCHOLARSHIP_UPDATE_20261023.md` still says the verified R20
-      (`smekal2023gnn`) replacement is "not yet applied to the main bibliography",
-      but `manuscript/references.bib` already contains that exact entry. Update the
-      dossier note to record that it is applied.
 - [ ] The scholarship dossiers are dated snapshots (`SCHOLARSHIP_UPDATE_20261023.md`,
       `SCHOLARSHIP_BATTLESHIP_20261025.md`, `STRATEGY_SCHOLARSHIP_20261025.md`).
       Re-read and refresh them only when a citation or reading limit changes; do not
