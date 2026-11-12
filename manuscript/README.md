@@ -13,7 +13,7 @@ hand-edit generated outputs.
 | `01_introduction.md` … `05_interpretation.md` | Main manuscript sections. |
 | `09_references.md`, `references.bib` | Bibliography sources. |
 | `10_reader.md` | HTML-only accessibility and geometry adapter for the MathJax reader. |
-| `variables.json` | Declared pin-field bindings used by every rendered edition; no duplicated pin values. |
+| `variables.json` | Declared bindings over the reader's `gnn-importer-variables/v1` map used by every rendered edition; no duplicated pin values. |
 | `config.yaml`, `preamble.md`, `frontmatter.tex`, `docx.lua`, `web.css` | Pandoc and reader configuration. |
 
 ## Reproducing
@@ -32,7 +32,8 @@ environment installed by this command. Without `TEMPLATE_PYTHON`, the wrapper us
 
 The only render entry point is `scripts/manuscript.ts` → `research.manuscript`.
 It resolves `{{GNN_VERSION}}`, `{{GNN_COMMIT}}`, and `{{GNN_REPOSITORY}}`
-from `models/gnn.pin.json` through `variables.json`. All numbered section sources
+from `models/gnn.pin.json` through `variables.json`, using the pinned revision's
+`gnn.importers` map rather than a local pin read. All numbered section sources
 are hydrated into the template's canonical ignored `output/manuscript/` before PDF, HTML, or DOCX
 rendering; authored files are never rewritten. Unknown/malformed tokens and
 missing, changed, or unregistered figure assets fail preflight.

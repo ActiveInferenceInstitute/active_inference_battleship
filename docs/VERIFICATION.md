@@ -85,7 +85,9 @@ specification, upstream revision, and parser-directory source digest. It does no
 substitute the checkout's working HEAD. A stale result is an error. The bridge
 checks real Python prefix/base-prefix custody on GitVault before importing.
 [`models/gnn.pin.json`](../models/gnn.pin.json) uses `gnn-importer-pin/v1` and pins
-`v5.0.3` at `8f293d9ba810e6eda5c09842d9c7ed9ffa5f92c1`.
+`v5.1.0` at `75c834bd8519dc7b5adc4d24f16bf393cfd1ecdf`; the pinned revision's own
+`gnn.importers` reader, not a local copy, validates the pin, the
+[pointer](../.github/GNN.md) and the specification.
 `typecheck` and `lint` run strict TypeScript and the installed Biome binary.
 `audit:react` scans actual source paths; a zero-file scan is not evidence.
 

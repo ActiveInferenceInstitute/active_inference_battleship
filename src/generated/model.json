@@ -21,16 +21,16 @@
   },
   "source": {
     "specificationSha256": "a425a3f6b0bdc8cb28a165f92c27c6ea329d3e48d2ea3f16136a93fbb447c91c",
-    "upstreamCommit": "8f293d9ba810e6eda5c09842d9c7ed9ffa5f92c1",
-    "parserClosureSha256": "a73ec44210949930005583c893652c7f9292a3f8ebcebbebc1f79ced3caf795c",
+    "upstreamCommit": "75c834bd8519dc7b5adc4d24f16bf393cfd1ecdf",
+    "parserClosureSha256": "07a62d05671946e92455046ac67427a44550f85216ea75c853150065dbf68bcd",
     "parserFiles": [
       {
         "path": "src/gnn/__init__.py",
-        "sha256": "4303d2cec14db42ad1a3f9ca557aaf48f42efc6b1566bcf099d2bf878c2b26ff"
+        "sha256": "908848847f2fb938f65b3ea0b17252ab6d2129ad2f0b427bca8761a81083d10d"
       },
       {
         "path": "src/gnn/parsers/__init__.py",
-        "sha256": "257f10d65b54ed2cc421fe25257d6ae506dc3dbde8685b7a5672aba06f0c4991"
+        "sha256": "a08df88ecf239a094254f7dc4ef0ea57aff697075f777a3993702ca8d45803ea"
       },
       {
         "path": "src/gnn/parsers/alloy_serializer.py",
@@ -58,7 +58,7 @@
       },
       {
         "path": "src/gnn/parsers/common.py",
-        "sha256": "c27da82a05058ec2f96b4c675374a848e64535122bf3a63155a47b8b23e3076e"
+        "sha256": "ade640beffbf18e6f99dc7b9e3ac5993e5a183652da096ceeb0014b77f3f5527"
       },
       {
         "path": "src/gnn/parsers/converters.py",
@@ -114,11 +114,11 @@
       },
       {
         "path": "src/gnn/parsers/lean_serializer.py",
-        "sha256": "b0ffc74403bbdaa300eab12050e352eff88d632368eff8aacab614789c1a9f5b"
+        "sha256": "f395625636e4bfa462196ce349858579ccc14ebd244ea375e11c981c9c662d88"
       },
       {
         "path": "src/gnn/parsers/markdown_parser.py",
-        "sha256": "24a30ea7e67d597e891fe16e521e13be5f2013af90eeb282cfe257940b281e82"
+        "sha256": "150f2994dc7e95bea30e7b226d86220eb319fcff64489503df20a307cf7b097c"
       },
       {
         "path": "src/gnn/parsers/markdown_parser_parameter.py",
