@@ -27,18 +27,31 @@ Current gate measurements belong in the
       produces no coverage. Do not quote one coverage number as a whole-repository
       gate (`docs/VERIFICATION.md`).
 - [ ] The research and strategy custody records bind the compiled model's bytes, so
-      the GNN pin cutover to `v5.1.0` leaves `research/generated/results.json`,
-      `research/generated/strategy-study/pilot.json` and `preexecution.json` stale:
-      `bun run test:manuscript` reports `Stale research input:
-      src/generated/model.json`. The model parameters did not change (only
-      `source.upstreamCommit` and the parser-closure digests), but clearing this
-      requires the publication workflow to re-run `bun run research`,
-      `bun scripts/strategy-study.ts pilot`, `run` and `bun run research:analyze`,
-      producing a new frozen study receipt. No number is rewritten by hand.
-- [ ] `research.test_strategy_analysis` cannot import under the local template
-      interpreter because `scipy` is absent there, so the strategy statistics tests
-      are unrunnable in this environment; the manuscript variable and custody tests
-      do run.
+      the GNN pin cutover to `v5.1.0` (`674a436`, #17) left
+      `research/generated/results.json`,
+      `research/generated/strategy-study/pilot.json` and `preexecution.json` stale.
+      Measured on `674a436`: `bun run test:manuscript` fails 9 of 52 tests (4
+      failures, 5 errors), reporting `Stale research input: src/generated/model.json`
+      and, from the strategy arm,
+      `Changed strategy input: src/generated/model.json`. The model parameters did
+      not change — the diff in
+      `src/generated/model.json` across the cutover is `source.upstreamCommit` plus
+      the parser-closure digests — but a receipt is bound to the bytes, not the
+      numbers. Clearing it needs the documented sequence from
+      [`research/README.md`](research/README.md) (`bun run research`,
+      `bun scripts/strategy-study.ts pilot`, `bun scripts/strategy-study.ts run`,
+      `bun run research:analyze`, `bun run test:manuscript`); because
+      `scripts/strategy-study.ts` writes with `flag: "wx"` ("existing receipts are
+      never overwritten"), each rebuilt strategy receipt must be removed from the
+      tree first. No number is rewritten by hand. Owner: the release/publication
+      owner, with the pinned GNN interpreter available.
+- [ ] No `gate` arm runs `bun run test:manuscript`: `all` in
+      [`scripts/run.ts`](scripts/run.ts) is lint, types, docs, `test:full`, and
+      `build`, while `test:full` is `package` plus `bun test tests --coverage` over
+      TypeScript only. The stale-receipt failures above therefore coexist with a
+      green local and hosted gate. Decide whether manuscript acceptance becomes a
+      gate arm or a named release step before the next publication. Owner: the
+      maintainer who owns `scripts/run.ts` and the release checklist.
 
 ## Environment prerequisites
 
@@ -46,6 +59,10 @@ Current gate measurements belong in the
       checkout. Full parser/package/build workflows additionally need `uv` and a
       local `Generalized_Notation_Notation` checkout with a working Python
       environment whose `sys.prefix` and `sys.base_prefix` resolve on GitVault.
+      `GNN_PYTHON` must name that vault-local interpreter; a bare
+      `bun run model:check` on `674a436` failed with
+      `Python prefix is outside GitVault` until it pointed at
+      `Local/cache/active-inference-battleship/gnn-python/bin/python`.
       `bun run check` aliases fast and does not renew parser verification; use
       `bun run gate all` for the full release check.
 - [ ] Browser acceptance (`bun run test:e2e`) and the optional Lighthouse audit need
@@ -54,12 +71,13 @@ Current gate measurements belong in the
 
 ## Owner decisions
 
-- [ ] Software is distributed as a GitHub release tarball; no npm registry publication
-      and no separate software DOI are claimed. Revisit only as an explicit release
-      decision, not as a documentation correction.
+- [ ] Software is distributed as a GitHub release tarball (`"private": true`, no npm
+      registry publication) and no separate software DOI is claimed. Revisit only as
+      an explicit release decision, not as a documentation correction.
 - [ ] Decide whether hosted job `model-check` (displayed as
       `gnn conformance (pinned)`) should be required by release-PR branch protection.
       It runs `bun run gate all`; the local GNN-only command remains
-      `bun run model:check`. No branch-protection setting is asserted here.
+      `bun run model:check`. No branch-protection setting is asserted here; those
+      settings belong to the organization admin, outside this repository.
 - [ ] The Lighthouse performance audit is separate from functional acceptance. Decide
       whether a failing/missing performance report should block a release.
