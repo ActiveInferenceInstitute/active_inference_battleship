@@ -7,6 +7,9 @@ import { controlsSchema, infer, scoreActions } from "../src/core/inference";
 import { pick, SeededRandom } from "../src/core/random";
 import { policies, type SearchPolicy, type SearchStep, searchFleet } from "../src/research/search";
 import { projectRoot } from "./paths";
+import { researchExecution } from "./research-custody";
+
+const execution = await researchExecution("descriptive", "scripts/research.ts");
 
 const protocolPath = join(projectRoot, "research/protocol.json");
 const protocolBytes = await readFile(protocolPath);
@@ -114,32 +117,17 @@ const analytic = [0, 0.05, 0.15, 0.25].flatMap((noise) =>
   }),
 );
 
-const sourcePaths = [
-  "research/protocol.json",
-  "scripts/research.ts",
-  "src/research/search.ts",
-  "src/core/fleet.ts",
-  "src/core/inference.ts",
-  "src/core/math.ts",
-  "src/core/random.ts",
-  "models/battleship.gnn.md",
-  "src/generated/model.json",
-];
-const sources = Object.fromEntries(
-  await Promise.all(
-    sourcePaths.map(async (path) => [path, digest(await readFile(join(projectRoot, path)))]),
-  ),
-);
+const sources = execution.sources;
 const result = {
   schemaVersion: 1,
   protocolSha256: digest(protocolBytes),
   sources,
-  runtime: { bun: Bun.version },
+  runtime: execution.runtime,
   cases,
   summaries,
   analytic,
 };
-const output = join(projectRoot, "research/generated");
+const output = join(execution.output, "research/generated");
 await mkdir(output, { recursive: true });
 await writeFile(join(output, "results.json"), `${JSON.stringify(result, null, 2)}\n`);
 const csv = [

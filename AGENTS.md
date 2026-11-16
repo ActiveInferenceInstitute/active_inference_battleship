@@ -27,9 +27,10 @@ Playable browser Battleship with an inspectable active-inference dashboard, comp
 | `docs` | `bun run gate docs` | `.` |
 
 `scripts/run.ts` is the sole gate registry. Default `fast` composes lint, types,
-docs, and every `tests/*.test.ts` except `model.test.ts` and `package.test.ts`;
-there is no parser/package integration, build, or coverage claim. `all` composes
-lint, types, docs, full package/tests with coverage, and production build,
+docs, and every `tests/*.test.ts` except `model.test.ts`, `package.test.ts` and
+`manuscript-launchers.test.ts`; there is no parser/package/manuscript-launcher
+integration, build, or coverage claim. `all` composes lint, types, docs, full
+package/tests with coverage, and production build,
 deduplicating the shared GNN leaf. Browser/manuscript acceptance remains separate.
 Use the [run guide](docs/RUN_GUIDE.md) for environments and
 [generated timings](docs/_generated/gate-timings.md) for measured evidence.

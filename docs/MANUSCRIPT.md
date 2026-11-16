@@ -18,6 +18,27 @@ Every display equation has a stable `eq:` label. The real template's `formalism.
 - `research/manuscript.py`: figure generation and thin integration with the real template rendering classes. `research/variables.py` hydrates declared pin variables without rewriting authored sources. `research/editions.py` independently checks scalar calculations and document structure.
 - `output/`: generated `pdf/`, complete `web/` edition, `docx/`, renderer provenance and validation receipts. This directory is ignored; sources and research data are retained separately. These conventional edition paths are required by the template's composition contract.
 
+## Bounded engineering qualification
+
+The current engineering controls passed with real files and runtimes: Bun source
+and runtime custody, concurrent/failed invocation cleanup, real pinned-GNN model
+integration, Python source inventories and render-publication rejection. The
+isolated dependency fixture used exact source bytes plus the existing Zod tree;
+it did not install dependencies or modify a canonical checkout.
+
+Research receipts record the actual Bun runtime and complete source inventory.
+Source validation rejects additions, removals and changed identity; a strategy
+pilot must also agree with the production runtime. Render publication rechecks
+every validated research/strategy/template dependency. Changed inputs and
+restored-byte identity changes do not replace existing editions. Publication
+uses a process-held lock and an atomic directory exchange, retaining the prior
+generation beneath `.cache/`. Launcher scratch belongs to one invocation, with
+signal custody covering preparation and child execution before cleanup.
+
+These passes do not renew the stale B1/BT05 scientific receipts, run a production
+study, render a fresh edition, or qualify Chrome/LibreOffice. The release owner
+must preserve the frozen evidence and authorize any renewal separately.
+
 ## Reproduction
 
 Use the external cache setup in the root README before the first package installation. All named project tasks thereafter bind their caches and temporary files to GitVault. A prepared compatible rendering environment is required; the example below selects the dedicated vault-local interpreter, rather than creating or modifying an environment:
@@ -61,7 +82,12 @@ The Word layout is source-controlled: `manuscript/docx.lua` gives the search tab
 
 [`manuscript/variables.json`](../manuscript/variables.json) declares the source, expected source schema, and field bindings; it does not duplicate pin values. The source is [`models/gnn.pin.json`](../models/gnn.pin.json), read by the pinned revision's `gnn.importers`, never by a local JSON read: `research/variables.py` calls `importer_variables` and receives the `gnn-importer-variables/v1` map, which the declaration binds. `GNN_VERSION` reads `gnn_tag` with the leading `v` removed, `GNN_COMMIT` reads `gnn_commit`, and `GNN_REPOSITORY` reads `gnn_repository`. The shared software/protocol section uses `{{GNN_VERSION}}`, `{{GNN_COMMIT}}`, and `{{GNN_REPOSITORY}}` in both the visible revision sentence and its source link. `scripts/manuscript.ts` puts only the pinned revision's `src` on `PYTHONPATH`, so the render uses the same reader the gate does.
 
-At render time, `research/variables.py` resolves those declarations, rejects missing/non-text fields and unknown or malformed tokens, and writes all numbered manuscript section copies to the template's canonical ignored `output/manuscript/`. PDF, HTML, and DOCX use these same hydrated inputs, with their existing edition-specific frontmatter handling. Rendering never rewrites the authored sections. The declaration and pin hashes are taken from the exact bytes used to resolve the variables; they, the hydration driver, the original sections, and the hydrated copies join the render input snapshot. The render receipt also records the resolved variables and each original-to-hydrated source mapping.
+At render time, `research/variables.py` resolves declarations, rejects missing/non-text
+fields and unknown/malformed tokens, and writes numbered section copies into
+invocation-private staging. PDF, HTML and DOCX consume those same hydrated bytes;
+authored sources are unchanged. Publication is serialized and occurs only after
+all custody checks succeed. The declaration, pin, hydration driver, original
+sections and hydrated copies are bound into the completion receipt.
 
 Render preflight compares the complete `manuscript/figures/manifest.json` registry with actual generated-file hashes. Missing, changed, and unregistered assets fail; rendering never silently rewrites the manifest. This supplements, rather than replaces, the research, live-capture, illustration, source-numbering, template-import and before/after input custody gates. The manuscript component tests include real-file hydration, unknown-token, missing-field, pin-change and snapshot regressions.
 
