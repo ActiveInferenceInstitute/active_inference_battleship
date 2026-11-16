@@ -20,6 +20,7 @@
     "check": "bun run scripts/run.ts check",
     "lint": "bun run scripts/run.ts lint",
     "format": "bun run scripts/run.ts format",
+    "cache:prime": "bun run scripts/prime-package-cache.ts",
     "test:e2e": "bun run scripts/run.ts e2e",
     "test:browser-matrix": "bun run scripts/browser-matrix.ts",
     "test:negative": "bun run scripts/run.ts negative",

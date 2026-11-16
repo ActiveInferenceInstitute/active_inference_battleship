@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Prepare genuine registry manifests and complete dependency payloads in a
+  task-private online setup consumer, so cold hosted caches can satisfy the
+  unchanged offline archive-consumer acceptance without modifying root tooling.
 - Extend signal custody through preparation, atomically exchange edition
   generations under an OS-held publication lock, and reject pilot/production
   runtime disagreement without renewing retained scientific receipts.

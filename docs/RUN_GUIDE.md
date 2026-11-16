@@ -1,6 +1,7 @@
 # Gate and render run guide
 
-Run from the repository root after `bun install --frozen-lockfile`:
+Run from the repository root after the authorized online setup
+`bun install --frozen-lockfile && bun run cache:prime`:
 
 ```sh
 bun run gate              # default fast plan
@@ -31,13 +32,14 @@ prerequisites; no successful result is cached across changed source.
 
 The default deliberately does **not** certify upstream parsing, package installation,
 coverage, the production bundle or browser behavior. Fast selection discovers new
-Bun test files automatically; only `model.test.ts` and `package.test.ts` are excluded
-because they run real subprocess integration. Nothing is skipped in full tests.
+Bun test files automatically; `model.test.ts`, `package.test.ts` and
+`manuscript-launchers.test.ts` are excluded because they run real subprocess
+integration. Nothing is skipped in full tests.
 Playwright, negative controls, manuscript checks and Lighthouse remain separately
 runnable workflows in [VERIFICATION](VERIFICATION.md), not silently included or
 claimed as passing by `all`.
 
-## One CI environment
+## One CI setup phase
 
 [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) keeps job key
 `model-check`, display name `gnn conformance (pinned)`. Its one job installs the
@@ -46,16 +48,28 @@ calls **`bun run gate all`**. No duplicate lint/test commands or per-arm install
 jobs. Node 26 is explicit because full tests exercise an ordinary Node consumer.
 
 Installed-package tests reuse that setup's Bun cache with `bun install --offline`
-for both production-only and consumer-tooling installation. They still install
-the real packed archive and exercise Node/Bun/NodeNext consumers; they do not
-resolve dependency metadata over the network during a gate. A missing cached
-dependency remains an error: warm the cache through the normal locked setup.
+for both production-only and consumer-tooling installation. A frozen root
+install can cache package payloads without the registry manifests required by a
+fresh consumer. Therefore the online setup additionally runs `bun run cache:prime`:
+the real Bun resolver installs a task-private setup consumer containing the actual
+runtime dependency declarations and installed Node-types version, using
+`--ignore-scripts`. This caches both genuine registry manifests and complete
+payloads, including tooling transitives. It does not alter the root environment
+or repository lock. Metadata-only resolution is insufficient because a newer
+allowed transitive version may not have a payload in the frozen root cache.
+
+The gate still installs the real packed archive and exercises Node/Bun/NodeNext
+consumers entirely offline; no cache records are invented and no assertion or
+consumer installation is removed. Missing cached dependencies remain errors.
+Do not run this online setup producer inside an offline gate or infer network
+or shared-runtime installation authority from this command.
 
 The workflow uses its pinned `setup-bun`, `setup-node` and `setup-uv` actions;
-it does **not** use the organization `setup-python-uv` composite action. Hosted
-Actions are billing-locked for this estate: local results are the gate, not a
-claim that a hosted job ran. See the parsed model scope in [the GNN pointer](../.github/GNN.md)
-and [GNN specification](GNN_SPECIFICATION.md).
+it does **not** use the organization `setup-python-uv` composite action. Preserve
+historical hosted billing refusals, but observe current hosted execution on its
+exact head: queued or running jobs are not passes, and a local subset does not
+replace required hosted checks. See [the GNN pointer](../.github/GNN.md) and
+[GNN specification](GNN_SPECIFICATION.md).
 
 ## Interpreter prerequisites on this host
 

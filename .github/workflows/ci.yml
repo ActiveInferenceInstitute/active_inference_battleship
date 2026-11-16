@@ -52,8 +52,10 @@ jobs:
           echo "BUN_INSTALL_CACHE_DIR=$VAULT/Local/cache/active-inference-battleship/bun" >> "$GITHUB_ENV"
           mkdir -p "$VAULT/Local/cache/active-inference-battleship/tmp"
 
-      - name: Install the single locked JavaScript environment
-        run: bun install --frozen-lockfile
+      - name: Install locked tooling and prepare the offline consumer cache
+        run: |
+          bun install --frozen-lockfile
+          bun run cache:prime
 
       - name: Provision the pinned upstream checkout
         run: |
