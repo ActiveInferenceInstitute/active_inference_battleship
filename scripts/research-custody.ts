@@ -145,7 +145,10 @@ export async function createResearchSnapshot(
       ] as const)
         for (const name of names) {
           const actual = await binding(base, name);
-          if (actual.sha256 !== expected[name]?.sha256 || actual.identity !== expected[name]?.identity)
+          if (
+            actual.sha256 !== expected[name]?.sha256 ||
+            actual.identity !== expected[name]?.identity
+          )
             throw new Error(`Research input changed during computation: ${name}`);
         }
     };

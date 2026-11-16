@@ -208,7 +208,9 @@ test("production admission copies its pilot before rejecting runtime disagreemen
       await Promise.all(
         (await researchInputPaths(root, "strategy")).map(async (name) => [
           name,
-          createHash("sha256").update(await readFile(join(root, name))).digest("hex"),
+          createHash("sha256")
+            .update(await readFile(join(root, name)))
+            .digest("hex"),
         ]),
       ),
     );

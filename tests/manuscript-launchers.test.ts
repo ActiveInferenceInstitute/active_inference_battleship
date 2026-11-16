@@ -120,11 +120,7 @@ test("SIGTERM retains invocation ownership from handler installation through cle
     reader.releaseLock();
     expect(new TextDecoder().decode(ready.value)).toContain("preparing");
     child.kill("SIGTERM");
-    const [code] = await Promise.all([
-      child.exited,
-      new Response(child.stdout).text(),
-      new Response(child.stderr).text(),
-    ]);
+    const [code] = await Promise.all([child.exited, new Response(child.stderr).text()]);
     expect(code).not.toBe(0);
     expect((await readdir(parent)).filter((name) => !previous.has(name))).toEqual([]);
   } finally {
