@@ -1,0 +1,42 @@
+{
+  "files": [
+    "research/source-inventory.json",
+    "research/source_inventory.py",
+    "scripts/research-custody.ts",
+    "scripts/package-output.ts",
+    "scripts/paths.ts",
+    "package.json",
+    "bun.lock",
+    "tsconfig.json",
+    "src/generated/model.json",
+    "src/core/fleet.ts",
+    "src/core/game.ts",
+    "src/core/inference.ts",
+    "src/core/math.ts",
+    "src/core/random.ts",
+    "src/model/schema.ts",
+    "src/model/default.ts",
+    "src/research/search.ts",
+    "src/research/paired-search.ts",
+    "models/battleship.gnn.md",
+    "node_modules/zod/package.json"
+  ],
+  "trees": [
+    "src/core",
+    "src/model",
+    "src/research",
+    "models",
+    "node_modules/zod"
+  ],
+  "studies": {
+    "descriptive": ["research/protocol.json", "scripts/research.ts"],
+    "strategy": [
+      "research/strategy-protocol.json",
+      "research/strategy-cases.json",
+      "scripts/strategy-study.ts",
+      "research/strategy_analysis.py",
+      "research/strategy_figures.py"
+    ],
+    "prepare": ["research/protocol.json", "scripts/strategy-study.ts"]
+  }
+}

@@ -6,10 +6,14 @@ import tempfile
 import unittest
 import subprocess
 import os
+import sys
+import select
 from zipfile import ZipFile
 from xml.etree import ElementTree as ET
 
-from research.manuscript import ROOT, verify_results, require_input_snapshot, sha, project_metadata
+from research.manuscript import (ROOT, verify_results, require_input_snapshot, sha, project_metadata,
+                                 render_input_paths, staged_render_output)
+from research.source_inventory import source_paths
 from research.editions import validate_calculations, validate_local_links, require_revision, VisibleText, validate_ink, validate_page_geometry, require_release_statement, validate_reading_pages
 from research.capture_pixels import validate_text_pixels
 from research.freeze import require_paint_coverage
@@ -107,6 +111,25 @@ class ManuscriptVariableTests(unittest.TestCase):
 
 
 class ResearchCustodyTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        # Produce a small, genuinely executed regression fixture. Never rebind
+        # shipped historical traces to today's source hashes.
+        cls.fixture = tempfile.TemporaryDirectory(prefix="battleship-producer-fixture-", dir=os.environ["TMPDIR"])
+        cls.addClassCleanup(cls.fixture.cleanup)
+        cls.fixture_root = Path(cls.fixture.name)
+        for relative in source_paths(ROOT, "descriptive"):
+            target = cls.fixture_root/relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(ROOT/relative, target)
+        protocol_path = cls.fixture_root/"research/protocol.json"
+        protocol = json.loads(protocol_path.read_text())
+        protocol.update(catalogueSizes=[16], seeds=[17])
+        protocol_path.write_text(json.dumps(protocol))
+        subprocess.run(["bun", str(cls.fixture_root/"scripts/research.ts")], cwd=cls.fixture_root,
+                       env={**os.environ, "BATTLESHIP_RESEARCH_CONTEXT": ""},
+                       check=True, capture_output=True, text=True, timeout=60)
+
     def test_reader_alternatives_require_real_complete_current_editions(self):
         from research.editions import require_reader_alternatives
         with tempfile.TemporaryDirectory(dir=os.environ["TMPDIR"]) as directory:
@@ -243,11 +266,7 @@ class ResearchCustodyTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix="battleship-paper-")
         self.root = Path(self.temp.name)
-        data = json.loads((ROOT/"research/generated/results.json").read_text())
-        for relative in [*data["sources"], "research/generated/results.json"]:
-            target = self.root/relative
-            target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(ROOT/relative, target)
+        shutil.copytree(self.fixture_root, self.root, dirs_exist_ok=True)
 
     def tearDown(self):
         self.temp.cleanup()
@@ -258,9 +277,14 @@ class ResearchCustodyTests(unittest.TestCase):
         transform(data)
         path.write_text(json.dumps(data))
 
-    def test_complete_real_results(self):
+    def test_fresh_owned_results(self):
         data = verify_results(self.root)
-        self.assertEqual(len(data["cases"]), 128)
+        self.assertEqual(len(data["cases"]), 4)
+        self.assertEqual({row["seed"] for row in data["cases"]}, {17})
+        self.assertEqual(data["protocolSha256"], sha(self.root/"research/protocol.json"))
+
+    def test_historical_calculations_are_value_fixtures_not_current_receipts(self):
+        data = json.loads((ROOT/"research/generated/results.json").read_text())
         result = validate_calculations(data)
         self.assertEqual(result["pairedEqualCounts"],32)
         self.assertEqual(result["pairedIdenticalShotOrder"],27)
@@ -426,13 +450,13 @@ class ResearchCustodyTests(unittest.TestCase):
             require_input_snapshot(self.root,snapshot)
 
     def test_wrong_summary_rejected(self):
-        data = verify_results(self.root)
+        data = json.loads((ROOT/"research/generated/results.json").read_text())
         data["summaries"][0]["mean"] += .25
         with self.assertRaisesRegex(ValueError,"Incorrect summary"):
             validate_calculations(data)
 
     def test_wrong_information_rejected(self):
-        data = verify_results(self.root)
+        data = json.loads((ROOT/"research/generated/results.json").read_text())
         data["analytic"][0]["uncertainInformation"] += .01
         with self.assertRaisesRegex(ValueError,"Incorrect analytic score"):
             validate_calculations(data)
@@ -670,7 +694,7 @@ class ResearchCustodyTests(unittest.TestCase):
     def test_modified_source_rejected(self):
         path = self.root/"src/core/math.ts"
         path.write_text(path.read_text()+"\n// deliberately changed input\n")
-        with self.assertRaisesRegex(ValueError, "Stale research input"):
+        with self.assertRaisesRegex(ValueError, "Changed research input"):
             verify_results(self.root)
 
     def test_missing_case_rejected(self):
@@ -697,6 +721,153 @@ class ResearchCustodyTests(unittest.TestCase):
         self.mutate(change)
         with self.assertRaisesRegex(ValueError, "Incomplete fleet search"):
             verify_results(self.root)
+
+    def test_missing_empty_and_partial_source_inventories_are_rejected(self):
+        path = self.root/"research/generated/results.json"
+        original = path.read_text()
+        for mode in ("missing", "empty", "omitted"):
+            with self.subTest(mode=mode):
+                data = json.loads(original)
+                if mode == "missing":
+                    del data["sources"]
+                elif mode == "empty":
+                    data["sources"] = {}
+                else:
+                    del data["sources"]["src/core/inference.ts"]
+                path.write_text(json.dumps(data))
+                with self.assertRaisesRegex(ValueError, "source inventory"):
+                    verify_results(self.root)
+
+    def test_independent_protocol_digest_is_required(self):
+        self.mutate(lambda data: data.update(protocolSha256="0"*64))
+        with self.assertRaisesRegex(ValueError, "protocol digest"):
+            verify_results(self.root)
+
+    def test_new_executable_source_cannot_be_omitted_from_receipt(self):
+        (self.root/"src/core/additional.ts").write_text("export const added = true;\n")
+        with self.assertRaisesRegex(ValueError, "source inventory"):
+            verify_results(self.root)
+
+    def render_fixture(self):
+        # Filesystem publication controls use real source/asset copies without
+        # asserting that historical scientific receipts have been renewed.
+        for relative in render_input_paths(ROOT):
+            target = self.root/relative
+            if not target.exists():
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT/relative, target)
+        template = self.root/"template-fixture"
+        (template/"infrastructure").mkdir(parents=True, exist_ok=True)
+        (template/"infrastructure/theme.css").write_text("p { line-height: 1.4; }\n")
+        return template
+
+    def test_render_entrypoint_rejects_stale_strategy_before_output(self):
+        template = self.render_fixture()
+        path = self.root/"research/generated/strategy-study/preexecution.json"
+        freeze = json.loads(path.read_text())
+        freeze["sources"] = {}  # Deliberately invalid owned copy, never renewed evidence.
+        path.write_text(json.dumps(freeze))
+        output = self.root/"output"
+        output.mkdir()
+        (output/"prior-edition.txt").write_text("preserved prior publication")
+        result = subprocess.run([sys.executable, "-B", "-m", "research.manuscript", "render"],
+                                cwd=self.root, env={**os.environ, "TEMPLATE_ROOT": str(template),
+                                                   "PYTHONPATH": str(self.root)},
+                                capture_output=True, text=True, timeout=30)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("Incomplete strategy source inventory", result.stderr)
+        self.assertEqual((output/"prior-edition.txt").read_text(), "preserved prior publication")
+        self.assertFalse((output/"render-receipt.json").exists())
+
+    def test_render_publication_rejects_every_changed_validated_dependency(self):
+        template = self.render_fixture()
+        published = self.root/"output"
+        published.mkdir()
+        (published/"prior.txt").write_text("prior edition")
+        relatives = ("research/protocol.json", "research/generated/results.json",
+                     "src/core/inference.ts", "src/generated/model.json",
+                     "research/strategy-protocol.json", "research/strategy-cases.json",
+                     "research/generated/strategy-study/pilot.json",
+                     "research/generated/strategy-study/preexecution.json",
+                     "research/generated/strategy-study/results.json",
+                     "research/generated/strategy-study/analysis.json",
+                     "models/gnn.pin.json", ".github/GNN.md",
+                     "manuscript/variables.json", "manuscript/figures/manifest.json")
+        for changed in [*(self.root/name for name in relatives), template/"infrastructure/theme.css"]:
+            with self.subTest(path=changed):
+                expected = {name: sha(self.root/name) for name in render_input_paths(self.root)}
+                template_expected = {"infrastructure/theme.css": sha(template/"infrastructure/theme.css")}
+                original = changed.read_bytes()
+                try:
+                    with self.assertRaises(RuntimeError):
+                        with staged_render_output(self.root, expected, template, template_expected) as output:
+                            (output/"render-receipt.json").write_text('{"fixture":"not a rendered edition"}')
+                            changed.write_bytes(original+b"\nchanged fixture input\n")
+                    self.assertEqual((published/"prior.txt").read_text(), "prior edition")
+                    self.assertFalse((published/"render-receipt.json").exists())
+                finally:
+                    changed.write_bytes(original)
+
+    def test_render_publication_rejects_inventory_additions_and_restored_bytes(self):
+        template = self.render_fixture()
+        for restore in (False, True):
+            expected = {name: sha(self.root/name) for name in render_input_paths(self.root)}
+            template_expected = {"infrastructure/theme.css": sha(template/"infrastructure/theme.css")}
+            changed = self.root/("research/protocol.json" if restore else "manuscript/99_added.md")
+            original = changed.read_bytes() if restore else None
+            with self.subTest(restore=restore), self.assertRaises(RuntimeError):
+                with staged_render_output(self.root, expected, template, template_expected) as output:
+                    (output/"render-receipt.json").write_text('{"fixture":"must not publish"}')
+                    changed.write_text("changed fixture")
+                    if original is not None:
+                        changed.write_bytes(original)
+            if original is None:
+                changed.unlink()
+            self.assertFalse((self.root/"output").exists())
+
+    def test_render_publication_exchanges_and_preserves_previous_generations(self):
+        template = self.render_fixture()
+        published = self.root/"output"
+        published.mkdir()
+        (published/"prior.txt").write_text("prior edition")
+        for generation in ("first", "second"):
+            expected = {name: sha(self.root/name) for name in render_input_paths(self.root)}
+            template_expected = {"infrastructure/theme.css": sha(template/"infrastructure/theme.css")}
+            with staged_render_output(self.root, expected, template, template_expected) as output:
+                (output/"render-receipt.json").write_text(json.dumps({"fixture": generation}))
+                (output/"generation.txt").write_text(generation)
+            self.assertEqual((published/"generation.txt").read_text(), generation)
+        preserved = list((self.root/".cache").glob("preserved-*"))
+        self.assertEqual(len(preserved), 2)
+        self.assertTrue(any((path/"prior.txt").is_file() for path in preserved))
+        self.assertTrue(any((path/"generation.txt").is_file() and
+                            (path/"generation.txt").read_text() == "first" for path in preserved))
+
+    def test_publication_lock_is_released_when_its_process_terminates(self):
+        template = self.render_fixture()
+        cache = self.root/".cache"
+        cache.mkdir()
+        lock = cache/"manuscript-publication.lock"
+        child = subprocess.Popen(
+            [sys.executable, "-B", "-c",
+             "import fcntl,sys,time; held=open(sys.argv[1],'a+b'); "
+             "fcntl.flock(held,fcntl.LOCK_EX); print('locked',flush=True); time.sleep(20)",
+             str(lock)], stdout=subprocess.PIPE, text=True)
+        try:
+            self.assertTrue(select.select([child.stdout], [], [], 5)[0])
+            self.assertEqual(child.stdout.readline().strip(), "locked")
+            child.terminate()
+            child.wait(timeout=5)
+            expected = {name: sha(self.root/name) for name in render_input_paths(self.root)}
+            template_expected = {"infrastructure/theme.css": sha(template/"infrastructure/theme.css")}
+            with staged_render_output(self.root, expected, template, template_expected) as output:
+                (output/"render-receipt.json").write_text('{"fixture":"lock release only"}')
+            self.assertTrue((self.root/"output/render-receipt.json").is_file())
+        finally:
+            if child.poll() is None:
+                child.terminate()
+                child.wait(timeout=5)
+            child.stdout.close()
 
 
 if __name__ == "__main__":

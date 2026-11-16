@@ -13,14 +13,12 @@ from pathlib import Path
 import numpy as np
 from scipy.stats import binomtest
 
+from research.source_inventory import require_sources
+
 ROOT = Path(__file__).resolve().parents[1]
 PROFILES = ("random", "pragmatic", "epistemic", "combined", "weighted")
 NAMES = ("Random", "Pragmatic", "Epistemic", "Combined β=1", "Weighted β=4")
 ENDPOINTS = ("shots", "hits5", "entropy5")
-SOURCE_FILES = ("research/strategy-protocol.json", "research/strategy-cases.json", "scripts/strategy-study.ts",
-                "src/research/paired-search.ts", "src/core/fleet.ts", "src/core/inference.ts",
-                "src/core/math.ts", "src/core/random.ts", "src/generated/model.json", "models/battleship.gnn.md",
-                "research/strategy_analysis.py", "research/strategy_figures.py")
 
 
 def digest(path: Path) -> str:
@@ -61,11 +59,19 @@ def verify_study(root: Path = ROOT) -> dict:
     base = root/"research/generated/strategy-study"
     data = json.loads((base/"results.json").read_text())
     freeze = json.loads((base/"preexecution.json").read_text())
-    if set(freeze["sources"]) != set(SOURCE_FILES) or data["preexecutionSha256"] != digest(base/"preexecution.json"):
-        raise ValueError("Incomplete strategy source inventory")
-    for relative, expected in freeze["sources"].items():
-        if digest(root/relative) != expected:
-            raise ValueError(f"Changed strategy input: {relative}")
+    require_sources(root, "strategy", freeze.get("sources"), label="strategy")
+    if data["preexecutionSha256"] != digest(base/"preexecution.json"):
+        raise ValueError("Changed strategy preexecution receipt")
+    pilot = json.loads((base/"pilot.json").read_text())
+    if (freeze.get("pilotSha256") != digest(base/"pilot.json") or
+        pilot.get("passed") is not True or pilot.get("sources") != freeze["sources"]):
+        raise ValueError("Missing or stale production computation gate")
+    runtime = freeze.get("runtime")
+    if (not isinstance(runtime, dict) or
+        set(runtime) != {"bun", "nodeCompatibility", "platform", "arch"} or
+        any(not isinstance(value, str) or not value for value in runtime.values()) or
+        pilot.get("runtime") != runtime):
+        raise ValueError("Missing or mismatched strategy runtime binding")
     protocol = json.loads((root/"research/strategy-protocol.json").read_text())
     manifest = json.loads((root/"research/strategy-cases.json").read_text())
     units = {(c["count"],c["index"]):c for c in manifest["cases"]}

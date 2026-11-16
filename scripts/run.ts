@@ -6,6 +6,7 @@ import { externalEnvironment, projectRoot } from "./paths";
 const integration: Readonly<Record<string, true>> = {
   "model.test.ts": true,
   "package.test.ts": true,
+  "manuscript-launchers.test.ts": true,
 };
 const fastTests = (await readdir(`${projectRoot}/tests`))
   .filter((name) => name.endsWith(".test.ts") && !integration[name])

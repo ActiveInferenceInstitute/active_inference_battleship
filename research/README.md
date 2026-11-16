@@ -19,13 +19,19 @@ the manuscript's research inputs and figures; generated results land in
 
 ## Running
 
-```sh
-bun run research
-bun run research:strategies
-bun run research:analyze
-bun run test:manuscript
-```
+The shipped receipts are evidence to preserve, not inputs to overwrite when a
+source-binding check fails. B1/BT05 renewal requires the release/publication
+owner's authorization and the exact frozen protocol/case bytes.
 
-Treat `research/generated/` as generated evidence: regenerate through these commands
-rather than editing the JSON, CSV, or Markdown by hand. The scholarship dossiers state
-their reading scope; do not upgrade a reading limit into a stronger claim.
+For an authorized renewal, use the independent source-copy and archival sequence
+in [the manuscript guide](../docs/MANUSCRIPT.md#paired-follow-up-and-caption-interpretation).
+`research:strategies` requires an explicit arm: `prepare` is first-time
+materialization only, while `pilot` precedes `run`. A pilot must bind the same
+source, protocol, cases and actual Bun runtime as the execution receipt.
+`research:analyze` validates retained traces; it does not renew their custody.
+
+Engineering rejection controls qualify source/runtime admission and publication
+preservation. They do not regenerate the scientific corpus, prove the original
+image-capture cause, or accept new PDF/HTML/DOCX editions. Keep the dated scholarship
+reading limits and every rejected/historical receipt; never rewrite numbers or
+upgrade a reading limit by hand.

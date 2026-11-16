@@ -37,14 +37,13 @@ Current gate measurements belong in the
       not change — the diff in
       `src/generated/model.json` across the cutover is `source.upstreamCommit` plus
       the parser-closure digests — but a receipt is bound to the bytes, not the
-      numbers. Clearing it needs the documented sequence from
-      [`research/README.md`](research/README.md) (`bun run research`,
-      `bun scripts/strategy-study.ts pilot`, `bun scripts/strategy-study.ts run`,
-      `bun run research:analyze`, `bun run test:manuscript`); because
-      `scripts/strategy-study.ts` writes with `flag: "wx"` ("existing receipts are
-      never overwritten"), each rebuilt strategy receipt must be removed from the
-      tree first. No number is rewritten by hand. Owner: the release/publication
-      owner, with the pinned GNN interpreter available.
+      numbers. Renewal belongs to the release/publication owner: preserve the
+      shipped receipts and use the independent-copy archival sequence in
+      [`research/README.md`](research/README.md), retaining exact frozen protocol
+      and case bytes before explicit `pilot` then `run`. Do not delete receipts
+      from this lane or regenerate science to make engineering checks green.
+      Current bounded custody/parser/launcher/render-rejection tests passed;
+      they do not resolve B1/BT05 or accept new manuscript editions.
 - [ ] No `gate` arm runs `bun run test:manuscript`: `all` in
       [`scripts/run.ts`](scripts/run.ts) is lint, types, docs, `test:full`, and
       `build`, while `test:full` is `package` plus `bun test tests --coverage` over
@@ -65,6 +64,9 @@ Current gate measurements belong in the
       `Local/cache/active-inference-battleship/gnn-python/bin/python`.
       `bun run check` aliases fast and does not renew parser verification; use
       `bun run gate all` for the full release check.
+      The bounded qualification selected existing compatible interpreters and
+      passed real pinned-parser controls without changing provider bytes.
+      This closes that selected-runtime proof, not the full release workflow.
 - [ ] Browser acceptance (`bun run test:e2e`) and the optional Lighthouse audit need
       real installed Chrome and a production `dist/` build. The dev server and preview
       use strict ports 5186 and 5187; a port conflict fails instead of falling back.
