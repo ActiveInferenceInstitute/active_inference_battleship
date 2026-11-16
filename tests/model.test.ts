@@ -2,7 +2,12 @@ import { afterAll, beforeAll, expect, test } from "bun:test";
 import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { validateContract } from "../scripts/contract";
-import { materializePinned, pinnedRevision, pinTransport, type PinnedGnnSource } from "../scripts/gnn-source";
+import {
+  materializePinned,
+  type PinnedGnnSource,
+  pinnedRevision,
+  pinTransport,
+} from "../scripts/gnn-source";
 import { externalEnvironment, gnnPython, projectRoot, vaultRoot } from "../scripts/paths";
 import { modelDefaults } from "../src/model/schema";
 import { model } from "./fixtures";
@@ -15,10 +20,13 @@ let provider: string;
 async function git(...args: string[]): Promise<string> {
   const child = Bun.spawn(["git", "-c", "core.fsmonitor=false", ...args], {
     env: { ...externalEnvironment(), GIT_OPTIONAL_LOCKS: "0", GIT_TERMINAL_PROMPT: "0" },
-    stdout: "pipe", stderr: "pipe",
+    stdout: "pipe",
+    stderr: "pipe",
   });
   const [output, errors, code] = await Promise.all([
-    new Response(child.stdout).text(), new Response(child.stderr).text(), child.exited,
+    new Response(child.stdout).text(),
+    new Response(child.stderr).text(),
+    child.exited,
   ]);
   if (code !== 0) throw new Error(`Fixture git failed (${code}): ${errors}`);
   return output.trim();
@@ -33,8 +41,17 @@ beforeAll(async () => {
   provider = join(suiteRoot, "provider");
   await git("init", "--quiet", provider);
   // Transfer the actual local pinned objects, not invented parser implementations.
-  await git("-C", provider, "fetch", "--quiet", "--no-tags", "--depth=1", upstream,
-    transport.commit, `refs/tags/${transport.tag}:refs/tags/${transport.tag}`);
+  await git(
+    "-C",
+    provider,
+    "fetch",
+    "--quiet",
+    "--no-tags",
+    "--depth=1",
+    upstream,
+    transport.commit,
+    `refs/tags/${transport.tag}:refs/tags/${transport.tag}`,
+  );
   const parser = join(provider, "src/gnn/parsers/markdown_parser.py");
   await mkdir(join(parser, ".."), { recursive: true });
   await writeFile(parser, 'raise RuntimeError("mutable provider parser must never execute")\n');
@@ -120,7 +137,9 @@ test("parses pinned objects despite incompatible provider working-tree bytes", a
     await git("-C", provider, "show", `${fixture.revision}:${relative}`),
   );
   expect(fixture.revision).toBe(fixture.transport.commit);
-  expect(validateContract(await parse("models/battleship.gnn.md")).parameters).toEqual(model.parameters);
+  expect(validateContract(await parse("models/battleship.gnn.md")).parameters).toEqual(
+    model.parameters,
+  );
 }, 30_000);
 test("refuses a pin that cannot name the fetch, leaving the verdict to the reader", async () => {
   const root = await mkdtemp(join(suiteRoot, "gnn-transport-"));

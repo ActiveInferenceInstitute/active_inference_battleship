@@ -17,14 +17,14 @@ production build. No testing framework mocks are used. See the
 | `bun run gate lint` | Installed Biome check. |
 | `bun run gate types` / `bun run typecheck` | Strict TypeScript check. |
 | `bun run gate docs` | Relative documentation links and the flat index. |
-| `bun run gate test:fast` | All `tests/*.test.ts` except `model.test.ts` and `package.test.ts`, without coverage. |
+| `bun run gate test:fast` | All `tests/*.test.ts` except `model.test.ts`, `package.test.ts` and `manuscript-launchers.test.ts`, without coverage. |
 | `bun run gate test:full` / `bun run test` | Full package build and all Bun tests with coverage, including the real Python parser and installed-package subprocess suites. |
 | `bun run gate gnn` / `bun run model:check` | Pinned-parser compiled-model freshness check. |
 | `bun run gate build` / `bun run build` | Pinned-model check, types, and production dashboard build. |
 | `bun run gate all` | Lint, types, docs, full tests, and production build; shared GNN work runs once within this invocation. |
 
 Fast checks intentionally make no integration or coverage claim. Full tests retain
-every suite; excluding the two integration files from `test:fast` does not remove
+every suite; excluding the three integration files from `test:fast` does not remove
 them from `test:full`. Neither gate automatically runs browser acceptance,
 negative controls, Lighthouse, or manuscript rendering.
 

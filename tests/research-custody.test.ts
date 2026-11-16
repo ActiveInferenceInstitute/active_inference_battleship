@@ -1,18 +1,21 @@
 import { expect, test } from "bun:test";
 import { createHash } from "node:crypto";
-import { copyFile, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
-import {
-  createResearchSnapshot, publishResearchSnapshot, requireNewResearchOutputs, researchInputPaths,
-} from "../scripts/research-custody";
 import { externalEnvironment, projectRoot } from "../scripts/paths";
+import {
+  createResearchSnapshot,
+  publishResearchSnapshot,
+  requireNewResearchOutputs,
+  researchInputPaths,
+} from "../scripts/research-custody";
 
-async function fixture() {
+async function fixture(study: "descriptive" | "strategy" = "descriptive") {
   const temporary = externalEnvironment()["TMPDIR"] as string;
   await mkdir(temporary, { recursive: true });
   const root = await mkdtemp(join(temporary, "research-custody-fixture-"));
   try {
-    for (const name of await researchInputPaths(projectRoot, "descriptive")) {
+    for (const name of await researchInputPaths(projectRoot, study)) {
       await mkdir(dirname(join(root, name)), { recursive: true });
       await copyFile(join(projectRoot, name), join(root, name));
     }
@@ -34,11 +37,15 @@ test("a fresh descriptive fixture binds executed bytes and refuses to replace it
     await writeFile(protocolPath, JSON.stringify(protocol));
     async function run() {
       const child = Bun.spawn([process.execPath, join(root, "scripts/research.ts")], {
-        cwd: root, env: { ...externalEnvironment(), BATTLESHIP_RESEARCH_CONTEXT: "" },
-        stdout: "pipe", stderr: "pipe",
+        cwd: root,
+        env: { ...externalEnvironment(), BATTLESHIP_RESEARCH_CONTEXT: "" },
+        stdout: "pipe",
+        stderr: "pipe",
       });
       const [code, stdout, stderr] = await Promise.all([
-        child.exited, new Response(child.stdout).text(), new Response(child.stderr).text(),
+        child.exited,
+        new Response(child.stdout).text(),
+        new Response(child.stderr).text(),
       ]);
       return { code, stdout, stderr };
     }
@@ -46,9 +53,18 @@ test("a fresh descriptive fixture binds executed bytes and refuses to replace it
     expect(first.code).toBe(0);
     const receipt = await readFile(join(root, "research/generated/results.json"));
     const result = JSON.parse(receipt.toString());
-    expect(result.protocolSha256).toBe(createHash("sha256").update(await readFile(protocolPath)).digest("hex"));
+    expect(result.protocolSha256).toBe(
+      createHash("sha256")
+        .update(await readFile(protocolPath))
+        .digest("hex"),
+    );
     expect(result.sources["research/protocol.json"]).toBe(result.protocolSha256);
-    expect(result.cases.map((row: { policy: string }) => row.policy).sort()).toEqual(["efe", "hit", "information", "random"]);
+    expect(result.cases.map((row: { policy: string }) => row.policy).sort()).toEqual([
+      "efe",
+      "hit",
+      "information",
+      "random",
+    ]);
     for (const row of result.cases) {
       expect(row.trace.filter((step: { hit: boolean }) => step.hit)).toHaveLength(17);
       expect(new Set(row.trace.map((step: { cell: number }) => step.cell)).size).toBe(row.shots);
@@ -69,11 +85,18 @@ test("computation reads the owned source copy and changed live input prevents pu
     const name = "src/core/math.ts";
     const original = await readFile(join(root, name));
     await writeFile(join(root, name), "export const entropy = () => 123;\n");
-    const child = Bun.spawn([process.execPath, "--eval",
-      `import { entropy } from ${JSON.stringify(join(snapshot.source, name))}; console.log(entropy([0.5, 0.5]));`,
-    ], { cwd: snapshot.source, stdout: "pipe", stderr: "pipe" });
+    const child = Bun.spawn(
+      [
+        process.execPath,
+        "--eval",
+        `import { entropy } from ${JSON.stringify(join(snapshot.source, name))}; console.log(entropy([0.5, 0.5]));`,
+      ],
+      { cwd: snapshot.source, stdout: "pipe", stderr: "pipe" },
+    );
     const [code, value, error] = await Promise.all([
-      child.exited, new Response(child.stdout).text(), new Response(child.stderr).text(),
+      child.exited,
+      new Response(child.stdout).text(),
+      new Response(child.stderr).text(),
     ]);
     expect(code).toBe(0);
     expect(error).toBe("");
@@ -82,7 +105,9 @@ test("computation reads the owned source copy and changed live input prevents pu
     const destination = "research/generated/results.json";
     await mkdir(dirname(join(snapshot.output, destination)), { recursive: true });
     await writeFile(join(snapshot.output, destination), '{"fixture":"must not publish"}\n');
-    await expect(publishResearchSnapshot(snapshot, [destination])).rejects.toThrow("changed during computation");
+    await expect(publishResearchSnapshot(snapshot, [destination])).rejects.toThrow(
+      "changed during computation",
+    );
     expect(await Bun.file(join(root, destination)).exists()).toBe(false);
   } finally {
     await snapshot.dispose();
@@ -112,13 +137,16 @@ test("added source files and changed-then-restored inputs invalidate captured cu
 test("strategy publication admission preserves every existing receipt byte", async () => {
   const root = await fixture();
   try {
-    const names = ["pilot.json", "preexecution.json", "results.json"].map((name) => `research/generated/strategy-study/${name}`);
+    const names = ["pilot.json", "preexecution.json", "results.json"].map(
+      (name) => `research/generated/strategy-study/${name}`,
+    );
     for (const name of names) {
       await mkdir(dirname(join(root, name)), { recursive: true });
       await writeFile(join(root, name), `preserved fixture ${name}\n`);
     }
     await expect(requireNewResearchOutputs(root, names)).rejects.toThrow("already exists");
-    for (const name of names) expect(await readFile(join(root, name), "utf8")).toBe(`preserved fixture ${name}\n`);
+    for (const name of names)
+      expect(await readFile(join(root, name), "utf8")).toBe(`preserved fixture ${name}\n`);
   } finally {
     await rm(root, { recursive: true, force: true });
   }
@@ -126,10 +154,18 @@ test("strategy publication admission preserves every existing receipt byte", asy
 
 test("cancelled snapshot preparation leaves no owned workspace", async () => {
   const root = await fixture();
-  const temporary = await mkdtemp(join(externalEnvironment()["TMPDIR"] as string, "cancelled-snapshot-"));
+  const temporary = await mkdtemp(
+    join(externalEnvironment()["TMPDIR"] as string, "cancelled-snapshot-"),
+  );
   const cancellation = new AbortController();
   try {
-    const preparing = createResearchSnapshot(root, "descriptive", [], temporary, cancellation.signal);
+    const preparing = createResearchSnapshot(
+      root,
+      "descriptive",
+      [],
+      temporary,
+      cancellation.signal,
+    );
     cancellation.abort(new Error("cancelled preparation"));
     await expect(preparing).rejects.toThrow("cancelled preparation");
     expect(await readdir(temporary)).toEqual([]);
@@ -150,14 +186,59 @@ test("a changed snapshot runtime is rejected before any research computation", a
     const child = Bun.spawn([process.execPath, join(snapshot.source, "scripts/research.ts")], {
       cwd: snapshot.source,
       env: { ...externalEnvironment(), BATTLESHIP_RESEARCH_CONTEXT: changedContext },
-      stdout: "pipe", stderr: "pipe",
+      stdout: "pipe",
+      stderr: "pipe",
     });
     const [code, stderr] = await Promise.all([child.exited, new Response(child.stderr).text()]);
     expect(code).not.toBe(0);
     expect(stderr).toContain("runtime differs");
-    expect(await Bun.file(join(snapshot.output, "research/generated/results.json")).exists()).toBe(false);
+    expect(await Bun.file(join(snapshot.output, "research/generated/results.json")).exists()).toBe(
+      false,
+    );
   } finally {
     await snapshot.dispose();
+    await rm(root, { recursive: true, force: true });
+  }
+}, 30_000);
+
+test("production admission copies its pilot before rejecting runtime disagreement", async () => {
+  const root = await fixture("strategy");
+  try {
+    const sources = Object.fromEntries(
+      await Promise.all(
+        (await researchInputPaths(root, "strategy")).map(async (name) => [
+          name,
+          createHash("sha256").update(await readFile(join(root, name))).digest("hex"),
+        ]),
+      ),
+    );
+    const directory = join(root, "research/generated/strategy-study");
+    await mkdir(directory, { recursive: true });
+    await writeFile(
+      join(directory, "pilot.json"),
+      JSON.stringify({
+        passed: true,
+        sources,
+        runtime: {
+          bun: "different-runtime",
+          nodeCompatibility: process.version,
+          platform: process.platform,
+          arch: process.arch,
+        },
+      }),
+    );
+    const child = Bun.spawn([process.execPath, join(root, "scripts/strategy-study.ts"), "run"], {
+      cwd: root,
+      env: { ...externalEnvironment(), BATTLESHIP_RESEARCH_CONTEXT: "" },
+      stdout: "pipe",
+      stderr: "pipe",
+    });
+    const [code, stderr] = await Promise.all([child.exited, new Response(child.stderr).text()]);
+    expect(code).not.toBe(0);
+    expect(stderr).toContain("Missing or stale production computation gate");
+    expect(stderr).not.toContain("ENOENT");
+    expect(await Bun.file(join(directory, "preexecution.json")).exists()).toBe(false);
+  } finally {
     await rm(root, { recursive: true, force: true });
   }
 }, 30_000);

@@ -20,7 +20,8 @@ export async function runTemplatePython(
       ...(signal ? { signal } : {}),
     },
   );
-  const interrupt = () => child.kill("SIGINT"), terminate = () => child.kill("SIGTERM");
+  const interrupt = () => child.kill("SIGINT"),
+    terminate = () => child.kill("SIGTERM");
   process.on("SIGINT", interrupt);
   process.on("SIGTERM", terminate);
   try {

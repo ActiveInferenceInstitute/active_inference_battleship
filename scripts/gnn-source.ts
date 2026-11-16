@@ -39,7 +39,8 @@ export async function pinTransport(
 export async function upstreamRoot(provider = process.env["GNN_ROOT"]): Promise<string> {
   const vault = vaultRoot();
   const upstream = await realpath(
-    provider ?? join(vault, "Username/ActiveInferenceInstitute/Public/Generalized_Notation_Notation"),
+    provider ??
+      join(vault, "Username/ActiveInferenceInstitute/Public/Generalized_Notation_Notation"),
   );
   const containment = relative(vault, upstream);
   if (containment.startsWith("..") || isAbsolute(containment))
@@ -47,7 +48,11 @@ export async function upstreamRoot(provider = process.env["GNN_ROOT"]): Promise<
   return upstream;
 }
 
-async function git(upstream: string, args: readonly string[], signal?: AbortSignal): Promise<string> {
+async function git(
+  upstream: string,
+  args: readonly string[],
+  signal?: AbortSignal,
+): Promise<string> {
   signal?.throwIfAborted();
   const child = Bun.spawn(["git", "-C", upstream, ...args], {
     stdout: "pipe",
@@ -64,17 +69,28 @@ async function git(upstream: string, args: readonly string[], signal?: AbortSign
 }
 
 /** Resolve the pinned fetch against real git objects; a moved tag is a failure. */
-export async function pinnedRevision(provider?: string, signal?: AbortSignal): Promise<{
+export async function pinnedRevision(
+  provider?: string,
+  signal?: AbortSignal,
+): Promise<{
   readonly transport: PinTransport;
   readonly upstream: string;
   readonly revision: string;
 }> {
   const transport = await pinTransport();
   const upstream = await upstreamRoot(provider);
-  const revision = await git(upstream, ["rev-parse", "--verify", `${transport.commit}^{commit}`], signal);
+  const revision = await git(
+    upstream,
+    ["rev-parse", "--verify", `${transport.commit}^{commit}`],
+    signal,
+  );
   if (revision !== transport.commit)
     throw new Error(`Pinned commit resolves to ${revision}, not ${transport.commit}`);
-  const tagCommit = await git(upstream, ["rev-parse", "--verify", `${transport.tag}^{commit}`], signal);
+  const tagCommit = await git(
+    upstream,
+    ["rev-parse", "--verify", `${transport.tag}^{commit}`],
+    signal,
+  );
   if (tagCommit !== transport.commit)
     throw new Error(
       `Pinned tag ${transport.tag} resolves to ${tagCommit}, not ${transport.commit}`,

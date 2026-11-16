@@ -1,6 +1,14 @@
 import { createHash } from "node:crypto";
 import {
-  chmod, link, lstat, mkdir, mkdtemp, readFile, readdir, rm, writeFile,
+  chmod,
+  link,
+  lstat,
+  mkdir,
+  mkdtemp,
+  readdir,
+  readFile,
+  rm,
+  writeFile,
 } from "node:fs/promises";
 import { dirname, join, posix, resolve } from "node:path";
 import { requireLocalOutput } from "./package-output";
@@ -26,8 +34,12 @@ async function binding(root: string, name: string): Promise<Binding> {
 
 /** Independent of receipt keys; includes additions in every executable namespace. */
 export async function researchInputPaths(root: string, study: Study): Promise<string[]> {
-  const inventory = JSON.parse(await readFile(join(root, "research/source-inventory.json"), "utf8")) as {
-    files: string[]; trees: string[]; studies: Record<Study, string[]>;
+  const inventory = JSON.parse(
+    await readFile(join(root, "research/source-inventory.json"), "utf8"),
+  ) as {
+    files: string[];
+    trees: string[];
+    studies: Record<Study, string[]>;
   };
   const names = new Set([...inventory.files, ...inventory.studies[study]]);
   async function discover(name: string): Promise<void> {
@@ -43,7 +55,11 @@ export async function researchInputPaths(root: string, study: Study): Promise<st
   }
   for (const name of inventory.trees) await discover(name);
   for (const name of names) {
-    if (!name || name.startsWith("/") || name.split("/").some((part) => part === ".." || part === "."))
+    if (
+      !name ||
+      name.startsWith("/") ||
+      name.split("/").some((part) => part === ".." || part === ".")
+    )
       throw new Error(`Unsafe research input: ${name}`);
     await requireLocalOutput(root, join(root, name));
     if (!(await lstat(join(root, name))).isFile())
@@ -77,8 +93,10 @@ export async function createResearchSnapshot(
   const names = [...new Set([...paths, ...extraInputs])].sort();
   await mkdir(temporaryParent, { recursive: true });
   const workspace = await mkdtemp(join(temporaryParent, "research-"));
-  const source = join(workspace, "source"), output = join(workspace, "output");
-  const original: Bindings = {}, copied: Bindings = {};
+  const source = join(workspace, "source"),
+    output = join(workspace, "output");
+  const original: Bindings = {},
+    copied: Bindings = {};
   const directories = new Set([source]);
   const dispose = async () => {
     // Only this invocation's directories were made read-only.
@@ -105,16 +123,29 @@ export async function createResearchSnapshot(
         directories.add(directory);
       copied[name] = await binding(source, name);
     }
-    const sources = Object.freeze(Object.fromEntries(paths.map((name) => [name, original[name]!.sha256])));
-    const inputs = Object.freeze(Object.fromEntries(extraInputs.map((name) => [name, original[name]!.sha256])));
+    const recordedHashes = (selected: readonly string[]): Record<string, string> =>
+      Object.fromEntries(
+        selected.map((name) => {
+          const captured = original[name];
+          if (!captured) throw new Error(`Missing captured research input: ${name}`);
+          return [name, captured.sha256];
+        }),
+      );
+    const sources = Object.freeze(recordedHashes(paths));
+    const inputs = Object.freeze(recordedHashes(extraInputs));
     const assertUnchanged = async () => {
-      if (JSON.stringify(await researchInputPaths(root, study)) !== JSON.stringify(paths) ||
-          JSON.stringify(await researchInputPaths(source, study)) !== JSON.stringify(paths))
+      if (
+        JSON.stringify(await researchInputPaths(root, study)) !== JSON.stringify(paths) ||
+        JSON.stringify(await researchInputPaths(source, study)) !== JSON.stringify(paths)
+      )
         throw new Error("Research source inventory changed during computation");
-      for (const [base, expected] of [[root, original], [source, copied]] as const)
+      for (const [base, expected] of [
+        [root, original],
+        [source, copied],
+      ] as const)
         for (const name of names) {
           const actual = await binding(base, name);
-          if (actual.sha256 !== expected[name]!.sha256 || actual.identity !== expected[name]!.identity)
+          if (actual.sha256 !== expected[name]?.sha256 || actual.identity !== expected[name]?.identity)
             throw new Error(`Research input changed during computation: ${name}`);
         }
     };
@@ -122,9 +153,15 @@ export async function createResearchSnapshot(
     for (const directory of directories) await chmod(directory, 0o555);
     const context = join(workspace, "context.json");
     const runtime = {
-      bun: Bun.version, nodeCompatibility: process.version, platform: process.platform, arch: process.arch,
+      bun: Bun.version,
+      nodeCompatibility: process.version,
+      platform: process.platform,
+      arch: process.arch,
     };
-    await writeFile(context, JSON.stringify({ study, source, output, sources, inputs, runtime }), { flag: "wx", mode: 0o400 });
+    await writeFile(context, JSON.stringify({ study, source, output, sources, inputs, runtime }), {
+      flag: "wx",
+      mode: 0o400,
+    });
     await assertUnchanged();
     signal?.throwIfAborted();
     return { root, source, output, context, study, sources, inputs, assertUnchanged, dispose };
@@ -134,7 +171,10 @@ export async function createResearchSnapshot(
   }
 }
 
-export async function requireNewResearchOutputs(root: string, outputs: readonly string[]): Promise<void> {
+export async function requireNewResearchOutputs(
+  root: string,
+  outputs: readonly string[],
+): Promise<void> {
   for (const name of outputs) {
     const path = join(root, name);
     await requireLocalOutput(root, path);
@@ -144,12 +184,17 @@ export async function requireNewResearchOutputs(root: string, outputs: readonly 
       if (error instanceof Error && "code" in error && error.code === "ENOENT") continue;
       throw error;
     }
-    throw new Error(`Research output already exists; preserve it before an authorized rerun: ${name}`);
+    throw new Error(
+      `Research output already exists; preserve it before an authorized rerun: ${name}`,
+    );
   }
 }
 
 /** Publish complete staged files exclusively, with the terminal receipt last. */
-export async function publishResearchSnapshot(snapshot: ResearchSnapshot, outputs: readonly string[]): Promise<void> {
+export async function publishResearchSnapshot(
+  snapshot: ResearchSnapshot,
+  outputs: readonly string[],
+): Promise<void> {
   await snapshot.assertUnchanged();
   await requireNewResearchOutputs(snapshot.root, outputs);
   for (const name of outputs) await binding(snapshot.output, name);
@@ -163,13 +208,17 @@ export async function publishResearchSnapshot(snapshot: ResearchSnapshot, output
 
 async function runResearchSnapshot(study: Study, entry: string, args: string[]): Promise<number> {
   const arm = args[0];
-  const outputs = study === "descriptive"
-    ? ["research/generated/summary.csv", "research/generated/results.json"]
-    : study === "prepare"
-      ? ["research/strategy-cases.json", "research/strategy-protocol.json"]
-      : arm === "pilot"
-        ? ["research/generated/strategy-study/pilot.json"]
-        : ["research/generated/strategy-study/preexecution.json", "research/generated/strategy-study/results.json"];
+  const outputs =
+    study === "descriptive"
+      ? ["research/generated/summary.csv", "research/generated/results.json"]
+      : study === "prepare"
+        ? ["research/strategy-cases.json", "research/strategy-protocol.json"]
+        : arm === "pilot"
+          ? ["research/generated/strategy-study/pilot.json"]
+          : [
+              "research/generated/strategy-study/preexecution.json",
+              "research/generated/strategy-study/results.json",
+            ];
   const cancellation = new AbortController();
   const cancel = () => cancellation.abort(new Error("Research invocation interrupted"));
   process.on("SIGINT", cancel);
@@ -178,15 +227,22 @@ async function runResearchSnapshot(study: Study, entry: string, args: string[]):
   try {
     await requireNewResearchOutputs(projectRoot, outputs);
     cancellation.signal.throwIfAborted();
-    const extra = study === "strategy" && arm === "run" ? ["research/generated/strategy-study/pilot.json"] : [];
+    const extra =
+      study === "strategy" && arm === "run" ? ["research/generated/strategy-study/pilot.json"] : [];
     snapshot = await createResearchSnapshot(
-      projectRoot, study, extra, externalEnvironment()["TMPDIR"] as string, cancellation.signal,
+      projectRoot,
+      study,
+      extra,
+      externalEnvironment()["TMPDIR"] as string,
+      cancellation.signal,
     );
     cancellation.signal.throwIfAborted();
     const child = Bun.spawn([process.execPath, join(snapshot.source, entry), ...args], {
       cwd: snapshot.source,
       env: { ...externalEnvironment(), BATTLESHIP_RESEARCH_CONTEXT: snapshot.context },
-      stdout: "inherit", stderr: "inherit", signal: cancellation.signal,
+      stdout: "inherit",
+      stderr: "inherit",
+      signal: cancellation.signal,
     });
     const code = await child.exited;
     if (code !== 0) return code;
@@ -208,15 +264,24 @@ export async function researchExecution(study: Study, entry: string) {
   const context = process.env["BATTLESHIP_RESEARCH_CONTEXT"];
   if (!context) process.exit(await runResearchSnapshot(study, entry, process.argv.slice(2)));
   const record = JSON.parse(await readFile(context, "utf8")) as {
-    study: Study; source: string; output: string;
-    sources: Record<string, string>; inputs: Record<string, string>;
+    study: Study;
+    source: string;
+    output: string;
+    sources: Record<string, string>;
+    inputs: Record<string, string>;
     runtime: { bun: string; nodeCompatibility: string; platform: string; arch: string };
   };
   if (record.study !== study || resolve(record.source) !== projectRoot)
     throw new Error("Research execution must use its owned source snapshot");
-  if (JSON.stringify(record.runtime) !== JSON.stringify({
-    bun: Bun.version, nodeCompatibility: process.version, platform: process.platform, arch: process.arch,
-  }))
+  if (
+    JSON.stringify(record.runtime) !==
+    JSON.stringify({
+      bun: Bun.version,
+      nodeCompatibility: process.version,
+      platform: process.platform,
+      arch: process.arch,
+    })
+  )
     throw new Error("Research execution runtime differs from its admitted snapshot");
   const expected = await researchInputPaths(projectRoot, study);
   if (JSON.stringify(Object.keys(record.sources).sort()) !== JSON.stringify(expected))

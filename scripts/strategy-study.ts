@@ -17,7 +17,10 @@ import { researchExecution } from "./research-custody";
 const arm = process.argv[2];
 if (!["prepare", "pilot", "run"].includes(arm ?? ""))
   throw new Error("Use prepare, pilot, or run; existing receipts are never overwritten");
-const execution = await researchExecution(arm === "prepare" ? "prepare" : "strategy", "scripts/strategy-study.ts");
+const execution = await researchExecution(
+  arm === "prepare" ? "prepare" : "strategy",
+  "scripts/strategy-study.ts",
+);
 
 const hash = (bytes: string | Uint8Array) => createHash("sha256").update(bytes).digest("hex");
 const save = async (path: string, value: unknown) => {
@@ -176,8 +179,11 @@ if (process.argv[2] === "prepare") {
 } else if (process.argv[2] === "run") {
   const current = sources,
     pilot = await read(`${directory}/pilot.json`);
-  if (!pilot.passed || JSON.stringify(pilot.sources) !== JSON.stringify(current) ||
-      JSON.stringify(pilot.runtime) !== JSON.stringify(execution.runtime))
+  if (
+    !pilot.passed ||
+    JSON.stringify(pilot.sources) !== JSON.stringify(current) ||
+    JSON.stringify(pilot.runtime) !== JSON.stringify(execution.runtime)
+  )
     throw new Error("Missing or stale production computation gate");
   const model = await read("src/generated/model.json");
   if (
@@ -224,7 +230,9 @@ if (process.argv[2] === "prepare") {
   await save(`${directory}/results.json`, {
     schemaVersion: 1,
     completedAt: new Date().toISOString(),
-    preexecutionSha256: hash(await readFile(join(execution.output, `${directory}/preexecution.json`))),
+    preexecutionSha256: hash(
+      await readFile(join(execution.output, `${directory}/preexecution.json`)),
+    ),
     cases,
   });
   console.log(
