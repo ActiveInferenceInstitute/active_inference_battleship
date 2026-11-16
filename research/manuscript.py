@@ -6,6 +6,9 @@ This module never installs dependencies or changes the template checkout.
 from __future__ import annotations
 
 import argparse
+from contextlib import contextmanager
+import ctypes
+import fcntl
 import hashlib
 import json
 import os
@@ -14,6 +17,9 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+import tempfile
+
+from research.source_inventory import contained_file, require_sources, source_paths, tree_paths
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -50,8 +56,11 @@ def sha(path: Path) -> str:
 
 def require_input_snapshot(root: Path, expected: dict[str, str]) -> None:
     for relative, digest in expected.items():
-        path = root/relative
-        if not path.is_file() or sha(path) != digest:
+        try:
+            current = sha(contained_file(root, relative))
+        except (OSError, ValueError) as exc:
+            raise RuntimeError(f"Manuscript input changed during rendering: {relative}") from exc
+        if current != digest:
             raise RuntimeError(f"Manuscript input changed during rendering: {relative}")
 
 
@@ -106,9 +115,9 @@ def require_figure_geometry(figure, name: str, boxed_text=()) -> dict:
 
 def verify_results(root: Path = ROOT) -> dict:
     result = json.loads((root / "research/generated/results.json").read_text())
-    for relative, expected in result["sources"].items():
-        if sha(root / relative) != expected:
-            raise ValueError(f"Stale research input: {relative}")
+    require_sources(root, "descriptive", result.get("sources"), label="research")
+    if result.get("protocolSha256") != sha(root/"research/protocol.json"):
+        raise ValueError("Research protocol digest differs from its source inventory")
     protocol = json.loads((root / "research/protocol.json").read_text())
     model = json.loads((root / "src/generated/model.json").read_text())
     if (protocol["boardSize"] != model["parameters"]["board_size"] or
@@ -244,8 +253,121 @@ def figures() -> None:
     illustrations(ROOT)
 
 
+def render_input_paths(root: Path) -> list[str]:
+    """Bind the complete owned source/asset namespaces before any validation."""
+    names = set(source_paths(root, "descriptive")) | set(source_paths(root, "strategy"))
+    for directory in ("research", "manuscript", "scripts", "src", "models"):
+        names.update(tree_paths(root, directory, ignore=("__pycache__",)))
+    names.update(("project.json", ".github/GNN.md", ".github/workflows/ci.yml",
+                  "manuscript/variables.json", "manuscript/config.yaml",
+                  "manuscript/preamble.md", "manuscript/references.bib",
+                  "manuscript/docx.lua", "manuscript/web.css", "manuscript/frontmatter.tex",
+                  "manuscript/figures/manifest.json", "research/generated/results.json",
+                  "research/generated/strategy-study/pilot.json",
+                  "research/generated/strategy-study/preexecution.json",
+                  "research/generated/strategy-study/results.json",
+                  "research/generated/strategy-study/analysis.json",
+                  "research/generated/strategy-study/comparisons.csv"))
+    for name in names:
+        contained_file(root, name)
+    return sorted(names)
+
+
+def verify_render_research(root: Path = ROOT) -> None:
+    verify_results(root)
+    from research.strategy_validation import validate_strategy_outputs
+    validate_strategy_outputs(root)
+
+
+def exchange_directories(source: Path, destination: Path) -> None:
+    """Atomically exchange two existing directories without an absent-edition interval."""
+    library = ctypes.CDLL(None, use_errno=True)
+    if sys.platform == "darwin":
+        exchange = library.renamex_np
+        exchange.argtypes = (ctypes.c_char_p, ctypes.c_char_p, ctypes.c_uint)
+        args = (os.fsencode(source), os.fsencode(destination), 2)  # RENAME_SWAP
+    elif sys.platform.startswith("linux"):
+        exchange = library.renameat2
+        exchange.argtypes = (ctypes.c_int, ctypes.c_char_p, ctypes.c_int,
+                             ctypes.c_char_p, ctypes.c_uint)
+        args = (-100, os.fsencode(source), -100, os.fsencode(destination), 2)  # RENAME_EXCHANGE
+    else:
+        raise RuntimeError("Atomic directory exchange is unavailable on this platform")
+    exchange.restype = ctypes.c_int
+    if exchange(*args) != 0:
+        error = ctypes.get_errno()
+        raise OSError(error, os.strerror(error), str(destination))
+
+
+@contextmanager
+def staged_render_output(root: Path, expected: dict[str, str],
+                         template: Path, template_expected: dict[str, str]):
+    """No edition or success receipt replaces published output on validation drift."""
+    def versions(base, names):
+        result = {}
+        for name in names:
+            info = contained_file(base, name).stat()
+            result[name] = (info.st_dev, info.st_ino, info.st_mode, info.st_size,
+                            info.st_mtime_ns, info.st_ctime_ns)
+        return result
+
+    before = versions(root, expected)
+    template_versions = versions(template, template_expected)
+
+    def require_stable():
+        if render_input_paths(root) != sorted(expected):
+            raise RuntimeError("Manuscript input inventory changed during rendering")
+        if tree_paths(template, "infrastructure", ignore=("__pycache__",)) != sorted(template_expected):
+            raise RuntimeError("Template input inventory changed during rendering")
+        require_input_snapshot(root, expected)
+        require_input_snapshot(template, template_expected)
+        if before != versions(root, expected) or template_versions != versions(template, template_expected):
+            raise RuntimeError("Validated input identity changed during rendering")
+
+    require_stable()
+    cache = root/".cache"
+    if cache.is_symlink():
+        raise ValueError("Manuscript cache must not be a symlink")
+    cache.mkdir(exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="manuscript-render-", dir=cache) as directory:
+        workspace = Path(directory)
+        staged = workspace/"output"
+        staged.mkdir()
+        yield staged
+        require_stable()
+        if not (staged/"render-receipt.json").is_file():
+            raise RuntimeError("Renderer did not produce a completion receipt")
+        # Serialize only publication; other invocations retain their private staging.
+        lock = cache/"manuscript-publication.lock"
+        descriptor = os.open(lock, os.O_CREAT | os.O_RDWR | os.O_NOFOLLOW, 0o600)
+        with os.fdopen(descriptor, "a+b") as held:
+            fcntl.flock(held, fcntl.LOCK_EX)
+            require_stable()
+            destination = root/"output"
+            if destination.is_symlink() or (destination.exists() and not destination.is_dir()):
+                raise ValueError("Manuscript output must be an ordinary directory")
+            # Keep both generations outside automatic scratch cleanup before switching.
+            # An interrupt either leaves the prior edition active or finds it here.
+            preserved = cache/f"preserved-{workspace.name}"
+            staged.rename(preserved)
+            if destination.exists():
+                exchange_directories(preserved, destination)
+            else:
+                preserved.rename(destination)
+
+
 def render() -> None:
     template = Path(os.environ["TEMPLATE_ROOT"]).resolve(strict=True)
+    input_before = {name: sha(ROOT/name) for name in render_input_paths(ROOT)}
+    template_before = {name: sha(template/name)
+                       for name in tree_paths(template, "infrastructure", ignore=("__pycache__",))}
+    with staged_render_output(ROOT, input_before, template, template_before) as output:
+        _render(output, input_before, template, template_before)
+
+
+def _render(output: Path, input_before: dict[str, str], template: Path,
+            template_before: dict[str, str]) -> None:
+    verify_render_research()
     vault = next((p for p in ROOT.parents if (p/"vault.toml").is_file()), None)
     if vault is None or any(not Path(p).resolve().is_relative_to(vault)
                             for p in (sys.prefix, sys.base_prefix)):
@@ -253,9 +375,7 @@ def render() -> None:
     for tool in ("pandoc", "pandoc-crossref", "xelatex"):
         if shutil.which(tool) is None:
             raise RuntimeError(f"Required renderer tool unavailable: {tool}")
-    verify_results()
-    template_before = {str(p.relative_to(template)): sha(p)
-                       for p in (template/"infrastructure").rglob("*.py") if p.is_file()}
+    require_input_snapshot(ROOT, input_before)
     from infrastructure.rendering.config import RenderingConfig
     from infrastructure.rendering.pdf_renderer import PDFRenderer
     from infrastructure.rendering.web_renderer import WebRenderer
@@ -266,6 +386,8 @@ def render() -> None:
     if not formalism_filter.is_relative_to(template):
         raise ValueError("Formalism filter is outside the selected template")
     formalism_before = sha(formalism_filter)
+    if template_before.get(formalism_filter.relative_to(template).as_posix()) != formalism_before:
+        raise ValueError("Formalism filter is outside the captured template input closure")
     tool_versions = {name: subprocess.run([name, "--version"], check=True, capture_output=True, text=True).stdout
                      for name in ("pandoc", "pandoc-crossref", "xelatex")}
 
@@ -285,24 +407,13 @@ def render() -> None:
     require_figure_manifest(ROOT)
     if not sources:
         raise ValueError("No manuscript sections")
-    render_inputs = [*sources, ROOT/"project.json", manuscript/"config.yaml", manuscript/"preamble.md",
-                     manuscript/"references.bib", manuscript/"docx.lua", manuscript/"web.css",
-                     ROOT/"research/docx_reference.py", ROOT/"research/manuscript.py", ROOT/"research/variables.py",
-                     ROOT/"research/frontmatter.py", ROOT/"research/numbering.py", ROOT/"research/publication_style.py", ROOT/"research/graphical_abstract.py", manuscript/"frontmatter.tex",
-                     ROOT/"scripts/capture-dashboard-for-manuscript.ts", ROOT/"research/strategy_analysis.py",
-                     ROOT/"research/strategy_figures.py", ROOT/"research/strategy_results.py",
-                     ROOT/"research/generated/strategy-study/figure-text.json",
-                     ROOT/"research/generated/main-figure-geometry.json",
-                     *[ROOT/"research/generated"/name for name in ("dashboard-capture.json", "dashboard-replay.json", "dashboard-analysis.json", "frontmatter.json")],
-                     *[p for p in (manuscript/"figures").rglob("*") if p.is_file()]]
-    input_before = {str(p.relative_to(ROOT)):sha(p) for p in [*render_inputs, *supplements]}
     from research.variables import hydrate_sources, load_variables
     variables, variable_inputs = load_variables(ROOT)
-    input_before.update(variable_inputs)
+    if any(input_before.get(name) != digest for name, digest in variable_inputs.items()):
+        raise RuntimeError("Manuscript variable inputs changed before rendering")
     metadata = project_metadata()
     from research.publication_style import validate_design_sources
     validate_design_sources(ROOT)
-    output = ROOT/"output"
     bibliography = subprocess.run(["pandoc", str(manuscript/"references.bib"), "-f", "biblatex", "-t", "csljson"],
                                   check=True, capture_output=True, text=True)
     if bibliography.stderr.strip():
@@ -319,8 +430,8 @@ def render() -> None:
     # edition metadata, resource paths, styles and assets still use manuscript/.
     hydrated_bibliography = output/"manuscript/references.bib"
     shutil.copy2(manuscript/"references.bib", hydrated_bibliography)
-    input_before.update({str(path.relative_to(ROOT)): sha(path)
-                         for path in [*sources, hydrated_bibliography]})
+    hydrated_inputs = {path.relative_to(output).as_posix(): sha(path)
+                       for path in [*sources, hydrated_bibliography]}
     # PDFRenderer's compile contract resolves ../figures beside its pdf directory.
     # Stage genuine generated assets there; do not rewrite the emitted TeX.
     shutil.copytree(manuscript/"figures", output/"figures", dirs_exist_ok=True)
@@ -377,19 +488,21 @@ def render() -> None:
     if sha(formalism_filter) != formalism_before:
         raise RuntimeError("Template formalism filter changed during rendering")
     require_input_snapshot(ROOT, input_before)
+    require_input_snapshot(output, hydrated_inputs)
     receipt = {"templateRoot":str(template), "python":sys.version,
                "prefix":sys.prefix, "basePrefix":sys.base_prefix,
                "templateImports": loaded,
                "formalismFilter": {"path":str(formalism_filter.relative_to(template)),"sha256":formalism_before},
                "renderTools":tool_versions,
                "hydration": {"variables": variables,
-                             "sources": {str(path.relative_to(ROOT)): str(authored.relative_to(ROOT))
+                             "sources": {"output/"+path.relative_to(output).as_posix(): str(authored.relative_to(ROOT))
                                          for path, authored in zip(sources, authored_sources, strict=True)}},
-               "outputs": {str(p.relative_to(ROOT)):sha(p) for p in
+               "outputs": {"output/"+p.relative_to(output).as_posix():sha(p) for p in
                            [pdf,docx,output/"bibliography.json",output/"pdf/_combined_manuscript.aux",output/"pdf/_combined_manuscript.tex",
                             *[output/source.relative_to(ROOT) for source in supplements],
                             *[p for p in (output/"web").rglob("*") if p.is_file()]]},
-               "inputs": input_before}
+               "inputs": {**input_before, **{"output/"+name: digest for name, digest in hydrated_inputs.items()}},
+               "templateInputs": template_before}
     (output/"render-receipt.json").write_text(json.dumps(receipt, indent=2)+"\n")
 
 

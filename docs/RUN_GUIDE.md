@@ -82,6 +82,24 @@ PDF/HTML/DOCX rendering needs Pandoc, pandoc-crossref and XeLaTeX; native Word
 projection/page checks additionally need a real `SOFFICE` executable. Missing
 LibreOffice is not a successful page check.
 
+## Bounded qualification, not a renewed release
+
+The focused Bun custody, concurrent-launcher and real pinned-model tests passed.
+The Python custody/admission tests and three render-publication rejection cases
+also passed. An exact SHA-bound isolated source fixture supplied the existing
+Zod dependency tree; no dependency installation or canonical write was performed.
+
+The template-cache interpreter alone lacked SciPy, so the Python custody tests
+explicitly selected the already prepared template interpreter instead. Both
+selected environments and their bases were vault-local. This is a recorded
+runtime choice, not a successful test of every runtime or a silent fallback.
+
+No successful engine work is repeated for documentation. Full package/build,
+browser/native-page acceptance and fresh scientific receipt renewal are not
+implied. B1/BT05 remains with the release owner; generated timings and historical
+receipts are preserved rather than regenerated to appear current.
+
+
 ## Measured observations
 
 [Generated before/after timings](_generated/gate-timings.md) are refreshed by:

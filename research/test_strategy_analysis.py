@@ -5,7 +5,8 @@ from pathlib import Path
 import shutil
 import tempfile
 import numpy as np
-from research.strategy_analysis import ROOT, comparison, holm, verify_study, SOURCE_FILES
+from research.strategy_analysis import ROOT, comparison, digest, holm, verify_study
+from research.source_inventory import source_paths
 
 
 class StrategyStatisticsTests(unittest.TestCase):
@@ -89,7 +90,8 @@ class StrategyStatisticsTests(unittest.TestCase):
         self.assertEqual(sum(c["shots"] for c in data["cases"]),47975)
         with tempfile.TemporaryDirectory(prefix="strategy-inputs-") as temp:
             root=Path(temp)
-            paths=[*SOURCE_FILES,"research/generated/strategy-study/results.json","research/generated/strategy-study/preexecution.json"]
+            paths=[*source_paths(ROOT, "strategy"), "research/generated/strategy-study/pilot.json",
+                   "research/generated/strategy-study/results.json", "research/generated/strategy-study/preexecution.json"]
             for relative in paths:
                 target=root/relative
                 target.parent.mkdir(parents=True,exist_ok=True)
@@ -111,6 +113,67 @@ class StrategyStatisticsTests(unittest.TestCase):
             self.assertEqual(len(verify_study(root)["cases"]),1280)
             (root/"src/core/inference.ts").write_text("changed")
             with self.assertRaisesRegex(ValueError,"Changed strategy input"): verify_study(root)
+
+
+class StrategyAdmissionTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(prefix="strategy-admission-")
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        for relative in source_paths(ROOT, "strategy"):
+            target = self.root/relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(ROOT/relative, target)
+        self.base = self.root/"research/generated/strategy-study"
+        self.base.mkdir(parents=True)
+        # New negative-control metadata, not relabeled historical observations.
+        # Empty cases ensure this fixture cannot pass the full scientific gate.
+        sources = {name: digest(self.root/name) for name in source_paths(self.root, "strategy")}
+        (self.base/"pilot.json").write_text(json.dumps({"passed": False, "sources": sources}))
+        (self.base/"preexecution.json").write_text(json.dumps({
+            "sources": sources, "pilotSha256": digest(self.base/"pilot.json"),
+        }))
+        (self.base/"results.json").write_text(json.dumps({
+            "preexecutionSha256": digest(self.base/"preexecution.json"), "cases": [],
+        }))
+
+    def test_unpassed_pilot_cannot_authorize_a_bound_production_receipt(self):
+        with self.assertRaisesRegex(ValueError, "production computation gate"):
+            verify_study(self.root)
+
+    def test_changed_pilot_bytes_invalidate_the_preexecution_binding(self):
+        path = self.base/"pilot.json"
+        data = json.loads(path.read_text())
+        data["passed"] = True
+        path.write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError, "production computation gate"):
+            verify_study(self.root)
+
+    def test_receipt_cannot_omit_required_source_members(self):
+        path = self.base/"preexecution.json"
+        data = json.loads(path.read_text())
+        del data["sources"]["src/core/inference.ts"]
+        path.write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError, "source inventory"):
+            verify_study(self.root)
+
+    def test_pilot_and_production_must_bind_the_same_runtime(self):
+        pilot_path = self.base/"pilot.json"
+        freeze_path = self.base/"preexecution.json"
+        results_path = self.base/"results.json"
+        runtime = {"bun": "fixture-runtime-A", "nodeCompatibility": "fixture-node",
+                   "platform": "fixture-platform", "arch": "fixture-arch"}
+        pilot = json.loads(pilot_path.read_text())
+        pilot.update(passed=True, runtime=runtime)
+        pilot_path.write_text(json.dumps(pilot))
+        freeze = json.loads(freeze_path.read_text())
+        freeze.update(pilotSha256=digest(pilot_path), runtime={**runtime, "bun": "fixture-runtime-B"})
+        freeze_path.write_text(json.dumps(freeze))
+        results = json.loads(results_path.read_text())
+        results["preexecutionSha256"] = digest(freeze_path)
+        results_path.write_text(json.dumps(results))
+        with self.assertRaisesRegex(ValueError, "runtime binding"):
+            verify_study(self.root)
 
 
 if __name__=="__main__": unittest.main()

@@ -16,6 +16,12 @@ export type PinTransport = {
   readonly commit: string;
 };
 
+export type PinnedGnnSource = {
+  readonly transport: PinTransport;
+  readonly revision: string;
+  readonly source: string;
+};
+
 export async function pinTransport(
   pinPath = process.env["GNN_PIN"] ?? join(projectRoot, "models/gnn.pin.json"),
 ): Promise<PinTransport> {
@@ -30,11 +36,10 @@ export async function pinTransport(
 }
 
 /** The canonical upstream checkout the pin is resolved against. */
-export async function upstreamRoot(): Promise<string> {
+export async function upstreamRoot(provider = process.env["GNN_ROOT"]): Promise<string> {
   const vault = vaultRoot();
   const upstream = await realpath(
-    process.env["GNN_ROOT"] ??
-      join(vault, "Username/ActiveInferenceInstitute/Public/Generalized_Notation_Notation"),
+    provider ?? join(vault, "Username/ActiveInferenceInstitute/Public/Generalized_Notation_Notation"),
   );
   const containment = relative(vault, upstream);
   if (containment.startsWith("..") || isAbsolute(containment))
@@ -42,8 +47,13 @@ export async function upstreamRoot(): Promise<string> {
   return upstream;
 }
 
-async function git(upstream: string, ...args: string[]): Promise<string> {
-  const child = Bun.spawn(["git", "-C", upstream, ...args], { stdout: "pipe", stderr: "pipe" });
+async function git(upstream: string, args: readonly string[], signal?: AbortSignal): Promise<string> {
+  signal?.throwIfAborted();
+  const child = Bun.spawn(["git", "-C", upstream, ...args], {
+    stdout: "pipe",
+    stderr: "pipe",
+    ...(signal ? { signal } : {}),
+  });
   const [output, errors, code] = await Promise.all([
     new Response(child.stdout).text(),
     new Response(child.stderr).text(),
@@ -54,17 +64,17 @@ async function git(upstream: string, ...args: string[]): Promise<string> {
 }
 
 /** Resolve the pinned fetch against real git objects; a moved tag is a failure. */
-export async function pinnedRevision(): Promise<{
+export async function pinnedRevision(provider?: string, signal?: AbortSignal): Promise<{
   readonly transport: PinTransport;
   readonly upstream: string;
   readonly revision: string;
 }> {
   const transport = await pinTransport();
-  const upstream = await upstreamRoot();
-  const revision = await git(upstream, "rev-parse", "--verify", `${transport.commit}^{commit}`);
+  const upstream = await upstreamRoot(provider);
+  const revision = await git(upstream, ["rev-parse", "--verify", `${transport.commit}^{commit}`], signal);
   if (revision !== transport.commit)
     throw new Error(`Pinned commit resolves to ${revision}, not ${transport.commit}`);
-  const tagCommit = await git(upstream, "rev-parse", "--verify", `${transport.tag}^{commit}`);
+  const tagCommit = await git(upstream, ["rev-parse", "--verify", `${transport.tag}^{commit}`], signal);
   if (tagCommit !== transport.commit)
     throw new Error(
       `Pinned tag ${transport.tag} resolves to ${tagCommit}, not ${transport.commit}`,
@@ -76,20 +86,23 @@ export async function pinnedRevision(): Promise<{
  * Extract exactly the pinned revision's `src/gnn` into `destination`, never the
  * checkout's working tree, so the parser and the reader are the pinned ones.
  */
-export async function materializePinned(destination: string): Promise<{
-  readonly transport: PinTransport;
-  readonly revision: string;
-  readonly source: string;
-}> {
-  const { transport, upstream, revision } = await pinnedRevision();
+export async function materializePinned(
+  destination: string,
+  provider?: string,
+  signal?: AbortSignal,
+): Promise<PinnedGnnSource> {
+  const { transport, upstream, revision } = await pinnedRevision(provider, signal);
   await mkdir(destination, { recursive: true });
+  signal?.throwIfAborted();
   const archive = Bun.spawn(["git", "-C", upstream, "archive", revision, "src/gnn"], {
     stdout: "pipe",
     stderr: "pipe",
+    ...(signal ? { signal } : {}),
   });
   const extract = Bun.spawn(["tar", "-xf", "-", "-C", destination], {
     stdin: archive.stdout,
     stderr: "pipe",
+    ...(signal ? { signal } : {}),
   });
   const [archiveErrors, archiveCode, extractErrors, extractCode] = await Promise.all([
     new Response(archive.stderr).text(),

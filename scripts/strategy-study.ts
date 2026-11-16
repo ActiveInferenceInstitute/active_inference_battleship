@@ -12,37 +12,26 @@ import {
   survivingLabels,
 } from "../src/research/paired-search";
 import { projectRoot } from "./paths";
+import { researchExecution } from "./research-custody";
+
+const arm = process.argv[2];
+if (!["prepare", "pilot", "run"].includes(arm ?? ""))
+  throw new Error("Use prepare, pilot, or run; existing receipts are never overwritten");
+const execution = await researchExecution(arm === "prepare" ? "prepare" : "strategy", "scripts/strategy-study.ts");
 
 const hash = (bytes: string | Uint8Array) => createHash("sha256").update(bytes).digest("hex");
-const save = async (path: string, value: unknown) =>
-  writeFile(join(projectRoot, path), `${JSON.stringify(value, null, 2)}\n`, { flag: "wx" });
+const save = async (path: string, value: unknown) => {
+  const destination = join(execution.output, path);
+  await mkdir(join(destination, ".."), { recursive: true });
+  await writeFile(destination, `${JSON.stringify(value, null, 2)}\n`, { flag: "wx" });
+};
 const read = async (path: string) => JSON.parse(await readFile(join(projectRoot, path), "utf8"));
 const directory = "research/generated/strategy-study";
-const sourceFiles = [
-  "research/strategy-protocol.json",
-  "research/strategy-cases.json",
-  "scripts/strategy-study.ts",
-  "src/research/paired-search.ts",
-  "src/core/fleet.ts",
-  "src/core/inference.ts",
-  "src/core/math.ts",
-  "src/core/random.ts",
-  "src/generated/model.json",
-  "models/battleship.gnn.md",
-  "research/strategy_analysis.py",
-  "research/strategy_figures.py",
-];
-const sources = async () =>
-  Object.fromEntries(
-    await Promise.all(
-      sourceFiles.map(async (p) => [p, hash(await readFile(join(projectRoot, p)))]),
-    ),
-  );
+const sources = execution.sources;
 const rules = { boardSize: 10, shipLengths: [5, 4, 3, 3, 2] };
 const pilotSeeds = [900001, 900002, 900003, 900004, 900005, 900006];
 
 if (process.argv[2] === "prepare") {
-  await mkdir(join(projectRoot, directory), { recursive: true });
   const old = await read("research/protocol.json");
   const used = new Set<number>([
     ...pilotSeeds,
@@ -180,13 +169,15 @@ if (process.argv[2] === "prepare") {
     checks,
     maximumAbsoluteError: maximum,
     pilotSeeds,
-    sources: await sources(),
+    sources,
+    runtime: execution.runtime,
   });
   console.log(JSON.stringify({ pilotPassed: true, checks, maximum }));
 } else if (process.argv[2] === "run") {
-  const current = await sources(),
+  const current = sources,
     pilot = await read(`${directory}/pilot.json`);
-  if (!pilot.passed || JSON.stringify(pilot.sources) !== JSON.stringify(current))
+  if (!pilot.passed || JSON.stringify(pilot.sources) !== JSON.stringify(current) ||
+      JSON.stringify(pilot.runtime) !== JSON.stringify(execution.runtime))
     throw new Error("Missing or stale production computation gate");
   const model = await read("src/generated/model.json");
   if (
@@ -198,12 +189,7 @@ if (process.argv[2] === "prepare") {
     frozenAt: new Date().toISOString(),
     productionStarted: false,
     sources: current,
-    runtime: {
-      bun: Bun.version,
-      nodeCompatibility: process.version,
-      platform: process.platform,
-      arch: process.arch,
-    },
+    runtime: execution.runtime,
     pilotSha256: hash(await readFile(join(projectRoot, `${directory}/pilot.json`))),
   });
   const manifest = await read("research/strategy-cases.json"),
@@ -235,12 +221,10 @@ if (process.argv[2] === "prepare") {
     }
     console.log(`Completed N=${unit.count}, unit=${unit.index + 1}/128`);
   }
-  if (JSON.stringify(current) !== JSON.stringify(await sources()))
-    throw new Error("Study source changed during production");
   await save(`${directory}/results.json`, {
     schemaVersion: 1,
     completedAt: new Date().toISOString(),
-    preexecutionSha256: hash(await readFile(join(projectRoot, `${directory}/preexecution.json`))),
+    preexecutionSha256: hash(await readFile(join(execution.output, `${directory}/preexecution.json`))),
     cases,
   });
   console.log(
