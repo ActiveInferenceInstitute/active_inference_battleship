@@ -29,7 +29,7 @@ def project_metadata(root: Path = ROOT) -> dict:
     from research.publication_style import author_contact
     author_contact(root)
     metadata = json.loads((root/"project.json").read_text())
-    config = yaml.safe_load((root/"manuscript/config.yaml").read_text())
+    config = yaml.safe_load((root/"docs/manuscript/config.yaml").read_text())
     if (metadata["organization"] != "Active Inference Institute" or
         metadata["language"] != "en-US" or metadata["releaseStatus"] != "published" or
         metadata["repository"] != "https://github.com/ActiveInferenceInstitute/active_inference_battleship" or
@@ -42,7 +42,7 @@ def project_metadata(root: Path = ROOT) -> dict:
         config["publication"]["release_status"] != metadata["releaseStatus"] or
         config["publication"].get("doi") != metadata["manuscriptDoi"]):
         raise ValueError("Manuscript metadata differs from project metadata")
-    abstract = (root/"manuscript/00_abstract.md").read_text()
+    abstract = (root/"docs/manuscript/00_abstract.md").read_text()
     if (metadata["repository"] not in abstract or "Zenodo" not in abstract or
         "https://doi.org/" + metadata["manuscriptDoi"] not in abstract or
         "planned public release" in abstract):
@@ -67,7 +67,7 @@ def require_input_snapshot(root: Path, expected: dict[str, str]) -> None:
 def require_figure_manifest(root: Path = ROOT) -> dict[str, str]:
     """Check the complete generated-asset registry without updating it."""
     from research.frontmatter import figure_manifest
-    expected = json.loads((root/"manuscript/figures/manifest.json").read_text())
+    expected = json.loads((root/"docs/manuscript/figures/manifest.json").read_text())
     if not isinstance(expected, dict) or not expected:
         raise ValueError("Empty or invalid figure manifest")
     actual = figure_manifest(root)
@@ -156,7 +156,7 @@ def figures() -> None:
     import numpy as np
 
     data = verify_results()
-    output = ROOT / "manuscript/figures"
+    output = ROOT / "docs/manuscript/figures"
     output.mkdir(parents=True, exist_ok=True)
     plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 18,
                          "axes.spines.top": False, "axes.spines.right": False,
@@ -241,7 +241,7 @@ def figures() -> None:
     # remove it after the template projects raw LaTeX into Office markup.
     section += "::: {.pdf-only}\n\n```{=latex}\n\\clearpage\n```\n\n:::\n\n"
     section += "![Original descriptive completion counts. Each point is one of 16 paired seed cases per catalog size under the four historical selectors; black horizontal marks are means. Jitter only separates cases. All 128 searches completed; EFE and greedy-hit counts tie in all 32 pairs. No significance tests or confidence intervals were specified for this exploratory demonstration.](figures/search-comparison.png){#fig:historical width=95%}\n"
-    (ROOT / "manuscript/04_results.md").write_text(section)
+    (ROOT / "docs/manuscript/04_results.md").write_text(section)
     from research.strategy_figures import figures as strategy_figures
     from research.strategy_results import write_results
     strategy_figures(ROOT)
@@ -256,13 +256,13 @@ def figures() -> None:
 def render_input_paths(root: Path) -> list[str]:
     """Bind the complete owned source/asset namespaces before any validation."""
     names = set(source_paths(root, "descriptive")) | set(source_paths(root, "strategy"))
-    for directory in ("research", "manuscript", "scripts", "src", "models"):
+    for directory in ("research", "docs/manuscript", "scripts", "src", "models"):
         names.update(tree_paths(root, directory, ignore=("__pycache__",)))
     names.update(("project.json", ".github/GNN.md", ".github/workflows/ci.yml",
-                  "manuscript/variables.json", "manuscript/config.yaml",
-                  "manuscript/preamble.md", "manuscript/references.bib",
-                  "manuscript/docx.lua", "manuscript/web.css", "manuscript/frontmatter.tex",
-                  "manuscript/figures/manifest.json", "research/generated/results.json",
+                  "docs/manuscript/variables.json", "docs/manuscript/config.yaml",
+                  "docs/manuscript/preamble.md", "docs/manuscript/references.bib",
+                  "docs/manuscript/docx.lua", "docs/manuscript/web.css", "docs/manuscript/frontmatter.tex",
+                  "docs/manuscript/figures/manifest.json", "research/generated/results.json",
                   "research/generated/strategy-study/pilot.json",
                   "research/generated/strategy-study/preexecution.json",
                   "research/generated/strategy-study/results.json",
@@ -391,7 +391,7 @@ def _render(output: Path, input_before: dict[str, str], template: Path,
     tool_versions = {name: subprocess.run([name, "--version"], check=True, capture_output=True, text=True).stdout
                      for name in ("pandoc", "pandoc-crossref", "xelatex")}
 
-    manuscript = ROOT/"manuscript"
+    manuscript = ROOT/"docs"/"manuscript"
     sources = sorted(manuscript.glob("[0-9][0-9]_*.md"))
     supplements = [ROOT/relative for relative in
                    ("research/SCHOLARSHIP_BATTLESHIP_20261025.md", "research/BATTLESHIP_ADDITIONS_20261025.bib",
@@ -399,7 +399,7 @@ def _render(output: Path, input_before: dict[str, str], template: Path,
                     "research/STRATEGY_STUDY.md", "research/strategy-protocol.json", "research/strategy-cases.json",
                     "research/generated/strategy-study/results.json", "research/generated/strategy-study/analysis.json",
                     "research/generated/strategy-study/comparisons.csv", "research/generated/strategy-study/preexecution.json",
-                    "manuscript/01_introduction.md", "manuscript/references.bib")]
+                    "docs/manuscript/01_introduction.md", "docs/manuscript/references.bib")]
     from research.frontmatter import numbered_labels, verify_capture, verify_illustrations
     numbered_labels(ROOT)
     verify_capture(ROOT)
@@ -427,7 +427,7 @@ def _render(output: Path, input_before: dict[str, str], template: Path,
     sources = hydrate_sources(authored_sources, variables, output/"manuscript")
     # The template's source-level citation gate discovers bibliography files
     # beside its supplied Markdown. Preserve that gate with an exact local copy;
-    # edition metadata, resource paths, styles and assets still use manuscript/.
+    # edition metadata, resource paths, styles and assets still use docs/manuscript/.
     hydrated_bibliography = output/"manuscript/references.bib"
     shutil.copy2(manuscript/"references.bib", hydrated_bibliography)
     hydrated_inputs = {path.relative_to(output).as_posix(): sha(path)
@@ -461,7 +461,7 @@ def _render(output: Path, input_before: dict[str, str], template: Path,
     frontmatter = "---\n"+yaml.safe_dump({"title":metadata["title"], "author":"Daniel Ari Friedman — Active Inference Institute", "lang":metadata["language"]},sort_keys=False)+"---\n\n"
     combined.write_text(frontmatter+"\n\n".join(p.read_text() for p in sources))
     args = combined_pandoc_args([manuscript, output/"figures", output],
-                               [manuscript/"references.bib"], edition="DOCX")
+                               [docs/manuscript/"references.bib"], edition="DOCX")
     from research.docx_reference import write_reference
     reference = output/"docx/reference.docx"
     write_reference(reference)

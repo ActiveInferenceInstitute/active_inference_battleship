@@ -26,7 +26,7 @@ def figures(root: Path = ROOT) -> None:
     plt.rcParams.update({"font.family":"DejaVu Sans","font.size":18,"axes.titlesize":18,
                          "axes.labelsize":18,"xtick.labelsize":18,"ytick.labelsize":18,"axes.spines.top":False,
                          "axes.spines.right":False,"svg.fonttype":"none","savefig.facecolor":"white"})
-    output = root/"manuscript/figures"
+    output = root/"docs/manuscript/figures"
     text_metadata = {}
     def save(fig,name):
         fig.canvas.draw()

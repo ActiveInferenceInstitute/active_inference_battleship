@@ -35,7 +35,7 @@ def validate_figure_fonts(root: Path, pdf: Path) -> dict:
     import re
     import pdfplumber
     from PIL import Image
-    content="\n".join(p.read_text() for p in sorted((root/"manuscript").glob("[0-9][0-9]_*.md")))
+    content="\n".join(p.read_text() for p in sorted((root/"docs"/"manuscript").glob("[0-9][0-9]_*.md")))
     authored=re.findall(r"!\[[^\]]*\]\(([^)]+)\)",content)
     metadata=json.loads((root/"research/generated/strategy-study/figure-text.json").read_text())
     main_geometry=json.loads((root/"research/generated/main-figure-geometry.json").read_text())
@@ -49,7 +49,7 @@ def validate_figure_fonts(root: Path, pdf: Path) -> dict:
     for relative,placed in zip(authored,images,strict=True):
         name=Path(relative).stem
         if name not in metadata: continue
-        width=Image.open(root/"manuscript"/relative).width
+        width=Image.open(root/"docs"/"manuscript"/relative).width
         info=metadata[name]
         measurements[name]=require_placed_font(info["minimumSourceFontPt"],info["dpi"],width,placed["width"])
     if set(measurements)!=set(metadata): raise ValueError("Incomplete scientific font placement checks")

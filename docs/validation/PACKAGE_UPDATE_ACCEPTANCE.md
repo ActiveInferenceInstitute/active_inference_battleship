@@ -1,4 +1,4 @@
-> Historical record: statements below describe the dated pre-release candidate. Current organization ownership, releases, and DOI are documented in [publication details](PUBLICATION.md).
+> Historical record: statements below describe the dated pre-release candidate. Current organization ownership, releases, and DOI are documented in [publication details](../publication/PUBLICATION.md).
 
 # Local package and manuscript update
 

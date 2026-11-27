@@ -12,12 +12,12 @@ import { assertAllTableReadingOrigins, checkAndResetTableScroll } from "./reader
 if (await Bun.file(join(projectRoot, "output/html-captures.json")).exists())
   throw new Error("Preserve the accepted reader manifest before recapturing");
 const env = externalEnvironment();
-const manuscriptSections = (await readdir(join(projectRoot, "manuscript"))).filter((name) =>
+const manuscriptSections = (await readdir(join(projectRoot, "docs", "manuscript"))).filter((name) =>
   /^\d\d_.*\.md$/.test(name),
 );
 const expectedFigures = (
   await Promise.all(
-    manuscriptSections.map((name) => readFile(join(projectRoot, "manuscript", name), "utf8")),
+    manuscriptSections.map((name) => readFile(join(projectRoot, "docs", "manuscript", name), "utf8")),
   )
 ).reduce((count, content) => count + [...content.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)].length, 0);
 const profile = await mkdtemp(join(env["TMPDIR"] ?? "", "manuscript-chrome-"));

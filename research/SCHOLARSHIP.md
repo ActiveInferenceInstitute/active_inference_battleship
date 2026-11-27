@@ -6,7 +6,7 @@ Access and verification date: **2026-10-23**. Research notes only. Canonical pro
 
 **21 content-checked references: 20 scholarly works and one source-pinned software reference.** With the [October 23 primary-source supplement](SCHOLARSHIP_UPDATE_20261023.md), 19 scholarly works have selected substantive reading; Sevenster retains abstract-level publisher evidence plus qualified reading of a university-hosted manuscript whose final-version equivalence is unverified. The supplement upgrades R02, R04, R08, and R20 without adding citations merely to increase the count. Prior readings are carried evidence, not fresh rereadings of every source. “Read” means the passages identified below, not an assertion that every page, proof, experiment, or cited reference was reviewed. Lindley (1956) is a separately identified metadata-only candidate and is excluded from the count and ready-to-use bibliography.
 
-Bibliography: [references.bib](../manuscript/references.bib). Each R-number below gives its BibTeX key. All included DOI identities were matched to the actual work through publisher/author-repository records, arXiv identifier records, or DataCite registration. A repository's self-citation was not treated as independent verification of another publication.
+Bibliography: [references.bib](../docs/manuscript/references.bib). Each R-number below gives its BibTeX key. All included DOI identities were matched to the actual work through publisher/author-repository records, arXiv identifier records, or DataCite registration. A repository's self-citation was not treated as independent verification of another publication.
 
 **Strongest framing:** a methods/software contribution that makes a deliberately bounded active-sensing model inspectable and reproducible from a Generalized Notation Notation (GNN) specification through browser decisions and exported analysis. The defensible contribution is integration, explicit semantics, and executable inspection. This search establishes neither priority for that combination nor a new inference/planning principle.
 
@@ -16,7 +16,7 @@ Bibliography: [references.bib](../manuscript/references.bib). Each R-number belo
 
 Project root: /Volumes/GitVault/Username/docxology/Private/active_inference_battleship.
 
-Read README.md, docs/MODEL.md, docs/DECISION_LAB.md, models/battleship.gnn.md, src/core/inference.ts, src/core/fleet.ts, src/core/game.ts, and the counterfactual/sweep portions of src/core/analysis.ts. Inspected source metadata in src/generated/model.json. The following are observations from those sources, rather than claims established by the external literature:
+Read README.md, docs/architecture/MODEL.md, docs/guides/DECISION_LAB.md, models/battleship.gnn.md, src/core/inference.ts, src/core/fleet.ts, src/core/game.ts, and the counterfactual/sweep portions of src/core/analysis.ts. Inspected source metadata in src/generated/model.json. The following are observations from those sources, rather than claims established by the external literature:
 
 - Hidden state is a labeled entry in a finite, seeded, biased catalog of legal complete fleets; the environment draws from that same support. Entries are not deduplicated.
 - Fleet occupancy is static. Game progress, turns, visited cells, and terminal conditions are separate bookkeeping. A full game-state POMDP representation would also need those variables, or equivalent history-dependent action availability.
@@ -29,8 +29,8 @@ Source identity observed:
 | File | SHA-256 |
 | --- | --- |
 | README.md | 0a373b2c7fe60517fa62f2a097efb53fff620729ffc9e47c2b1628e7327b2893 |
-| docs/MODEL.md | 2583677d45c9f2d63369925eb69718b2360c0401b632053986b13b2c6b8ab51a |
-| docs/DECISION_LAB.md | b9e9198229152f95c922bbbb07043ad7e15775178598eb4b9b575d818ab1c1c6 |
+| docs/architecture/MODEL.md | 2583677d45c9f2d63369925eb69718b2360c0401b632053986b13b2c6b8ab51a |
+| docs/guides/DECISION_LAB.md | b9e9198229152f95c922bbbb07043ad7e15775178598eb4b9b575d818ab1c1c6 |
 | models/battleship.gnn.md | a425a3f6b0bdc8cb28a165f92c27c6ea329d3e48d2ea3f16136a93fbb447c91c |
 | src/core/inference.ts | 5629ec630b8396b308e38bb039efe61a9d41909e3c13e8ce98c599e4fa85baff |
 | src/core/fleet.ts | 8c00a3a4d55b343c0d9285b7cdbd801844aa31b3175140424a86d045e500dd2c |
@@ -255,7 +255,7 @@ Roger D. Peng (2011). **Reproducible Research in Computational Science.** Scienc
 
 ### R19 — wilkinson2016fair
 
-Mark D. Wilkinson and 52 coauthors (full verified author list in manuscript/references.bib) (2016). **The FAIR Guiding Principles for scientific data management and stewardship.** Scientific Data 3, 160018. DOI: [10.1038/sdata.2016.18](https://doi.org/10.1038/sdata.2016.18).
+Mark D. Wilkinson and 52 coauthors (full verified author list in docs/manuscript/references.bib) (2016). **The FAIR Guiding Principles for scientific data management and stewardship.** Scientific Data 3, 160018. DOI: [10.1038/sdata.2016.18](https://doi.org/10.1038/sdata.2016.18).
 
 - **Read:** [publisher text](https://www.nature.com/articles/sdata201618), abstract, “Supporting discovery through good data management,” Box 2, and “The Principles precede implementation.” A cookie-redirect variant of the publisher page supplied the readable text.
 - **Supports:** persistent identifiers, metadata, provenance, licenses, and machine-readable research objects.

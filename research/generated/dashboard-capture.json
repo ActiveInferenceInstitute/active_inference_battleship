@@ -58,56 +58,56 @@
   },
   "captures": [
     {
-      "path": "manuscript/figures/dashboard/play-boards.png",
+      "path": "docs/manuscript/figures/dashboard/play-boards.png",
       "sha256": "880e097f2fd108dd550f4daa645fed731bde7371e2eccd4afb70c8598837034f",
       "region": "panel board-panel",
       "width": 1019.625,
       "height": 766.96875
     },
     {
-      "path": "manuscript/figures/dashboard/play-metrics.png",
+      "path": "docs/manuscript/figures/dashboard/play-metrics.png",
       "sha256": "43f7d7f3ab968d0c03e7b1b7f83e5f79e66967ee7dee195f8d58f6e7e44bff1b",
       "region": "panel metrics-strip",
       "width": 1019.625,
       "height": 145.390625
     },
     {
-      "path": "manuscript/figures/dashboard/play-dials.png",
+      "path": "docs/manuscript/figures/dashboard/play-dials.png",
       "sha256": "cb4143176164f165ccf4725035512800ea5b04c9280f50096f11c7d344d8496b",
       "region": "panel dials",
       "width": 310,
       "height": 186.390625
     },
     {
-      "path": "manuscript/figures/dashboard/masthead.png",
+      "path": "docs/manuscript/figures/dashboard/masthead.png",
       "sha256": "8dad5151b16e08c810963a5057b736b47d9315942f8310c9e2397b2c3187defc",
       "region": "masthead",
       "width": 1353.625,
       "height": 92
     },
     {
-      "path": "manuscript/figures/dashboard/decision-map.png",
+      "path": "docs/manuscript/figures/dashboard/decision-map.png",
       "sha256": "120b4efb6aca832ea8416ab34054b29ad1e7cea4757d0ebb781abf4ece196caa",
       "region": "panel lab-map-panel",
       "width": 1019.625,
       "height": 617.515625
     },
     {
-      "path": "manuscript/figures/dashboard/decision-receipt.png",
+      "path": "docs/manuscript/figures/dashboard/decision-receipt.png",
       "sha256": "8c69d86c70f326d4f4b96f61facbc5fbc8838b699f8a1524426e975fe318675c",
       "region": "panel decision-receipt",
       "width": 1019.625,
       "height": 970.328125
     },
     {
-      "path": "manuscript/figures/dashboard/action-tradeoff.png",
+      "path": "docs/manuscript/figures/dashboard/action-tradeoff.png",
       "sha256": "c2c1627bc57ec8108546999022bfd4df644074088799054e7d6c73c9660ceafe",
       "region": "panel action-tradeoff",
       "width": 1019.625,
       "height": 770
     },
     {
-      "path": "manuscript/figures/dashboard/action-tradeoff-plot.png",
+      "path": "docs/manuscript/figures/dashboard/action-tradeoff-plot.png",
       "sha256": "c1d39f87f9098908bc20a8f271ee5a5f1b4cd1858744c2c5c4e910c0011c4eca",
       "region": "action-tradeoff-plot",
       "width": 969.625,

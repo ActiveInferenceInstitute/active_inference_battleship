@@ -36,7 +36,7 @@ Bun test files automatically; `model.test.ts`, `package.test.ts` and
 `manuscript-launchers.test.ts` are excluded because they run real subprocess
 integration. Nothing is skipped in full tests.
 Playwright, negative controls, manuscript checks and Lighthouse remain separately
-runnable workflows in [VERIFICATION](VERIFICATION.md), not silently included or
+runnable workflows in [VERIFICATION](validation/VERIFICATION.md), not silently included or
 claimed as passing by `all`.
 
 ## One CI setup phase
@@ -69,7 +69,7 @@ it does **not** use the organization `setup-python-uv` composite action. Preserv
 historical hosted billing refusals, but observe current hosted execution on its
 exact head: queued or running jobs are not passes, and a local subset does not
 replace required hosted checks. See [the GNN pointer](../.github/GNN.md) and
-[GNN specification](GNN_SPECIFICATION.md).
+[GNN specification](architecture/GNN_SPECIFICATION.md).
 
 ## Interpreter prerequisites on this host
 
@@ -91,7 +91,7 @@ bun run manuscript:render
 ```
 
 These overrides do not change either dependency repository. The renderer's own
-command and declared variables are documented in [manuscript/README](../manuscript/README.md).
+command and declared variables are documented in [docs/manuscript/README](manuscript/README.md).
 PDF/HTML/DOCX rendering needs Pandoc, pandoc-crossref and XeLaTeX; native Word
 projection/page checks additionally need a real `SOFFICE` executable. Missing
 LibreOffice is not a successful page check.

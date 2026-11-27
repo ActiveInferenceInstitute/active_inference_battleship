@@ -51,4 +51,4 @@ Each preset preserves assumed sensor noise. These are illustrative settings, not
 
 **Export analysis JSON** saves format `battleship-analysis`, version 1, with the model SHA-256, seed, catalog size, actor, public history, live and sandbox controls, posterior weights/occupancy, all available action scores, selected cell, both hypothetical branches, and the selected sweep. It is an analysis record, not an importable replay. The seed can reconstruct hidden fleets; this is a local experiment tool, not secure multiplayer. Use **Export replay** and **Import replay** to resume actual gameplay.
 
-The analysis API is independent of React and the DOM; see [API](API.md). Equations and floating-point boundaries are in [MODEL](MODEL.md). Reproduction steps are in [VERIFICATION](VERIFICATION.md).
+The analysis API is independent of React and the DOM; see [API](../architecture/API.md). Equations and floating-point boundaries are in [MODEL](../architecture/MODEL.md). Reproduction steps are in [VERIFICATION](../validation/VERIFICATION.md).

@@ -1,12 +1,12 @@
 # Battleship scholarship supplement: human search, questions, and task boundaries
 
-Access date: **2026-10-25**. Research handoff for the **Active Inference Institute**. This is a new external-cache dossier, not an edit to the manuscript or project bibliography. Companion research additions: [BATTLESHIP_ADDITIONS_20261025.bib](BATTLESHIP_ADDITIONS_20261025.bib). The root author subsequently integrated the proposed insert and all eight additions into [the introduction](../manuscript/01_introduction.md) and [manuscript bibliography](../manuscript/references.bib). The research handoff below remains a dated record of its original scope.
+Access date: **2026-10-25**. Research handoff for the **Active Inference Institute**. This is a new external-cache dossier, not an edit to the manuscript or project bibliography. Companion research additions: [BATTLESHIP_ADDITIONS_20261025.bib](BATTLESHIP_ADDITIONS_20261025.bib). The root author subsequently integrated the proposed insert and all eight additions into [the introduction](../docs/manuscript/01_introduction.md) and [manuscript bibliography](../docs/manuscript/references.bib). The research handoff below remains a dated record of its original scope.
 
 ## Recommendation and scope
 
 **Seven scholarly additions are warranted.** They supply direct Battleship-inspired human-search precedent, distinguish information from task utility and predictive uncertainty, and connect question generation to goal-dependent question evaluation. They are not seven independent replications: some papers reuse earlier tasks or data. The Hasbro rulebook is an additional primary rules document, outside the scholarly count.
 
-Reviewed the current `manuscript/01_introduction.md`, `manuscript/references.bib`, the relevant source records and unresolved limits in `research/SCHOLARSHIP.md` and `research/SCHOLARSHIP_UPDATE_20261023.md`, plus `manuscript/02_model.md` and `src/core/game.ts`. The actual bibliography is under `manuscript/`; the attempted root-level `references.bib` read failed because that file does not exist. The existing introduction already cites `grand2026shoot`, `silver2010pomcp`, and `sevenster2004battleships`; none is a new addition here.
+Reviewed the current `docs/manuscript/01_introduction.md`, `docs/manuscript/references.bib`, the relevant source records and unresolved limits in `research/SCHOLARSHIP.md` and `research/SCHOLARSHIP_UPDATE_20261023.md`, plus `docs/manuscript/02_model.md` and `src/core/game.ts`. The actual bibliography is under `docs/manuscript/`; the attempted root-level `references.bib` read failed because that file does not exist. The existing introduction already cites `grand2026shoot`, `silver2010pomcp`, and `sevenster2004battleships`; none is a new addition here.
 
 The current model declares a default 10×10 board, five straight ships of lengths 5/4/3/3/2, a seeded catalog of 4096 labeled fleets, possible duplicate entries, and a nonuniform placement procedure over physical layouts. Ships may touch. Each action targets one unvisited cell. Physical feedback is deterministic; positive epsilon changes the assistant's assumed binary likelihood. `game.ts:observations` retains only cell and hit, dropping sunk metadata. These are current local source observations, not findings established by the scholarly sources below. Runtime behavior was not independently tested in this research pass.
 
@@ -95,9 +95,9 @@ SHA-256 observations made after the substantive local reads and before creating 
 
 | Canonical project path, relative to project root | SHA-256 |
 | --- | --- |
-| `manuscript/01_introduction.md` | `0511c1839b37edecf8590c5be0b770f09220493ec29cd175b63bb14264d0af0b` |
-| `manuscript/02_model.md` | `2afc9b205762f01fdc964822c944dde77716b6c94cf774c0446db3d52c8444f3` |
-| `manuscript/references.bib` | `0b2b95387003bc050cde2b3995465f0af1ee76a21eba5cee3452ef9a360fae32` |
+| `docs/manuscript/01_introduction.md` | `0511c1839b37edecf8590c5be0b770f09220493ec29cd175b63bb14264d0af0b` |
+| `docs/manuscript/02_model.md` | `2afc9b205762f01fdc964822c944dde77716b6c94cf774c0446db3d52c8444f3` |
+| `docs/manuscript/references.bib` | `0b2b95387003bc050cde2b3995465f0af1ee76a21eba5cee3452ef9a360fae32` |
 | `research/SCHOLARSHIP.md` | `dc01ea6bacd1a80e069896de91767d22d66fde508a778637efacc7b6a3fb8eb1` |
 | `research/SCHOLARSHIP_UPDATE_20261023.md` | `39b13290bae685dcbb5d26ce325c863d2a89bcb82548ca196cc232ec58155586` |
 

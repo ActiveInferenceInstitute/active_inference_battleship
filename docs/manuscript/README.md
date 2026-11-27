@@ -1,8 +1,8 @@
-# manuscript/
+# docs/manuscript/
 
 Pandoc/Markdown sources for the paired-study manuscript and the HTML reader. The
 manuscript derives the model, reports the paired strategy study, and retains the
-original descriptive study. Generated figures live in `manuscript/figures/`; do not
+original descriptive study. Generated figures live in `docs/manuscript/figures/`; do not
 hand-edit generated outputs.
 
 ## What is here
@@ -53,5 +53,5 @@ bun run manuscript:verify
 
 These commands also need the real render outputs; they are not implied by render
 success. The historical default LibreOffice location is not currently installed
-on the working machine. See [`../docs/MANUSCRIPT.md`](../docs/MANUSCRIPT.md) for
+on the working machine. See [`../docs/publication/MANUSCRIPT.md`](../publication/MANUSCRIPT.md) for
 tool requirements, variable/snapshot custody, and historical verification limits.

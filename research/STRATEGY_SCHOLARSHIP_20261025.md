@@ -4,7 +4,7 @@ Date: 2026-10-25. Scope: research only. This note proposes five substantive bibl
 
 ## Frozen reading boundary
 
-The candidate is the user-designated worktree at /Volumes/GitVault/Local/worktrees/active-inference-battleship-strategies-20261025-r1. I read manuscript/references.bib, 01_introduction.md, 03_software_and_protocol.md, 05_interpretation.md, and research/STRATEGY_STUDY.md. I also read the introduction's Battleship passages, the results' figure captions and headings, and inspected the five current original PNG figures to ground title and layout suggestions. Source SHA-256 bindings for the five requested files, in that order, are:
+The candidate is the user-designated worktree at /Volumes/GitVault/Local/worktrees/active-inference-battleship-strategies-20261025-r1. I read docs/manuscript/references.bib, 01_introduction.md, 03_software_and_protocol.md, 05_interpretation.md, and research/STRATEGY_STUDY.md. I also read the introduction's Battleship passages, the results' figure captions and headings, and inspected the five current original PNG figures to ground title and layout suggestions. Source SHA-256 bindings for the five requested files, in that order, are:
 
 - references.bib: c510caa6b170bd6e7c41d41d274e968b4a1eae643857d9446845806d012a405f
 - 01_introduction.md: 87fee39bb25f8910755dcbf3bc73b0ef28057fc713ba7c8a47ba5a5f1a4971dd

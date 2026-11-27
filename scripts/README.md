@@ -40,4 +40,4 @@ See the [run guide](../docs/RUN_GUIDE.md) for prerequisites and aliases, and the
 
 `scripts/paths.ts` resolves the GitVault root by walking up for `vault.toml` and
 `Username`; the GNN parser refuses a Python whose prefixes are outside that root. See
-[`../docs/VERIFICATION.md`](../docs/VERIFICATION.md) and [`../AGENTS.md`](../AGENTS.md).
+[`../docs/validation/VERIFICATION.md`](../docs/validation/VERIFICATION.md) and [`../AGENTS.md`](../AGENTS.md).

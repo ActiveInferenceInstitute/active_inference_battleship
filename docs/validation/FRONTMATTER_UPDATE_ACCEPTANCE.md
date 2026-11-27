@@ -1,4 +1,4 @@
-> Historical record: statements below describe the dated pre-release candidate. Current organization ownership, releases, and DOI are documented in [publication details](PUBLICATION.md).
+> Historical record: statements below describe the dated pre-release candidate. Current organization ownership, releases, and DOI are documented in [publication details](../publication/PUBLICATION.md).
 
 # Numbered formalisms and visual manuscript opening
 
@@ -11,7 +11,7 @@ The R4 manuscript candidate passed both independent review lanes on October 24, 
 - Eight whole dashboard DOM crops retain their capture provenance, replay, and analysis. Figure generation checks those bindings. The HTML supplies descriptions and full-size links; screenshots remain scientific illustrations rather than interactive controls.
 - Native MathJax commands retain their actual preferences, keyboard behavior, and speech/explorer features. Guarded submenu replacement cleans up the prior posted submenu; preference Escape delegates to native Close even after keyboard focus leaves the editor. Browser checks await actual native rendering readiness before sending input.
 
-See [the manuscript workflow](MANUSCRIPT.md) for rendering, source-image capture, reader verification, and regression commands. Source camera and ordinary reader camera commands have separate purposes.
+See [the manuscript workflow](../publication/MANUSCRIPT.md) for rendering, source-image capture, reader verification, and regression commands. Source camera and ordinary reader camera commands have separate purposes.
 
 ## Verification and its limits
 

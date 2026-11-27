@@ -4,7 +4,7 @@
 
 This is the post-review acceptance output. The [validation receipt](DECISION_LAB_VALIDATION.md) records the frozen inputs before review, so its pending-review statement is historical. This document was created after both reviewers finished and does not change any reviewed input.
 
-Open the running dashboard at **http://127.0.0.1:5186**. See the [project README](../README.md), [Decision lab guide](DECISION_LAB.md), [model specification](MODEL.md), and [composable API](API.md).
+Open the running dashboard at **http://127.0.0.1:5186**. See the [project README](../../README.md), [Decision lab guide](../guides/DECISION_LAB.md), [model specification](../architecture/MODEL.md), and [composable API](../architecture/API.md).
 
 ## Delivered behavior
 

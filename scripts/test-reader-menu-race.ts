@@ -22,7 +22,7 @@ const options = new Set([
 for (const option of process.argv.slice(2))
   if (!options.has(option)) throw new Error(`Unknown reader race option: ${option}`);
 const bibliography = Bun.spawnSync(
-  ["pandoc", join(projectRoot, "manuscript/references.bib"), "-f", "biblatex", "-t", "csljson"],
+  ["pandoc", join(projectRoot, "docs/manuscript/references.bib"), "-f", "biblatex", "-t", "csljson"],
   { env },
 );
 if (bibliography.exitCode !== 0 || bibliography.stderr.toString().trim())
@@ -31,11 +31,11 @@ const entries: { id: string }[] = JSON.parse(bibliography.stdout.toString());
 const expectedReferences = entries.length;
 if (!expectedReferences || new Set(entries.map((entry) => entry.id)).size !== expectedReferences)
   throw new Error("Empty or duplicate authored bibliography inventory");
-const sections = (await readdir(join(projectRoot, "manuscript"))).filter((name) =>
+const sections = (await readdir(join(projectRoot, "docs", "manuscript"))).filter((name) =>
   /^\d\d_.*\.md$/.test(name),
 );
 const expectedImages = (
-  await Promise.all(sections.map((name) => readFile(join(projectRoot, "manuscript", name), "utf8")))
+  await Promise.all(sections.map((name) => readFile(join(projectRoot, "docs", "manuscript", name), "utf8")))
 ).reduce((count, source) => count + [...source.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)].length, 0);
 if (!expectedImages) throw new Error("Empty authored figure inventory");
 

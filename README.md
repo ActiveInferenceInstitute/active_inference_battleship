@@ -1,8 +1,8 @@
 # Active Inference Battleship
 
-A playable browser Battleship game and an inspectable active inference dashboard from the **Active Inference Institute**, specified in **Generalized Notation Notation (GNN)**. GNN is a generative-model notation, not a graph neural network. The build **imports the actual local GNN Python parser**, checks a deliberately bounded model contract, and compiles its declarations and provenance into the browser application. Tested TypeScript code implements the supported mathematics. [Follow the specification-to-runtime path](docs/GNN_SPECIFICATION.md).
+A playable browser Battleship game and an inspectable active inference dashboard from the **Active Inference Institute**, specified in **Generalized Notation Notation (GNN)**. GNN is a generative-model notation, not a graph neural network. The build **imports the actual local GNN Python parser**, checks a deliberately bounded model contract, and compiles its declarations and provenance into the browser application. Tested TypeScript code implements the supported mathematics. [Follow the specification-to-runtime path](docs/architecture/GNN_SPECIFICATION.md).
 
-**Public release v0.5.0.** [Source and release downloads](https://github.com/ActiveInferenceInstitute/active_inference_battleship/releases/tag/v0.5.0) · [Manuscript DOI: 10.5281/zenodo.23676081](https://doi.org/10.5281/zenodo.23676081). The Zenodo record archives the manuscript and reproducibility companions. Software is MIT licensed; the manuscript and original figures are CC BY 4.0. No npm registry publication or separate software DOI is claimed. [Release and citation details](docs/RELEASE_PLAN.md).
+**Public release v0.5.0.** [Source and release downloads](https://github.com/ActiveInferenceInstitute/active_inference_battleship/releases/tag/v0.5.0) · [Manuscript DOI: 10.5281/zenodo.23676081](https://doi.org/10.5281/zenodo.23676081). The Zenodo record archives the manuscript and reproducibility companions. Software is MIT licensed; the manuscript and original figures are CC BY 4.0. No npm registry publication or separate software DOI is claimed. [Release and citation details](docs/publication/RELEASE_PLAN.md).
 
 ## Documentation
 
@@ -11,7 +11,7 @@ Full documentation starts at the [documentation hub](docs/README.md), with a
 [generated gate timings](docs/_generated/gate-timings.md). Folder guides sit beside
 each source tree: [src](src/README.md), [scripts](scripts/README.md),
 [tests](tests/README.md), [e2e](e2e/README.md),
-[manuscript](manuscript/README.md), and [research](research/README.md).
+[manuscript](docs/manuscript/README.md), and [research](research/README.md).
 
 ## Table of contents
 
@@ -48,11 +48,11 @@ These convenience commands use the checked-in, source-bound compiled model. They
 
 Play against an agent, follow your assistant's suggested shots, or run both sides automatically. Change epistemic weight, hit preferences, policy precision, assumed sensor noise, and a spatial habit prior while watching the beliefs and action scores change.
 
-**Decision explorer** explains any available action, compares an isolated settings sandbox with the live policy, and shows hypothetical hit/miss updates. Switch between six diagnostic maps, compare hit probability with information gain on fixed axes, explore illustrative strategy presets, sweep epistemic weight or policy precision, inspect the GNN factors, and export the full analysis. **Model & guide** explains the parser/adapter/runtime boundary and downloads the verbatim GNN source and compiled model. [Decision explorer guide](docs/DECISION_LAB.md).
+**Decision explorer** explains any available action, compares an isolated settings sandbox with the live policy, and shows hypothetical hit/miss updates. Switch between six diagnostic maps, compare hit probability with information gain on fixed axes, explore illustrative strategy presets, sweep epistemic weight or policy precision, inspect the GNN factors, and export the full analysis. **Model & guide** explains the parser/adapter/runtime boundary and downloads the verbatim GNN source and compiled model. [Decision explorer guide](docs/guides/DECISION_LAB.md).
 
-**Manuscript and research:** a scholarly methods manuscript derives the model, engages 34 sources—32 scholarly works, the pinned GNN software, and the manufacturer manual—and retains an analytic example and the original descriptive study. The scholarship dossiers distinguish full-text, selected-passage, abstract-only, and OCR reading limits. A prospectively specified follow-up adds 1,280 paired strategy searches, three endpoints, 24 Holm-adjusted sign tests, paired mean-effect intervals, and explanatory figures. PDF, HTML, and DOCX editions use the actual local docxology/template renderer. [Reproduce the paper and inspect its evidence](docs/MANUSCRIPT.md).
+**Manuscript and research:** a scholarly methods manuscript derives the model, engages 34 sources—32 scholarly works, the pinned GNN software, and the manufacturer manual—and retains an analytic example and the original descriptive study. The scholarship dossiers distinguish full-text, selected-passage, abstract-only, and OCR reading limits. A prospectively specified follow-up adds 1,280 paired strategy searches, three endpoints, 24 Holm-adjusted sign tests, paired mean-effect intervals, and explanatory figures. PDF, HTML, and DOCX editions use the actual local docxology/template renderer. [Reproduce the paper and inspect its evidence](docs/publication/MANUSCRIPT.md).
 
-**Core package and headless commands:** build a browser-independent ESM interface with TypeScript declarations, run a full game to a resumable replay, or analyze either actor without the dashboard. The package includes the checked compiled GNN model and preserves impossible log weights explicitly in JSON. It is distributed as a GitHub release tarball; it is not published to a package registry. [Package, CLI, and analysis-format guide](docs/PACKAGE.md).
+**Core package and headless commands:** build a browser-independent ESM interface with TypeScript declarations, run a full game to a resumable replay, or analyze either actor without the dashboard. The package includes the checked compiled GNN model and preserves impossible log weights explicitly in JSON. It is distributed as a GitHub release tarball; it is not published to a package registry. [Package, CLI, and analysis-format guide](docs/guides/PACKAGE.md).
 
 ```sh
 bun run build:package
@@ -64,7 +64,7 @@ Those commands assume the source checkout prerequisites below. A built local arc
 
 ## Run locally
 
-Source development uses Bun 1.4.4 or later, with caches bound to a mounted GitVault checkout. The fast gate does not need the Python parser. Full parser/package/build workflows additionally require uv and the local `ActiveInferenceInstitute/Public/Generalized_Notation_Notation` repository with its working Python environment. Google Chrome is additionally required for browser tests and the performance audit. The application itself has no browser extension, login, cloud service, API key, or runtime Python requirement. The built core package also runs in Node; see its separate runtime qualifications in the [package guide](docs/PACKAGE.md) and the [run guide](docs/RUN_GUIDE.md).
+Source development uses Bun 1.4.4 or later, with caches bound to a mounted GitVault checkout. The fast gate does not need the Python parser. Full parser/package/build workflows additionally require uv and the local `ActiveInferenceInstitute/Public/Generalized_Notation_Notation` repository with its working Python environment. Google Chrome is additionally required for browser tests and the performance audit. The application itself has no browser extension, login, cloud service, API key, or runtime Python requirement. The built core package also runs in Node; see its separate runtime qualifications in the [package guide](docs/guides/PACKAGE.md) and the [run guide](docs/RUN_GUIDE.md).
 
 From this project directory:
 
@@ -130,7 +130,7 @@ The hidden state is a **complete fleet in a finite catalog**, not an independent
 
 Bayesian inference is exact **conditional on this finite catalog**. The catalog is a biased sample of the full legal fleet space, generated by bounded randomized backtracking. Duplicate fleet entries retain separate prior mass. Narrowing a finite catalog can make the game substantially easier than unconstrained Battleship. This project makes no optimality, biological, learning, or general performance claims.
 
-The implementation has a one-shot planning horizon, a static transition model, a fixed observation likelihood, and no parameter learning. At epistemic weight 1, the objective is the standard risk/ambiguity or preference/information decomposition used here. Other epistemic weights give a deliberately generalized objective. [The mathematical specification](docs/MODEL.md) defines every quantity and limitation.
+The implementation has a one-shot planning horizon, a static transition model, a fixed observation likelihood, and no parameter learning. At epistemic weight 1, the objective is the standard risk/ambiguity or preference/information decomposition used here. Other epistemic weights give a deliberately generalized objective. [The mathematical specification](docs/architecture/MODEL.md) defines every quantity and limitation.
 
 GNN maintains a [downstream adoption guide](https://github.com/ActiveInferenceInstitute/Generalized_Notation_Notation/blob/main/docs/gnn/integration/downstream_adoption.md) for repositories that consume the notation.
 
@@ -172,7 +172,7 @@ Diagnostics include posterior fleet entropy, occupancy heatmap, effective hypoth
 | `src/ui/DecisionLab.tsx` and its map/receipt/sensitivity/sandbox/factor components | Isolated decision experiments and GNN interpretation |
 | `DESIGN.md`, `src/tokens.css` | Visual tokens, component and responsive contracts |
 
-The core has no React, DOM, network, hidden mutable random state, or server dependency. [API examples](docs/API.md) show how to use it in another interface or simulation. The UI uses React/Vite, native SVG diagnostics, Phosphor icons, and CSS tokens. Light/dark themes and reduced motion are supported. React inspection tools are development-only and opt-in with `VITE_INSPECT_REACT=1`; production builds remove that branch.
+The core has no React, DOM, network, hidden mutable random state, or server dependency. [API examples](docs/architecture/API.md) show how to use it in another interface or simulation. The UI uses React/Vite, native SVG diagnostics, Phosphor icons, and CSS tokens. Light/dark themes and reduced motion are supported. React inspection tools are development-only and opt-in with `VITE_INSPECT_REACT=1`; production builds remove that branch.
 
 ## Verification
 
@@ -190,9 +190,9 @@ bun run audit:react       # actual src scan; no telemetry or remote dependency s
 
 Fast tests select every `tests/*.test.ts` except `model.test.ts` and `package.test.ts`; the full test arm retains both real Python parser and installed-package subprocess suites. `all` deduplicates their shared GNN check with the production build. Neither fast nor all automatically runs browser tests, negative controls, Lighthouse, or manuscript rendering.
 
-`test:e2e` serves the existing production `dist/` on port 5187; run `build` first. Reports, screenshots, and failed traces are retained at the local `test-results/` path. Full-test coverage describes the **imported core, model schema, and contract helpers**, not UI coverage or the whole upstream repository. Browser tests exercise the rendered UI separately. The [run guide](docs/RUN_GUIDE.md) and [verification protocol](docs/VERIFICATION.md) define the gates; current measurements live in the [generated timing document](docs/_generated/gate-timings.md).
+`test:e2e` serves the existing production `dist/` on port 5187; run `build` first. Reports, screenshots, and failed traces are retained at the local `test-results/` path. Full-test coverage describes the **imported core, model schema, and contract helpers**, not UI coverage or the whole upstream repository. Browser tests exercise the rendered UI separately. The [run guide](docs/RUN_GUIDE.md) and [verification protocol](docs/validation/VERIFICATION.md) define the gates; current measurements live in the [generated timing document](docs/_generated/gate-timings.md).
 
-[The historical v0.2 validation receipt](docs/DECISION_LAB_VALIDATION.md) records its source bindings and retained evidence. [The v0.1 baseline receipt](docs/VALIDATION.md) preserves earlier repaired findings. The [historical Institute update](docs/INSTITUTE_UPDATE.md) explains that update's additions and verification scope. None automatically accepts later changes. Very tall mobile pages are captured as overlapping viewport segments to avoid Chromium full-page compositing limits.
+[The historical v0.2 validation receipt](docs/validation/DECISION_LAB_VALIDATION.md) records its source bindings and retained evidence. [The v0.1 baseline receipt](docs/validation/VALIDATION.md) preserves earlier repaired findings. The [historical Institute update](docs/publication/INSTITUTE_UPDATE.md) explains that update's additions and verification scope. None automatically accepts later changes. Very tall mobile pages are captured as overlapping viewport segments to avoid Chromium full-page compositing limits.
 
 For the optional Lighthouse audit, start the production server on 5187, then run:
 
@@ -213,7 +213,7 @@ This launches real installed Chrome through Playwright, attaches the Lighthouse 
 References motivate the formalism; game-specific equations, tests, and scope are stated explicitly in this project. Source links were checked on October 22, 2026. The public release and manuscript DOI are identified above.
 
 
-The paired-study manuscript separates completion, early hits, and label discrimination. Larger publication figures retain every case and all planned comparisons; an analytic objective diagram explains why the selectors can favor different hit probabilities. The [manuscript guide](docs/MANUSCRIPT.md) documents actual placed-font checks and the [statistical and search scholarship](research/STRATEGY_SCHOLARSHIP_20261025.md) records new primary sources and reading limits. No presentation amendment changes the 256 paired units, 1,280 searches, or 24-test family.
+The paired-study manuscript separates completion, early hits, and label discrimination. Larger publication figures retain every case and all planned comparisons; an analytic objective diagram explains why the selectors can favor different hit probabilities. The [manuscript guide](docs/publication/MANUSCRIPT.md) documents actual placed-font checks and the [statistical and search scholarship](research/STRATEGY_SCHOLARSHIP_20261025.md) records new primary sources and reading limits. No presentation amendment changes the 256 paired units, 1,280 searches, or 24-test family.
 
 ## InstituteOS sidecar
 

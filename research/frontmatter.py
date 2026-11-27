@@ -19,7 +19,7 @@ def digest(path: Path) -> str:
 
 def numbered_labels(root: Path = ROOT) -> dict:
     equations, formalisms, references = [], [], []
-    for path in sorted((root / "manuscript").glob("[0-9][0-9]_*.md")):
+    for path in sorted((root / "docs" / "manuscript").glob("[0-9][0-9]_*.md")):
         text = path.read_text()
         displays = list(re.finditer(r"(?ms)^\$\$\n.*?^\$\$(?:[^\n]*)", text))
         for display in displays:
@@ -73,7 +73,7 @@ def verify_illustrations(root: Path = ROOT) -> dict:
     for relative, expected in generators.items():
         if digest(root / relative) != expected:
             raise ValueError("Changed graphical abstract generator")
-    if (root / "manuscript/frontmatter.tex").read_text() != pdf_plate_preamble():
+    if (root / "docs/manuscript/frontmatter.tex").read_text() != pdf_plate_preamble():
         raise ValueError("Changed frontmatter page layout")
     for relative, expected in provenance["assets"].items():
         path = root / relative
@@ -83,7 +83,7 @@ def verify_illustrations(root: Path = ROOT) -> dict:
 
 
 def figure_manifest(root: Path = ROOT) -> dict:
-    directory = root / "manuscript/figures"
+    directory = root / "docs/manuscript/figures"
     return {str(path.relative_to(directory)): digest(path) for path in sorted(directory.rglob("*"))
             if path.is_file() and path.name != "manifest.json"}
 
@@ -97,7 +97,7 @@ def illustrations(root: Path = ROOT) -> None:
     from PIL import Image
 
     receipt, data = verify_capture(root)
-    directory = root / "manuscript/figures"
+    directory = root / "docs/manuscript/figures"
     ink, muted, green, pale, rule = "#182F3B", "#425C68", "#176D59", "#EAF2F2", "#9EB5BE"
     plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 11,
                          "text.color": ink, "svg.fonttype": "none", "savefig.facecolor": "white"})
@@ -179,11 +179,11 @@ def illustrations(root: Path = ROOT) -> None:
                   "selectedCell": leader["cell"], "selectedAction": leader,
                   "scope": "Illustrative software state, not additional research outcomes."}
     (root / "research/generated/frontmatter.json").write_text(json.dumps(provenance, indent=2) + "\n")
-    (root / "manuscript/frontmatter.tex").write_text(pdf_plate_preamble())
+    (root / "docs/manuscript/frontmatter.tex").write_text(pdf_plate_preamble())
 
 
 def opening_captions(root: Path = ROOT) -> list[str]:
-    text = (root / "manuscript/00_00_frontmatter.md").read_text()
+    text = (root / "docs/manuscript/00_00_frontmatter.md").read_text()
     captions = re.findall(r"!\[([^\]]+)\]\(figures/(?:graphical-abstract|model-atlas|dashboard-play|dashboard-decisions)\.png\)", text)
     if len(captions) != 4:
         raise ValueError("The opening requires four complete authored captions")

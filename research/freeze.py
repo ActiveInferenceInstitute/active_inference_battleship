@@ -66,7 +66,7 @@ def main() -> None:
         width,height=struct.unpack(">II",content[16:24])
         image_rows.append({**capture,"width":width,"height":height,"size":len(content),
                            "mtimeNs":path.stat().st_mtime_ns})
-    rendered_inputs = [p for p in sources if p.is_relative_to(ROOT/"manuscript")]
+    rendered_inputs = [p for p in sources if p.is_relative_to(ROOT/"docs"/"manuscript")]
     latest_input = max(p.stat().st_mtime_ns for p in rendered_inputs)
     if any(row["mtimeNs"]<latest_input for row in image_rows if row["surface"]=="manuscript"):
         raise ValueError("Capture predates a manuscript rendering input")
