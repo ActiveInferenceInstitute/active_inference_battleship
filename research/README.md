@@ -24,7 +24,7 @@ source-binding check fails. B1/BT05 renewal requires the release/publication
 owner's authorization and the exact frozen protocol/case bytes.
 
 For an authorized renewal, use the independent source-copy and archival sequence
-in [the manuscript guide](../docs/MANUSCRIPT.md#paired-follow-up-and-caption-interpretation).
+in [the manuscript guide](../docs/publication/MANUSCRIPT.md#paired-follow-up-and-caption-interpretation).
 `research:strategies` requires an explicit arm: `prepare` is first-time
 materialization only, while `pilot` precedes `run`. A pilot must bind the same
 source, protocol, cases and actual Bun runtime as the execution receipt.

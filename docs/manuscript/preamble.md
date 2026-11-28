@@ -18,5 +18,5 @@
 \setlength{\emergencystretch}{3em}
 \definecolor{BattleshipLink}{HTML}{A61B1B}
 \hypersetup{colorlinks=true,linkcolor=BattleshipLink,citecolor=BattleshipLink,urlcolor=BattleshipLink,filecolor=BattleshipLink,anchorcolor=BattleshipLink}
-\input{../../manuscript/frontmatter.tex}
+\input{../../docs/manuscript/frontmatter.tex}
 ```

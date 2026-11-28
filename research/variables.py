@@ -34,7 +34,7 @@ def _reader():
 
 def load_variables(root: Path) -> tuple[dict[str, str], dict[str, str]]:
     """Return substitutions and hashes of the exact declaration/pin bytes read."""
-    declaration_path = root / "manuscript/variables.json"
+    declaration_path = root / "docs/manuscript/variables.json"
     declaration_bytes = declaration_path.read_bytes()
     declaration = json.loads(declaration_bytes)
     if not isinstance(declaration, dict) or declaration.get("schema") != "battleship-manuscript-variables/v1":

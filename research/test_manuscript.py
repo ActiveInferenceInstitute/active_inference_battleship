@@ -26,13 +26,13 @@ class ManuscriptVariableTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix="battleship-variables-")
         self.root = Path(self.temp.name)
-        for relative in ("manuscript/variables.json", "models/gnn.pin.json", "research/variables.py",
-                         *[str(path.relative_to(ROOT)) for path in sorted((ROOT / "manuscript").glob("[0-9][0-9]_*.md"))]):
+        for relative in ("docs/manuscript/variables.json", "models/gnn.pin.json", "research/variables.py",
+                         *[str(path.relative_to(ROOT)) for path in sorted((ROOT / "docs" / "manuscript").glob("[0-9][0-9]_*.md"))]):
             target = self.root / relative
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / relative, target)
-        self.source = self.root / "manuscript/03_software_and_protocol.md"
-        self.sources = sorted((self.root / "manuscript").glob("[0-9][0-9]_*.md"))
+        self.source = self.root / "docs/manuscript/03_software_and_protocol.md"
+        self.sources = sorted((self.root / "docs" / "manuscript").glob("[0-9][0-9]_*.md"))
 
     def tearDown(self):
         self.temp.cleanup()
@@ -44,7 +44,7 @@ class ManuscriptVariableTests(unittest.TestCase):
         self.assertEqual(variables, {"GNN_VERSION": pin["tag"].removeprefix("v"),
                                      "GNN_COMMIT": pin["commit"],
                                      "GNN_REPOSITORY": pin["repository"]})
-        self.assertEqual(set(snapshot), {"manuscript/variables.json", "models/gnn.pin.json"})
+        self.assertEqual(set(snapshot), {"docs/manuscript/variables.json", "models/gnn.pin.json"})
         require_input_snapshot(self.root, snapshot)
         sources = hydrate_sources(self.sources, variables, self.root / "output/manuscript")
         self.assertEqual([path.name for path in sources], [path.name for path in self.sources])
@@ -70,9 +70,9 @@ class ManuscriptVariableTests(unittest.TestCase):
         self.assertEqual(variables["GNN_VERSION"], "99.2.1")
         self.assertEqual(variables["GNN_COMMIT"], "1" * 40)
         self.assertIn("1" * 40, hydrate_text(self.source.read_text(), variables, self.source))
-        declaration = self.root / "manuscript/variables.json"
+        declaration = self.root / "docs/manuscript/variables.json"
         declaration.write_text(declaration.read_text() + "\n")
-        with self.assertRaisesRegex(RuntimeError, "input changed during rendering: manuscript/variables.json"):
+        with self.assertRaisesRegex(RuntimeError, "input changed during rendering: docs/manuscript/variables.json"):
             require_input_snapshot(self.root, snapshot)
 
     def test_unbound_or_malformed_tokens_fail_before_writing_any_copy(self):
@@ -293,12 +293,12 @@ class ResearchCustodyTests(unittest.TestCase):
         labels = numbered_labels(ROOT)
         self.assertEqual(len(labels["equations"]), 10)
         self.assertEqual(len(labels["formalisms"]), 7)
-        directory = self.root / "manuscript"
-        directory.mkdir(exist_ok=True)
+        directory = self.root / "docs" / "manuscript"
+        directory.mkdir(parents=True, exist_ok=True)
         model = directory / "02_model.md"
         software = directory / "03_software_and_protocol.md"
         for target in (model, software):
-            shutil.copyfile(ROOT / "manuscript" / target.name, target)
+            shutil.copyfile(ROOT / "docs" / "manuscript" / target.name, target)
         original = model.read_text()
         self.assertEqual(numbered_labels(self.root), labels)
         model.write_text(original.replace(" {#eq:likelihood}", "", 1))
@@ -401,7 +401,7 @@ class ResearchCustodyTests(unittest.TestCase):
 
     def test_real_metadata_rejects_false_release_and_title_drift(self):
         self.assertEqual(project_metadata()["organization"],"Active Inference Institute")
-        for name in ("project.json","manuscript/config.yaml","manuscript/00_abstract.md"):
+        for name in ("project.json","docs/manuscript/config.yaml","docs/manuscript/00_abstract.md"):
             destination=self.root/name
             destination.parent.mkdir(parents=True,exist_ok=True)
             shutil.copyfile(ROOT/name,destination)
@@ -415,7 +415,7 @@ class ResearchCustodyTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,"metadata"):
                 project_metadata(self.root)
         path.write_text(json.dumps(original))
-        abstract=self.root/"manuscript/00_abstract.md"
+        abstract=self.root/"docs/manuscript/00_abstract.md"
         abstract.write_text(abstract.read_text().replace("Zenodo","Elsewhere"))
         with self.assertRaisesRegex(ValueError,"published release statement"):
             project_metadata(self.root)
@@ -472,7 +472,7 @@ class ResearchCustodyTests(unittest.TestCase):
                           "Table: Search example. {#tbl:search}\n")
         output = self.root/"layout.docx"
         subprocess.run(["pandoc",str(source),"--reference-doc",str(reference),
-                        "--lua-filter",str(ROOT/"manuscript/docx.lua"),"-o",str(output)],
+                        "--lua-filter",str(ROOT/"docs/manuscript/docx.lua"),"-o",str(output)],
                        check=True,capture_output=True)
         ns={"w":"http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
         with ZipFile(output) as archive:
@@ -532,7 +532,7 @@ class ResearchCustodyTests(unittest.TestCase):
             source=self.root/f"{name}.md"
             source.write_text("Before the figure.\n\n"+content+"\nAfter the boundary.\n")
             output=self.root/f"{name}.docx"
-            render_docx(source,output,extra_args=["--lua-filter",str(ROOT/"manuscript/docx.lua")])
+            render_docx(source,output,extra_args=["--lua-filter",str(ROOT/"docs/manuscript/docx.lua")])
             with ZipFile(output) as archive:
                 document=ET.fromstring(archive.read("word/document.xml"))
                 self.assertEqual(len(document.findall('.//w:br[@w:type="page"]',ns)),expected)
@@ -573,10 +573,10 @@ class ResearchCustodyTests(unittest.TestCase):
 
     def test_current_guide_count_is_bound_to_the_parsed_bibliography(self):
         from research.editions import require_guide_reference_count
-        parsed = subprocess.run(["pandoc", str(ROOT/"manuscript/references.bib"), "-f", "biblatex", "-t", "csljson"],
+        parsed = subprocess.run(["pandoc", str(ROOT/"docs/manuscript/references.bib"), "-f", "biblatex", "-t", "csljson"],
                                 check=True,capture_output=True,text=True)
         expected = len(json.loads(parsed.stdout))
-        guide = (ROOT/"docs/MANUSCRIPT.md").read_text()
+        guide = (ROOT/"docs/publication/MANUSCRIPT.md").read_text()
         require_guide_reference_count(guide, expected)
         stale = guide.replace(f"references.bib`: {expected} ", "references.bib`: 21 ",1)
         self.assertNotEqual(stale,guide)
@@ -587,7 +587,7 @@ class ResearchCustodyTests(unittest.TestCase):
 
     def test_current_readme_count_is_bound_to_the_parsed_bibliography(self):
         from research.editions import require_readme_reference_count
-        parsed = subprocess.run(["pandoc", str(ROOT/"manuscript/references.bib"), "-f", "biblatex", "-t", "csljson"],
+        parsed = subprocess.run(["pandoc", str(ROOT/"docs/manuscript/references.bib"), "-f", "biblatex", "-t", "csljson"],
                                 check=True,capture_output=True,text=True)
         expected = len(json.loads(parsed.stdout))
         readme = (ROOT/"README.md").read_text()
@@ -603,15 +603,15 @@ class ResearchCustodyTests(unittest.TestCase):
         import yaml
         from research.publication_style import author_contact, validate_design_sources, validate_cover_text
         for name in ("config.yaml", "preamble.md", "web.css"):
-            target = self.root/"manuscript"/name
+            target = self.root/"docs"/"manuscript"/name
             target.parent.mkdir(exist_ok=True)
-            shutil.copyfile(ROOT/"manuscript"/name, target)
+            shutil.copyfile(ROOT/"docs"/"manuscript"/name, target)
         design = validate_design_sources(self.root)
         contact = design["contact"]
         validate_cover_text(contact["email"] + " " + contact["orcid"], contact, "fixture")
         with self.assertRaisesRegex(ValueError, "missing email"):
             validate_cover_text(contact["orcid"], contact, "fixture")
-        path = self.root/"manuscript/config.yaml"
+        path = self.root/"docs/manuscript/config.yaml"
         original = path.read_text()
         config = yaml.safe_load(original)
         for key, value in (("orcid", "0000-0001-6232-9097"), ("email", "not an address")):
@@ -620,7 +620,7 @@ class ResearchCustodyTests(unittest.TestCase):
             with self.assertRaises(ValueError): author_contact(self.root)
             config = yaml.safe_load(original)
         path.write_text(original)
-        path = self.root/"manuscript/preamble.md"
+        path = self.root/"docs/manuscript/preamble.md"
         original = path.read_text()
         for bad in (original.replace("margin=18mm", "margin=24mm"),
                     original.replace("urlcolor=BattleshipLink", "urlcolor=blue")):
@@ -666,7 +666,7 @@ class ResearchCustodyTests(unittest.TestCase):
 
     def test_real_pdf_figure_overflow_rejected(self):
         from reportlab.pdfgen import canvas
-        image = ROOT/"manuscript/figures/architecture.png"
+        image = ROOT/"docs/manuscript/figures/architecture.png"
         for name,y in [("valid",20),("overflow",-20)]:
             path = self.root/f"{name}.pdf"
             document = canvas.Canvas(str(path),pagesize=(200,200))
@@ -792,7 +792,7 @@ class ResearchCustodyTests(unittest.TestCase):
                      "research/generated/strategy-study/results.json",
                      "research/generated/strategy-study/analysis.json",
                      "models/gnn.pin.json", ".github/GNN.md",
-                     "manuscript/variables.json", "manuscript/figures/manifest.json")
+                     "docs/manuscript/variables.json", "docs/manuscript/figures/manifest.json")
         for changed in [*(self.root/name for name in relatives), template/"infrastructure/theme.css"]:
             with self.subTest(path=changed):
                 expected = {name: sha(self.root/name) for name in render_input_paths(self.root)}
@@ -813,7 +813,7 @@ class ResearchCustodyTests(unittest.TestCase):
         for restore in (False, True):
             expected = {name: sha(self.root/name) for name in render_input_paths(self.root)}
             template_expected = {"infrastructure/theme.css": sha(template/"infrastructure/theme.css")}
-            changed = self.root/("research/protocol.json" if restore else "manuscript/99_added.md")
+            changed = self.root/("research/protocol.json" if restore else "docs/manuscript/99_added.md")
             original = changed.read_bytes() if restore else None
             with self.subTest(restore=restore), self.assertRaises(RuntimeError):
                 with staged_render_output(self.root, expected, template, template_expected) as output:

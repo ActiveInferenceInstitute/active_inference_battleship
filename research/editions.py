@@ -193,7 +193,7 @@ def validate_calculations(data: dict) -> dict:
 
 
 def require_guide_reference_count(text: str, expected: int) -> None:
-    match = re.search(r"(?m)^- `manuscript/references\.bib`: (\d+) ", text)
+    match = re.search(r"(?m)^- `docs/manuscript/references\.bib`: (\d+) ", text)
     if match is None or int(match.group(1)) != expected:
         raise ValueError("Manuscript guide bibliography inventory differs from parsed references")
 
@@ -231,7 +231,7 @@ def validate_sources(root: Path = ROOT) -> dict:
     calculations = validate_calculations(data)
     from research.strategy_validation import validate_strategy_outputs
     strategy = validate_strategy_outputs(root)
-    sections = sorted((root/"manuscript").glob("[0-9][0-9]_*.md"))
+    sections = sorted((root/"docs"/"manuscript").glob("[0-9][0-9]_*.md"))
     from research.variables import hydrate_text, load_variables
     variables, _ = load_variables(root)
     content = "\n".join(hydrate_text(p.read_text(), variables, p) for p in sections)
@@ -244,14 +244,14 @@ def validate_sources(root: Path = ROOT) -> dict:
     local_links = sum(validate_local_links(root/path) for path in
                       ("research/SCHOLARSHIP.md", "research/SCHOLARSHIP_UPDATE_20261023.md",
                        "research/STRATEGY_SCHOLARSHIP_20261025.md",
-                       "docs/GNN_SPECIFICATION.md", "docs/RELEASE_PLAN.md"))
-    bibliography = root/"manuscript/references.bib"
+                       "docs/architecture/GNN_SPECIFICATION.md", "docs/publication/RELEASE_PLAN.md"))
+    bibliography = root/"docs/manuscript/references.bib"
     parsed = subprocess.run(["pandoc", str(bibliography), "-f", "biblatex", "-t", "csljson"],
                             check=True, capture_output=True, text=True)
     if parsed.stderr.strip():
         raise ValueError(f"Bibliography parser diagnostic: {parsed.stderr}")
     entries = json.loads(parsed.stdout)
-    require_guide_reference_count((root/"docs/MANUSCRIPT.md").read_text(),len(entries))
+    require_guide_reference_count((root/"docs/publication/MANUSCRIPT.md").read_text(),len(entries))
     require_readme_reference_count((root/"README.md").read_text(),len(entries))
     keys = {e["id"] for e in entries}
     bibliography_content = re.sub(r"@(?:eq|def|prop|example):[\w-]+", "", content)
@@ -262,12 +262,12 @@ def validate_sources(root: Path = ROOT) -> dict:
     if len(keys)!=len(entries) or not keys<=citations:
         raise ValueError("Duplicate or unused bibliography entries")
     for image in re.findall(r"!\[[^\]]*\]\(([^)]+)\)",content):
-        path = root/"manuscript"/image
+        path = root/"docs"/"manuscript"/image
         if not path.is_file() or path.stat().st_size==0:
             raise ValueError(f"Missing manuscript image: {image}")
     manifest = require_figure_manifest(root)
     table = (root/"research/generated/results-table.md").read_text().strip()
-    if table not in (root/"manuscript/04_results.md").read_text():
+    if table not in (root/"docs/manuscript/04_results.md").read_text():
         raise ValueError("Manuscript table differs from generated table")
     return {**calculations,"strategyFollowup":strategy,"sections":len(sections),"references":len(keys),"figures":len(manifest),"numbering":numbering,
             "scholarshipLocalLinks":local_links}
@@ -320,7 +320,7 @@ def validate_editions(root: Path = ROOT) -> dict:
     interval_text=require_plain_statistical_intervals((root/"output/pdf/_combined_manuscript.tex").read_text())
     numbering = validate_numbering(root)
     opening = {"pdf": validate_opening(pdf), "docx": validate_opening(root/"output/docx-native/active_inference_battleship.pdf")}
-    authored = "\n".join(p.read_text() for p in sorted((root/"manuscript").glob("[0-9][0-9]_*.md")))
+    authored = "\n".join(p.read_text() for p in sorted((root/"docs"/"manuscript").glob("[0-9][0-9]_*.md")))
     expected_images = len(re.findall(r"!\[[^\]]*\]\(([^)]+)\)", authored))
     from research.strategy_validation import validate_figure_fonts
     plot_fonts={"pdf":validate_figure_fonts(root,pdf),

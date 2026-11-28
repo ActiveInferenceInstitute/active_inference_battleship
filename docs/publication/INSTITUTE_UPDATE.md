@@ -5,7 +5,7 @@
 This dated development record predates publication. For current public URLs, DOI, licensing, and citation, see [Publication](PUBLICATION.md) and [Release details](RELEASE_PLAN.md). The original statements below describe that earlier update.
 
 
-Current branding uses **Active Inference Institute**. The exploratory workspace is **Decision explorer**. Internal component, CSS, and view keys retain existing names; users navigate by the new label. Authored explanations use American English, with explicit compatibility and published-title exceptions in [GNN specification](GNN_SPECIFICATION.md).
+Current branding uses **Active Inference Institute**. The exploratory workspace is **Decision explorer**. Internal component, CSS, and view keys retain existing names; users navigate by the new label. Authored explanations use American English, with explicit compatibility and published-title exceptions in [GNN specification](../architecture/GNN_SPECIFICATION.md).
 
 ## Interface additions
 
@@ -17,7 +17,7 @@ Six map layers, five sliders, four presets, both-actor inspection, policy sweeps
 
 ## Scholarship and editions
 
-The [primary-source supplement](../research/SCHOLARSHIP_UPDATE_20261023.md) strengthens four formerly abstract-only references through selected substantive passages. The [main dossier](../research/SCHOLARSHIP.md) distinguishes 19 substantive scholarly readings, one qualified manuscript/publisher-abstract reading, and one pinned software source. It retains inaccessible-source gaps. Published titles are preserved; unread originals and presumed correction contents do not become claim support.
+The [primary-source supplement](../../research/SCHOLARSHIP_UPDATE_20261023.md) strengthens four formerly abstract-only references through selected substantive passages. The [main dossier](../../research/SCHOLARSHIP.md) distinguishes 19 substantive scholarly readings, one qualified docs/manuscript/publisher-abstract reading, and one pinned software source. It retains inaccessible-source gaps. Published titles are preserved; unread originals and presumed correction contents do not become claim support.
 
 The manuscript adds the process/model distinction, expected-versus-realized information clarification, historical GNN context, implementation pipeline, and future-release language in its abstract and availability section. The architecture figure separates parser, adapter, compiled runtime, and public information. Figures retain PNG/PDF/SVG exports and data bindings. The numerical protocol and mathematics are unchanged; regeneration updates source identities and American-English labels. The summary CSV's first column is now `catalog`; JSON/replay/API keys such as `catalogueSize` remain unchanged.
 
@@ -45,7 +45,7 @@ Historical reports remain intact and do not automatically accept this update. Nu
 
 ## Intended release
 
-The real release will publish source at [ActInfInstitute/active_inference_battleship](https://github.com/ActInfInstitute/active_inference_battleship) and archive the final manuscript PDF on Zenodo with a DOI. The present version is an unreleased draft with null manuscript/software DOI fields. [Release plan](RELEASE_PLAN.md) distinguishes manuscript and software archives and retains future publication checks. No push, release, DOI reservation, or deposit is part of this update.
+The real release will publish source at [ActInfInstitute/active_inference_battleship](https://github.com/ActInfInstitute/active_inference_battleship) and archive the final manuscript PDF on Zenodo with a DOI. The present version is an unreleased draft with null docs/manuscript/software DOI fields. [Release plan](RELEASE_PLAN.md) distinguishes manuscript and software archives and retains future publication checks. No push, release, DOI reservation, or deposit is part of this update.
 
 Two capture-heavy browser cases exhausted the existing 45-second case budget during an initial update run. Their failed reports and traces are retained. Cancellation is now parameterized as an independent case for each information view; map-layer and expanded-source captures are separate from the sandbox apply/replay case. Every previous assertion and capture remains covered, and each cancellation case also checks preservation and recovery. That initial split retained the 45-second budget; subsequent analysis and capture traces motivated the workflow budget described above. It yields 70 configured cases without treating a retry as proof that the earlier run passed.
 

@@ -116,7 +116,7 @@ beforeAll(async () => {
   expect(listing).toContain("package/lib/types/index.d.ts");
   expect(listing).toContain("package/lib/cli.js");
   expect(listing).toContain("package/models/battleship.gnn.md");
-  expect(listing).toContain("package/docs/PACKAGE.md");
+  expect(listing).toContain("package/docs/guides/PACKAGE.md");
   expect(listing).toContain("package/examples/headless.mjs");
   const verbose = (await success(["tar", "-tvzf", archive])).stdout.trim().split("\n");
   expect(verbose.every((line) => line.startsWith("-") || line.startsWith("d"))).toBe(true);

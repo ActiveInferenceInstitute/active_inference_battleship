@@ -18,14 +18,14 @@ Current gate measurements belong in the
 
 - [ ] The manuscript reader's earlier image-capture failure produced an
       uninstrumented `NaN`; the guarded readiness checks prevent recurrence but the
-      original asset/transient cause is still unidentified (`docs/MANUSCRIPT.md`).
+      original asset/transient cause is still unidentified (`docs/publication/MANUSCRIPT.md`).
 - [ ] Two real pending font requests once caused a bounded readiness rejection after
       ~31,412 ms; the recovery path is tested, but no universal font-lifecycle cure is
-      claimed (`docs/MANUSCRIPT_ACCEPTANCE.md`).
+      claimed (`docs/validation/MANUSCRIPT_ACCEPTANCE.md`).
 - [ ] Full-suite Bun coverage covers imported modules, not the rendered UI, the
       Python GNN bridge, or the upstream parser pipeline. The default fast gate
       produces no coverage. Do not quote one coverage number as a whole-repository
-      gate (`docs/VERIFICATION.md`).
+      gate (`docs/validation/VERIFICATION.md`).
 - [ ] The research and strategy custody records bind the compiled model's bytes, so
       the GNN pin cutover to `v5.1.0` (`674a436`, #17) left
       `research/generated/results.json`,

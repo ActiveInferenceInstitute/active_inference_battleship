@@ -38,7 +38,7 @@ def write_results():
               "The original 16 fixed cases per size used four profiles and exact floating-point tie ordering. Their 128 searches, source bindings, protocol, and unaltered figure formats remain in the source distribution. The table below is preserved; no retrospective p values or inferential intervals are assigned to those exploratory cases.", "",
               (ROOT/"research/generated/results-table.md").read_text().strip(), "",
               "Table: Original descriptive demonstration, n = 16 paired units per size and 128 searches total. Mean Δ is profile minus greedy hit in completion shots, with negative values indicating fewer shots. EFE and hit completion counts tie in all 32 pairs, with ordered traces identical in 27. These exploratory results use the historical selector and are separate from the fresh follow-up. {#tbl:search}", ""]
-    (ROOT/"manuscript/04_results.md").write_text("\n".join(lines))
+    (ROOT/"docs/manuscript/04_results.md").write_text("\n".join(lines))
 
 
 if __name__ == "__main__": write_results()

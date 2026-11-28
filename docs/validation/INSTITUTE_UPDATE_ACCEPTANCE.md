@@ -1,4 +1,4 @@
-> Historical record: statements below describe the dated pre-release candidate. Current organization ownership, releases, and DOI are documented in [publication details](PUBLICATION.md).
+> Historical record: statements below describe the dated pre-release candidate. Current organization ownership, releases, and DOI are documented in [publication details](../publication/PUBLICATION.md).
 
 # Institute update: local verification record
 
@@ -12,9 +12,9 @@ Setup guidance clears after successful launch or gameplay. Import feedback disti
 
 The **Model & guide** explains the GNN declaration, real upstream parser, strict supported-model adapter, compiled JSON and defaults, and handwritten TypeScript execution. Source/model downloads retain exact bytes and provenance. Live controls, analysis snapshots, and resumable replays have different purposes. The implementation retains its finite sampled fleet catalog, one-shot planning, subjective-noise semantics, and selected-truth information boundary.
 
-The scholarship supplement strengthens four previously abstract-only readings. The dossier distinguishes 19 selected substantive scholarly readings, one qualified manuscript/publisher-abstract reading, and one pinned software source. Inaccessible Lindley/corrigendum content and the Grand metadata conflict remain explicit. This is not a systematic review or a claim of theoretical priority, strategy superiority, or educational efficacy.
+The scholarship supplement strengthens four previously abstract-only readings. The dossier distinguishes 19 selected substantive scholarly readings, one qualified docs/manuscript/publisher-abstract reading, and one pinned software source. Inaccessible Lindley/corrigendum content and the Grand metadata conflict remain explicit. This is not a systematic review or a claim of theoretical priority, strategy superiority, or educational efficacy.
 
-The abstract, availability section, guide, README, and release plan identify the intended future source repository, **https://github.com/ActInfInstitute/active_inference_battleship**, and a future **Zenodo DOI manuscript PDF**. Shared metadata remains `unreleased`, `en-US`, with null manuscript/software DOI fields. Published reference titles, verbatim GNN, and stable API/replay identifiers preserve their original spelling.
+The abstract, availability section, guide, README, and release plan identify the intended future source repository, **https://github.com/ActInfInstitute/active_inference_battleship**, and a future **Zenodo DOI manuscript PDF**. Shared metadata remains `unreleased`, `en-US`, with null docs/manuscript/software DOI fields. Published reference titles, verbatim GNN, and stable API/replay identifiers preserve their original spelling.
 
 ## Current checks
 

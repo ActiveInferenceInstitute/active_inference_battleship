@@ -57,7 +57,7 @@ The information-weighted profile illustrates the distinction between identifying
 
 ## All planned comparisons and their uncertainty
 
-All differences are profile minus pragmatic. Favorable/tied/unfavorable counts have denominator 128, not the number of non-tied cases. Significance tests condition on non-ties; intervals estimate mean raw differences descriptively. Decimal rounding is for display only; decisions use full-precision adjusted p values. The [complete protocol, seeds, traces, and analysis](../research/STRATEGY_STUDY.md) retain exact values.
+All differences are profile minus pragmatic. Favorable/tied/unfavorable counts have denominator 128, not the number of non-tied cases. Significance tests condition on non-ties; intervals estimate mean raw differences descriptively. Decimal rounding is for display only; decisions use full-precision adjusted p values. The [complete protocol, seeds, traces, and analysis](../../research/STRATEGY_STUDY.md) retain exact values.
 
 ### Completion shots
 

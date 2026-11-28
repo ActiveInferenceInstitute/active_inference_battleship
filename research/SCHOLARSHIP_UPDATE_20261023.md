@@ -1,4 +1,4 @@
-> Historical record: statements below describe the dated pre-release candidate. Current organization ownership, releases, and DOI are documented in [publication details](../docs/PUBLICATION.md).
+> Historical record: statements below describe the dated pre-release candidate. Current organization ownership, releases, and DOI are documented in [publication details](../docs/publication/PUBLICATION.md).
 
 # Primary-source scholarship update — October 23, 2026
 
@@ -83,7 +83,7 @@ Selected local files read in this pass had these SHA-256 values, providing stabl
 
 ## Proposed wording and claim-to-source additions
 
-These are proposed editorial insertions for the implementation owner, not changes applied to the manuscript or guide. Citation keys already exist in [references.bib](../manuscript/references.bib).
+These are proposed editorial insertions for the implementation owner, not changes applied to the manuscript or guide. Citation keys already exist in [references.bib](../docs/manuscript/references.bib).
 
 **Introduction: model/process distinction** — suitable after the discrete-model vocabulary paragraph; U01 pp. 5–7 and U02 p. 9:
 
@@ -120,7 +120,7 @@ The future project URL uses `ActInfInstitute`; the pinned upstream GNN URLs use 
 
 Verified replacement BibTeX for R20, **not yet applied** to the main bibliography:
 
-**Correction — 2026-11-12:** The “not yet applied” status above is historical. The `smekal2023gnn` entry in [`manuscript/references.bib`](../manuscript/references.bib) now matches the verified replacement below, including its author order, DOI, deposit note, and access date.
+**Correction — 2026-11-12:** The “not yet applied” status above is historical. The `smekal2023gnn` entry in [`docs/manuscript/references.bib`](../docs/manuscript/references.bib) now matches the verified replacement below, including its author order, DOI, deposit note, and access date.
 
 ```bibtex
 @misc{smekal2023gnn,
@@ -145,7 +145,7 @@ Official documentation was read without creating a draft, reserving a DOI, enabl
 | --- | --- | --- |
 | [Digital Object Identifier (DOI)](https://help.zenodo.org/docs/deposit/describe-records/reserve-doi/), “Reserve a DOI” and “Use an existing DOI” | A draft can reserve a DOI before its files are uploaded. The identifier can be embedded in those files. Deleting the draft loses the reservation. Existing identifiers must refer to the same object. | Reserve only when authorized, record the actual returned identifier, and embed it in the final PDF. A reserved identifier is not evidence of a published record. |
 | [Create new upload](https://help.zenodo.org/docs/deposit/create-new-upload/), “Fill in metadata,” especially DOI and resource type | DOI registration occurs when the record is published. Creators, title, date, and resource type describe the deposited object. | Build and inspect the exact PDF with its actual reserved DOI, then deposit that PDF with matching metadata. Use the intended publication/preprint subtype; do not imply journal acceptance. |
-| [Resource types](https://help.zenodo.org/docs/deposit/describe-records/resource-type/), “Mixed resource types” | Zenodo permits a mixed upload under its best-fitting type or separate records when the distinct resource types are significant contributions. | A separate manuscript/PDF record and software source archive make their identities and versions easier to cite accurately. This is a recommendation, not a rule that Zenodo prohibits mixed uploads. |
+| [Resource types](https://help.zenodo.org/docs/deposit/describe-records/resource-type/), “Mixed resource types” | Zenodo permits a mixed upload under its best-fitting type or separate records when the distinct resource types are significant contributions. | A separate docs/manuscript/PDF record and software source archive make their identities and versions easier to cite accurately. This is a recommendation, not a rule that Zenodo prohibits mixed uploads. |
 | [Archive a release from GitHub](https://help.zenodo.org/docs/github/archive-software/github-upload/), “Create a release” | An enabled GitHub integration processes a GitHub release into a Software record; processing and archival status are checked afterward. | Treat any future software DOI as a distinct object identifier. A public repository URL or an unprocessed GitHub release does not establish a completed archive, and a software DOI does not automatically identify the manuscript PDF. |
 | [Manage versions](https://help.zenodo.org/docs/deposit/manage-versions/), introductory versioning explanation | A new version has its own files, metadata, and persistent identifier while remaining linked to other versions. | Cite the specific deposited version for the PDF or software bytes being discussed. Do not substitute a general software concept DOI for an exact manuscript or parser revision. |
 | [Describe software](https://help.zenodo.org/docs/github/describe-software/), metadata precedence paragraph | When both `CITATION.cff` and `.zenodo.json` are present, Zenodo uses `.zenodo.json` for GitHub release archiving. | In a future release, verify the metadata actually consumed by Zenodo; do not assume `CITATION.cff` alone controls the archive. |

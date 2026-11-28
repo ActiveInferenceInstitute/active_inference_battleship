@@ -43,7 +43,7 @@ def validate_numbering(root: Path = ROOT) -> dict:
         nodes = document.xpath('//*[@id=$label]', label=label)
         if len(nodes) != 1 or rf"\qquad{{({number})}}" not in "".join(nodes[0].itertext()):
             raise ValueError(f"HTML equation number mismatch: {label}")
-    source = "\n".join(path.read_text() for path in sorted((root / "manuscript").glob("[0-9][0-9]_*.md")))
+    source = "\n".join(path.read_text() for path in sorted((root / "docs" / "manuscript").glob("[0-9][0-9]_*.md")))
     counts = Counter()
     office_text = " ".join(node.text or "" for node in office.findall(".//w:t", ns))
     html_text = " ".join(document.getroot().itertext())

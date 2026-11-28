@@ -30,11 +30,11 @@ bun run model:import
 bun run gate all
 ```
 
-[`models/gnn.pin.json`](../models/gnn.pin.json) is the canonical upstream pin:
+[`models/gnn.pin.json`](../../models/gnn.pin.json) is the canonical upstream pin:
 schema `gnn-importer-pin/v1`, recorded `2026-11-12`, repository
 `ActiveInferenceInstitute/Generalized_Notation_Notation`, tag `v5.1.0`, commit
 `75c834bd8519dc7b5adc4d24f16bf393cfd1ecdf`. The pinned revision's own
-`gnn.importers` reader validates the pin, the [pointer](../.github/GNN.md) and
+`gnn.importers` reader validates the pin, the [pointer](../../.github/GNN.md) and
 the specification, and the model suite asserts the pinned commit against the
 compiled artifact. `model:import` resolves that commit in the `GNN_ROOT`
 checkout, materializes the commit's `src/gnn` tree into the external cache, runs
@@ -49,8 +49,8 @@ real Python parser and package subprocess suites; it does not renew parser
 verification. `bun run gate all` includes the full suites and production build,
 deduplicating their shared GNN check. The hosted workflow runs that full gate in
 job `model-check`, displayed as `gnn conformance (pinned)`. See the
-[CI pointer](../.github/GNN.md), [run guide](RUN_GUIDE.md), and
-[generated timings](_generated/gate-timings.md).
+[CI pointer](../../.github/GNN.md), [run guide](../RUN_GUIDE.md), and
+[generated timings](../_generated/gate-timings.md).
 
 ## Language and compatibility
 

@@ -8,7 +8,7 @@ const env = externalEnvironment();
 const base = process.env["BATTLESHIP_CAPTURE_URL"] ?? "http://127.0.0.1:5186";
 if (!/^http:\/\/127\.0\.0\.1:\d+$/.test(base))
   throw new Error("Capture requires an explicit loopback preview");
-const output = join(projectRoot, "manuscript/figures/dashboard");
+const output = join(projectRoot, "docs/manuscript/figures/dashboard");
 const replayPath = join(projectRoot, "research/generated/dashboard-replay.json");
 const analysisPath = join(projectRoot, "research/generated/dashboard-analysis.json");
 await mkdir(output, { recursive: true });

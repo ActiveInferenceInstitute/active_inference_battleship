@@ -14,6 +14,6 @@ To rebuild the Pages application from the checked-in compiled model, run `bun in
 
 ## Organization edition and lecture
 
-Version 0.5.0 moves the existing repository to the ActiveInferenceInstitute organization and rebuilds the site at its organization Pages address. See [migration details](ORGANIZATION_MIGRATION.md). The initial Zenodo record remains unchanged; this version has its own DOI-bearing cover and archive record.
+Version 0.5.0 moves the existing repository to the ActiveInferenceInstitute organization and rebuilds the site at its organization Pages address. See [migration details](../architecture/ORGANIZATION_MIGRATION.md). The initial Zenodo record remains unchanged; this version has its own DOI-bearing cover and archive record.
 
 The release includes a narrated 20-minute lecture, 40-slide PDF, complete transcript, caption tracks, and a source ledger. Animated fleet beliefs, GNN dependencies, paired effects, and descriptive trajectories use retained source values. Interpolated motion adds no observations. The voice is synthetic local Aiden. Producer checks, prior independent scientific reviews, and publication availability remain separate claims; the lecture is not a new scientific experiment.

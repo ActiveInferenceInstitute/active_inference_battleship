@@ -29,4 +29,4 @@ source-bound GNN model is committed at `generated/model.json`.
 - Do not hand-edit generated artifacts or weaken strict replay/import schemas.
 
 Architecture detail is in the [project README](../README.md) and
-[`../docs/MODEL.md`](../docs/MODEL.md); API examples are in [`../docs/API.md`](../docs/API.md).
+[`../docs/architecture/MODEL.md`](../docs/architecture/MODEL.md); API examples are in [`../docs/architecture/API.md`](../docs/architecture/API.md).

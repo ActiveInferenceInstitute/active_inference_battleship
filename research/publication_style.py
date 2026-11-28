@@ -9,7 +9,7 @@ PDF_MARGIN_MM = 18
 
 def author_contact(root: Path) -> dict:
     import yaml
-    authors = yaml.safe_load((root / "manuscript/config.yaml").read_text())["authors"]
+    authors = yaml.safe_load((root / "docs/manuscript/config.yaml").read_text())["authors"]
     if len(authors) != 1:
         raise ValueError("This cover requires one corresponding author")
     author = authors[0]
@@ -30,7 +30,7 @@ def author_contact(root: Path) -> dict:
 
 def validate_design_sources(root: Path) -> dict:
     contact = author_contact(root)
-    preamble = (root / "manuscript/preamble.md").read_text()
+    preamble = (root / "docs/manuscript/preamble.md").read_text()
     if rf"\usepackage[margin={PDF_MARGIN_MM}mm]{{geometry}}" not in preamble:
         raise ValueError("PDF margins must be the declared 18 mm")
     if rf"\definecolor{{BattleshipLink}}{{HTML}}{{{LINK_RED}}}" not in preamble:
@@ -38,7 +38,7 @@ def validate_design_sources(root: Path) -> dict:
     for key in ("linkcolor", "citecolor", "urlcolor", "filecolor", "anchorcolor"):
         if f"{key}=BattleshipLink" not in preamble:
             raise ValueError(f"PDF {key} must be red")
-    css = (root / "manuscript/web.css").read_text().lower()
+    css = (root / "docs/manuscript/web.css").read_text().lower()
     for color in (LINK_RED, LINK_RED_DARK):
         if f"--paper-link: #{color.lower()}" not in css:
             raise ValueError("Both HTML themes must use accessible red links")

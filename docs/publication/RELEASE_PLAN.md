@@ -14,9 +14,9 @@ Use `CITATION.cff` for the manuscript citation. The DOI identifies this deposite
 
 ## Reproduction and interpretation
 
-The repository includes the [paired-study guide](../research/STRATEGY_STUDY.md), exact protocol and case seeds, complete traces, full-precision analysis, and all 24 planned comparisons. It retains the original descriptive study separately. There are 256 paired units and 1,280 unique profile searches; repeated verification is not additional data. The [manuscript guide](MANUSCRIPT.md) distinguishes source validation, numerical checks, browser behavior, and rendered editions. Publication establishes availability, not unrestricted Battleship optimality, educational efficacy, or independent scientific replication.
+The repository includes the [paired-study guide](../../research/STRATEGY_STUDY.md), exact protocol and case seeds, complete traces, full-precision analysis, and all 24 planned comparisons. It retains the original descriptive study separately. There are 256 paired units and 1,280 unique profile searches; repeated verification is not additional data. The [manuscript guide](MANUSCRIPT.md) distinguishes source validation, numerical checks, browser behavior, and rendered editions. Publication establishes availability, not unrestricted Battleship optimality, educational efficacy, or independent scientific replication.
 
-The portable built dashboard and package consume the checked-in compiled GNN model. Full source/model reconstruction uses the pinned actual GNN parser and strict adapter described in [GNN_SPECIFICATION.md](GNN_SPECIFICATION.md). The manuscript is built with the real docxology/template renderers, with source and output digests. Preserve companion directories when serving the HTML reader.
+The portable built dashboard and package consume the checked-in compiled GNN model. Full source/model reconstruction uses the pinned actual GNN parser and strict adapter described in [GNN_SPECIFICATION.md](../architecture/GNN_SPECIFICATION.md). The manuscript is built with the real docxology/template renderers, with source and output digests. Preserve companion directories when serving the HTML reader.
 
 ## Release verification
 

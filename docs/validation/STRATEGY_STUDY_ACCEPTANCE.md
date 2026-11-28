@@ -1,4 +1,4 @@
-> Historical record: statements below describe the dated pre-release candidate. Current organization ownership, releases, and DOI are documented in [publication details](PUBLICATION.md).
+> Historical record: statements below describe the dated pre-release candidate. Current organization ownership, releases, and DOI are documented in [publication details](../publication/PUBLICATION.md).
 
 # Strategy study and manuscript: local review-ready handoff
 
@@ -9,21 +9,21 @@ The manuscript, research outputs and reader improvements are ready for local rev
 - PDF manuscript (local artifact: `../output/pdf/active_inference_battleship_combined.pdf`): 24 pages.
 - Word manuscript (local artifact: `../output/docx/active_inference_battleship.docx`): 28 pages in the retained LibreOffice projection.
 - HTML reader (local artifact: `../output/web/index.html`), including exact PDF/Word alternatives under its `editions/` directory.
-- [Reproduction guide](MANUSCRIPT.md) and [study protocol, results and limits](../research/STRATEGY_STUDY.md).
+- [Reproduction guide](../publication/MANUSCRIPT.md) and [study protocol, results and limits](../../research/STRATEGY_STUDY.md).
 - 34 bibliography entries: 32 scholarly works, pinned GNN software and the manufacturer manual. Reading/access qualifications remain in the scholarship dossiers.
 
 The presentation retains Active Inference Institute attribution, American English, author email and ORCID, accessible red hyperlinks, 18 mm PDF margins, automatic equation/formalism numbering and the four-page illustrated opening. Six scientific figures use 18-point source labels; minimum actual scientific figure placement is approximately 11.79 points in PDF and 9.71 points in the LibreOffice projection, above the nine-point requirement.
 
 ## Independent review and documentary closure
 
-Both independent R4 lanes individually read all **980 current PNGs**, including every page, viewport segment, theme, scroll end, zoom and supplied interaction state. Both read all **16 declared changed/new source files** and the authored manuscript/bibliography within their stated semantic scope. Lane A's G–J checklist records 13 PASS/12 N/A; lane B's A–F checklist records 31 PASS/11 N/A. Neither located a confirmed remaining visual or reader defect in that packet.
+Both independent R4 lanes individually read all **980 current PNGs**, including every page, viewport segment, theme, scroll end, zoom and supplied interaction state. Both read all **16 declared changed/new source files** and the authored docs/manuscript/bibliography within their stated semantic scope. Lane A's G–J checklist records 13 PASS/12 N/A; lane B's A–F checklist records 31 PASS/11 N/A. Neither located a confirmed remaining visual or reader defect in that packet.
 
 Their `REVISE` findings concern verification-guide prose:
 
 1. The earlier paragraph incorrectly said ArrowLeft collapses incidental grandchildren. R5 now describes the actual native `unpost()` call, owning-menu-container focus and exact menu-count assertion, while retaining the independent keyboard checks.
 2. Another paragraph retained the former seven-figure/single-table wording. R5 now says every visible figure label and each named table region; the camera derives its inventory from authored figures and current tables.
 
-Only `docs/MANUSCRIPT.md` changed between R4 and the R5 frozen sources. The builder verified that literal correction and reran the existing source/edition verifier. Every rendered input/output and all 980 capture bytes and nanosecond timestamps remain identical. No new render, numerical replay or independent editorial PASS is claimed. The small documentation correction was implemented directly; it did not trigger another delegated repair task.
+Only `docs/publication/MANUSCRIPT.md` changed between R4 and the R5 frozen sources. The builder verified that literal correction and reran the existing source/edition verifier. Every rendered input/output and all 980 capture bytes and nanosecond timestamps remain identical. No new render, numerical replay or independent editorial PASS is claimed. The small documentation correction was implemented directly; it did not trigger another delegated repair task.
 
 Preserved evidence:
 
@@ -68,4 +68,4 @@ This handoff covers the rendered manuscript and declared reader/verification del
 
 The local copy procedure uses the canonical repository lease, original-byte backups, all 1,071 baseline-file conflict checks, confined atomic copies and exact final hashes/nanosecond timestamps. Only obsolete baseline-bound generated files may move into the retained backup; original source is never retired. Integration and served-byte receipts are retained separately in the task's operations cache because they are produced after this record is written.
 
-No Git commit/push, public release, Zenodo deposit or DOI assignment is part of this handoff. The real public release remains planned for [ActInfInstitute/active_inference_battleship](https://github.com/ActInfInstitute/active_inference_battleship), with a separately archived Zenodo manuscript PDF and DOI as described in the [release plan](RELEASE_PLAN.md).
+No Git commit/push, public release, Zenodo deposit or DOI assignment is part of this handoff. The real public release remains planned for [ActInfInstitute/active_inference_battleship](https://github.com/ActInfInstitute/active_inference_battleship), with a separately archived Zenodo manuscript PDF and DOI as described in the [release plan](../publication/RELEASE_PLAN.md).

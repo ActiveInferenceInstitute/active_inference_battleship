@@ -8,7 +8,7 @@ This receipt describes the local finite-catalogue application and the evidence p
 
 The bridge imports `gnn.parsers.markdown_parser.MarkdownGNNParser` from the existing local upstream checkout using its external Python 3.11 environment. Its checked contract supports static fleets, dynamic discrete observation steps, and a one-shot planning horizon.
 
-These bindings are the **acceptance-time (v0.1, GNN 4.3.0-era) baseline**, not the current binding. The current upstream pin (GNN `v5.1.0`, `75c834bd8519dc7b5adc4d24f16bf393cfd1ecdf`) is recorded in [`models/gnn.pin.json`](../models/gnn.pin.json).
+These bindings are the **acceptance-time (v0.1, GNN 4.3.0-era) baseline**, not the current binding. The current upstream pin (GNN `v5.1.0`, `75c834bd8519dc7b5adc4d24f16bf393cfd1ecdf`) is recorded in [`models/gnn.pin.json`](../../models/gnn.pin.json).
 
 | Binding (acceptance-time baseline) | Value |
 | --- | --- |
@@ -68,4 +68,4 @@ These are loopback production-build measurements, not deployed-network guarantee
 
 Source, build outputs, browser profiles, temporary files, and caches remain on GitVault. A repository lease protected the build. No commit, remote publication, or deployment was performed. The production preview is served on loopback port 5186; stop it before running the development server on that same strict port.
 
-Reproduce the checks using [the verification protocol](VERIFICATION.md) and [the setup instructions](../README.md). Preserve failed reports before rerunning Playwright, since its output directory is reused. Retained external red browser artifacts include `Local/artifacts/active-inference-battleship-e2e-first-failure`, `active-inference-battleship-e2e-second-failure`, and the JSON-import failure report. A green earlier run is also retained separately from the final matrix.
+Reproduce the checks using [the verification protocol](VERIFICATION.md) and [the setup instructions](../../README.md). Preserve failed reports before rerunning Playwright, since its output directory is reused. Retained external red browser artifacts include `Local/artifacts/active-inference-battleship-e2e-first-failure`, `active-inference-battleship-e2e-second-failure`, and the JSON-import failure report. A green earlier run is also retained separately from the final matrix.

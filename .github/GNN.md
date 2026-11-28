@@ -58,7 +58,7 @@ both the interpreter's prefix and base prefix must resolve there. The pin is
 not the upstream checkout's working HEAD.
 
 For local commands, see the [run guide](../docs/RUN_GUIDE.md) and
-[verification protocol](../docs/VERIFICATION.md). The default `bun run gate`
+[verification protocol](../docs/validation/VERIFICATION.md). The default `bun run gate`
 and legacy `bun run check` select `fast`, which omits parser/package integration,
 builds, and coverage; use `all` for the full release check. Measured results live
 in the [generated timing document](../docs/_generated/gate-timings.md), not here.

@@ -29,4 +29,4 @@ fresh browser process per case.
 | `capture.ts`                   | Shared screenshot/capture helpers.         |
 
 These tests require Chrome; they are separate from the Bun unit suite in
-[`../tests/`](../tests/README.md). See [`../docs/VERIFICATION.md`](../docs/VERIFICATION.md).
+[`../tests/`](../tests/README.md). See [`../docs/validation/VERIFICATION.md`](../docs/validation/VERIFICATION.md).

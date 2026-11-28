@@ -39,4 +39,4 @@ historical suite counts as current measurements.
 | `fixtures/`                                                 | Small deterministic fixtures.                       |
 
 Do not weaken strict schemas or replay validation to pass a test. See
-[`../docs/VERIFICATION.md`](../docs/VERIFICATION.md) for what each gate proves.
+[`../docs/validation/VERIFICATION.md`](../docs/validation/VERIFICATION.md) for what each gate proves.

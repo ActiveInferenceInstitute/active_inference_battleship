@@ -1,4 +1,4 @@
-> Historical record: statements below describe the dated pre-release candidate. Current organization ownership, releases, and DOI are documented in [publication details](PUBLICATION.md).
+> Historical record: statements below describe the dated pre-release candidate. Current organization ownership, releases, and DOI are documented in [publication details](../publication/PUBLICATION.md).
 
 # Graphical opening and Battleship scholarship update
 
@@ -12,7 +12,7 @@ This records the local manuscript update requested on October 25, 2026. It is a 
 - Seven primary scholarly papers and a manufacturer rulebook extend the bibliography to 29 entries: 27 scholarly papers, one software source, and one manual. Both the guide and manuscript distinguish the original reading dossier from the new Battleship supplement. The supplement records selected substantive passages and task differences; reused tasks/corpora are not independent replications.
 - Ten equations, four definitions, two propositions, and one example retain automatic numbering. The graphical cover and dedicated model/Play/decision plates remain on physical pages 1–4.
 
-See [the manuscript workflow](MANUSCRIPT.md), [original dossier](../research/SCHOLARSHIP.md), and [Battleship supplement](../research/SCHOLARSHIP_BATTLESHIP_20261025.md). Linked supplement/source companions are exported beside the local editions. Preserve those companions when distributing the draft.
+See [the manuscript workflow](../publication/MANUSCRIPT.md), [original dossier](../../research/SCHOLARSHIP.md), and [Battleship supplement](../../research/SCHOLARSHIP_BATTLESHIP_20261025.md). Linked supplement/source companions are exported beside the local editions. Preserve those companions when distributing the draft.
 
 ## Review findings and verified corrections
 

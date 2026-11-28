@@ -1,6 +1,6 @@
 # Core package and headless workflows
 
-This is the **v0.5.0 public source and release-tarball distribution** from the **Active Inference Institute**. [GitHub release](https://github.com/ActiveInferenceInstitute/active_inference_battleship/releases/tag/v0.5.0) · [Manuscript archive, DOI 10.5281/zenodo.23676081](https://doi.org/10.5281/zenodo.23676081). The DOI identifies the manuscript and deposited companions; there is no separate software DOI or npm registry release. [Release details](RELEASE_PLAN.md).
+This is the **v0.5.0 public source and release-tarball distribution** from the **Active Inference Institute**. [GitHub release](https://github.com/ActiveInferenceInstitute/active_inference_battleship/releases/tag/v0.5.0) · [Manuscript archive, DOI 10.5281/zenodo.23676081](https://doi.org/10.5281/zenodo.23676081). The DOI identifies the manuscript and deposited companions; there is no separate software DOI or npm registry release. [Release details](../publication/RELEASE_PLAN.md).
 
 ## Build and reuse
 
@@ -33,7 +33,7 @@ const report = analyzeReplay(replay, {
 const json = encodeAnalysis(report);
 ```
 
-`loadDefaultModel()` returns an independently validated copy; modifying one caller's copy does not alter subsequent defaults. The public interface also exposes the existing fleet, game, inference, counterfactual, policy-sweep, session, random-source, and single-fleet research operations. Importing internal paths is intentionally unsupported by package exports. See [core interfaces](API.md) and [GNN semantics](GNN_SPECIFICATION.md).
+`loadDefaultModel()` returns an independently validated copy; modifying one caller's copy does not alter subsequent defaults. The public interface also exposes the existing fleet, game, inference, counterfactual, policy-sweep, session, random-source, and single-fleet research operations. Importing internal paths is intentionally unsupported by package exports. See [core interfaces](../architecture/API.md) and [GNN semantics](../architecture/GNN_SPECIFICATION.md).
 
 The package targets ESM and ES2023, with Node 26 or later and Bun 1.4.4 or later declared. Current verification uses Node 26.12.1 and Bun 1.4.4; older runtimes and CommonJS are not qualified. Generated declarations use explicit `.js` module specifiers and are checked in an independent strict `NodeNext` consumer without DOM or Bun global types. Browser compatibility is checked by the public declaration build and browser-target bundling; this is separate from the dashboard's rendered/browser tests.
 

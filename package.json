@@ -80,11 +80,11 @@
     "lib/",
     "models/battleship.gnn.md",
     "project.json",
-    "docs/API.md",
-    "docs/PACKAGE.md",
-    "docs/GNN_SPECIFICATION.md",
-    "docs/MODEL.md",
-    "docs/RELEASE_PLAN.md",
+    "docs/architecture/API.md",
+    "docs/guides/PACKAGE.md",
+    "docs/architecture/GNN_SPECIFICATION.md",
+    "docs/architecture/MODEL.md",
+    "docs/publication/RELEASE_PLAN.md",
     "examples/"
   ],
   "engines": {
